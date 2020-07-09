@@ -19,6 +19,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> receiveMoney(@RequestBody String str, HttpServletRequest request) throws Exception {
         log.info("Request parameter : {}", str);
-        return ResponseEntity.ok("success");
+        String copy = str + ".copy";
+        return ResponseEntity.ok(copy);
     }
 }
