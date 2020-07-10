@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
-
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
         log.info("Request parameter : {}", userDTO);
