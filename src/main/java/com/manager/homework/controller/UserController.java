@@ -1,5 +1,6 @@
 package com.manager.homework.controller;
 
+import com.manager.homework.vo.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     @PostMapping("/login")
-    public ResponseEntity<String> receiveMoney(@RequestBody String str, HttpServletRequest request) throws Exception {
-        log.info("Request parameter : {}", str);
-        String copy = str + ".copy";
-        return ResponseEntity.ok(copy);
+    public ResponseEntity<UserDTO> receiveMoney(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
+        log.info("Request parameter : {}", userDTO);
+
+        return ResponseEntity.ok(userDTO);
     }
 }
