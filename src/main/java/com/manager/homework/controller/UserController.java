@@ -4,10 +4,7 @@ import com.manager.homework.vo.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> receiveMoney(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
+    public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
+        log.info("Request parameter : {}", userDTO);
+
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<UserDTO> test(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
         log.info("Request parameter : {}", userDTO);
 
         return ResponseEntity.ok(userDTO);
