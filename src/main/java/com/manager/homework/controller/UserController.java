@@ -22,9 +22,9 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<UserDTO> test(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception {
-        log.info("Request parameter : {}", userDTO);
+    public ResponseEntity<String> test(@RequestParam String str, HttpServletRequest request) throws Exception {
+        log.info("Request parameter : {}", str);
 
-        return ResponseEntity.ok(userDTO);
+        return ResponseEntity.ok(str);
     }
 }
