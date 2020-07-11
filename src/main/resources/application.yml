@@ -1,0 +1,26 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      properties.hibernate.hbm2ddl.auto: update
+      showSql: true
+    jwt:
+      secret: govlepel@$&
+  social:
+    kakao:
+      client_id: e256943117cc3bf2cab23161e9836ec0
+      redirect: /social/login/kakao
+      url:
+        login: https://kauth.kakao.com/oauth/authorize
+        token: https://kauth.kakao.com/oauth/token
+        profile: https://kapi.kakao.com/v2/user/me
+  url:
+    base: http://localhost:8000
+  freemarker:
+    suffix: .ftl
