@@ -24,6 +24,8 @@ public class UserController {
     public ResponseEntity<String> test(@RequestParam String str, HttpServletRequest request) throws Exception {
         log.info("Request parameter : {}", str);
 
+
+
         return ResponseEntity.ok(str);
     }
 }
