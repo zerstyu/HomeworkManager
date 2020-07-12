@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/user/logout/result")
                 .invalidateHttpSession(true)
                 .and()
+                .csrf().disable()
                 // 403 예외처리 핸들링
                 .exceptionHandling().accessDeniedPage("/user/denied");
     }

@@ -4,7 +4,6 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-
   jpa:
     database-platform: H2
     show-sql: true
@@ -17,6 +16,12 @@ spring:
     prefix: classpath:templates/
     suffix: .html
     cache: false
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      location: C:/Temp
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 logging:
   level:
