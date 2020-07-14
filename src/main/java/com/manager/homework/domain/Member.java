@@ -1,21 +1,15 @@
 package com.manager.homework.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 @Table(name = "members")
-public class Member {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-
+// 사용자
+public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String email;
 
