@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'io.springfox:springfox-swagger2:2.6.1'
+    implementation 'io.springfox:springfox-swagger-ui:2.6.1'
     compileOnly 'org.projectlombok:lombok'
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
