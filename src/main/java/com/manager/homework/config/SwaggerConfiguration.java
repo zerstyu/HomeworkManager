@@ -18,8 +18,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(swaggerInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.manager.homework.controller"))
                 .paths(PathSelectors.ant("/v1/**"))
-                .build()
-                .useDefaultResponseMessages(false); // 기본으로 세팅되는 200,401,403,404 메시지를 표시 하지 않음
+                .build();
     }
 
     private ApiInfo swaggerInfo() {

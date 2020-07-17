@@ -1,5 +1,6 @@
 package com.manager.homework.service;
 
+import com.google.common.collect.Lists;
 import com.manager.homework.domain.Member;
 import com.manager.homework.domain.Role;
 import com.manager.homework.repository.MemberRepository;
@@ -47,5 +48,26 @@ public class MemberService implements UserDetailsService {
         }
 
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
+    }
+
+    public List<Member> getAllMemberList() {
+        List<Member> memberList = Lists.newArrayList(memberRepository.findAll());
+        return memberList;
+    }
+
+    public Member updateUserByUsername(String userEmail, MemberDto memberDto) throws UsernameNotFoundException {
+        Optional<Member> userEntityWrapper = memberRepository.findByEmail(userEmail);
+        Member userEntity = userEntityWrapper.get();
+
+        userEntity.setEmail(memberDto.getEmail());
+        userEntity.setPassword(memberDto.getPassword());
+        memberRepository.save(userEntity);
+        return userEntity;
+    }
+
+    public void deleteUserByUsername(String userEmail) throws UsernameNotFoundException {
+        Optional<Member> userEntityWrapper = memberRepository.findByEmail(userEmail);
+        Member userEntity = userEntityWrapper.get();
+        memberRepository.delete(userEntity);
     }
 }
