@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/api")
 @Api(tags = {"1. Member"})
 @AllArgsConstructor
-public class MemberControllerV1 {
-    public static final Logger logger = LoggerFactory.getLogger(MemberControllerV1.class);
+public class MemberApiController {
+    public static final Logger logger = LoggerFactory.getLogger(MemberApiController.class);
 
     private MemberService memberService;
 
