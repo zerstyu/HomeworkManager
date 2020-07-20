@@ -1,4 +1,4 @@
-package com.manager.homework.common;
+package com.manager.homework.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -17,7 +17,6 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
 
     public List<SubjectDto> getSubjectList(String email) {
-        log.debug("getSubjectList email = {}", email);
         List<Subject> subjectList = subjectRepository.findByEmail(email);
         List<SubjectDto> subjectDtoList = Lists.newArrayList();
 
@@ -47,10 +46,10 @@ public class SubjectService {
     }
 
     public void deleteSubject(SubjectDto subjectDto) throws Exception {
-        if (!isExistSubject(subjectDto.getEmail(), subjectDto.getChangeName())) {
+        Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
+        if (subject == null) {
             throw new Exception("삭제하려는 과목이 없습니다.");
         }
-        Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
         subjectRepository.delete(subject);
     }
 

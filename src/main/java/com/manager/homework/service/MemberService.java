@@ -2,8 +2,8 @@ package com.manager.homework.service;
 
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.Member;
-import com.manager.homework.domain.Role;
 import com.manager.homework.repository.MemberRepository;
+import com.manager.homework.type.Role;
 import com.manager.homework.vo.MemberDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
