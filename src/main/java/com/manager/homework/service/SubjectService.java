@@ -1,5 +1,6 @@
 package com.manager.homework.service;
 
+import com.google.common.collect.Lists;
 import com.manager.homework.domain.Subject;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.vo.SubjectDto;
@@ -7,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -15,33 +16,40 @@ import java.util.Optional;
 public class SubjectService {
     private final SubjectRepository subjectRepository;
 
-    public SubjectDto getSubjectList(String email) {
+    public List<SubjectDto> getSubjectList(String email) {
         log.debug("getSubjectList email = {}", email);
-        return Optional.ofNullable(
-                SubjectDto.builder()
+        List<Subject> subjectList = subjectRepository.findByEmail(email);
+        List<SubjectDto> subjectDtoList = Lists.newArrayList();
+
+        subjectList.forEach(
+                it -> subjectDtoList.add(SubjectDto.builder()
                         .email(email)
-                        .subjectList(subjectRepository.findByEmail(email))
-                        .build())
-                .orElse(new SubjectDto());
+                        .name(it.getName())
+                        .build()));
+
+        return subjectDtoList;
     }
 
     public void createSubject(SubjectDto subjectDto) throws Exception {
-        if(isExistSubject(subjectDto.getEmail(), subjectDto.getName())) {
+        if (isExistSubject(subjectDto.getEmail(), subjectDto.getName())) {
             throw new Exception("과목이 존재합니다.");
         }
         subjectRepository.save(subjectDto.toEntity());
     }
 
     public void updateSubject(SubjectDto subjectDto) throws Exception {
-        if(isExistSubject(subjectDto.getEmail(), subjectDto.getChangeName())) {
-            throw new Exception("과목이 존재합니다.");
+        if (isExistSubject(subjectDto.getEmail(), subjectDto.getChangeName())) {
+            throw new Exception("변경하려는 과목이름이 존재합니다.");
         }
         Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
         subject.setName(subjectDto.getChangeName());
         subjectRepository.save(subject);
     }
 
-    public void deleteSubject(SubjectDto subjectDto) {
+    public void deleteSubject(SubjectDto subjectDto) throws Exception {
+        if (!isExistSubject(subjectDto.getEmail(), subjectDto.getChangeName())) {
+            throw new Exception("삭제하려는 과목이 없습니다.");
+        }
         Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
         subjectRepository.delete(subject);
     }

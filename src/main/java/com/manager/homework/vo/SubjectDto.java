@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @Builder
 @RequiredArgsConstructor
 @Data
@@ -16,7 +14,6 @@ public class SubjectDto {
     private String email;
     private String name;
     private String changeName;
-    private List<String> subjectList;
 
     public Subject toEntity() {
         return Subject.builder()

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/subjects")
@@ -23,9 +25,8 @@ public class SubjectApiController {
     @GetMapping("/{email}")
     public ResponseEntity getSubjectList(@PathVariable("email") String email) {
         try {
-            log.debug("email = {}", email);
-            SubjectDto subjectDto = subjectService.getSubjectList(email);
-            return new ResponseEntity(new CommonResponse("SUCCESS", subjectDto), HttpStatus.OK);
+            List<SubjectDto> subjectDtoList = subjectService.getSubjectList(email);
+            return new ResponseEntity(new CommonResponse("SUCCESS", subjectDtoList), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity(new CommonResponse("ERROR", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
