@@ -25,7 +25,7 @@ public class Response<T> {
         return new Response<>(StatusCode.FAIL, message, data);
     }
 
-    public static Response fail(@NonNull String message) {
+    public static Response<String> fail(@NonNull String message) {
         return new Response<>(StatusCode.FAIL, message, null);
     }
 }

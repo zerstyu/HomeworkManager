@@ -22,47 +22,27 @@ public class SubjectApiController {
     @ApiOperation(value = "과목 리스트 조회", notes = "과목 리스트 조회")
     @GetMapping("/{email}")
     public Response<List<SubjectDto>> getSubjectList(@PathVariable("email") String email) {
-        try {
-            return Response.ok(subjectService.getSubjectList(email));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return Response.fail(e.getMessage());
-        }
+        return Response.ok(subjectService.getSubjectList(email));
     }
 
     @ApiOperation(value = "과목 생성", notes = "과목 생성")
     @PostMapping
-    public Response<String> createSubject(@RequestBody SubjectDto subjectDto) {
-        try {
-            subjectService.createSubject(subjectDto);
-            return Response.ok();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return Response.fail(e.getMessage());
-        }
+    public Response<String> createSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+        subjectService.createSubject(subjectDto);
+        return Response.ok();
     }
 
     @ApiOperation(value = "과목 수정", notes = "과목 수정")
     @PutMapping
-    public Response<String> updateSubject(@RequestBody SubjectDto subjectDto) {
-        try {
-            subjectService.updateSubject(subjectDto);
-            return Response.ok();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return Response.fail(e.getMessage());
-        }
+    public Response<String> updateSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+        subjectService.updateSubject(subjectDto);
+        return Response.ok();
     }
 
     @ApiOperation(value = "과목 삭제", notes = "과목 삭제")
     @DeleteMapping
-    public Response<String> deleteSubject(@RequestBody SubjectDto subjectDto) {
-        try {
-            subjectService.deleteSubject(subjectDto);
-            return Response.ok();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return Response.fail(e.getMessage());
-        }
+    public Response<String> deleteSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+        subjectService.deleteSubject(subjectDto);
+        return Response.ok();
     }
 }
