@@ -17,6 +17,10 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
 
     public List<SubjectDto> getSubjectList(String memberId) {
+        //querydsl test
+        List<Subject> queryDslList = subjectRepository.selectAll(memberId);
+        queryDslList.forEach(System.out::println);
+
         List<Subject> subjectList = subjectRepository.findByMemberId(memberId);
         List<SubjectDto> subjectDtoList = Lists.newArrayList();
 
