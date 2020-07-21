@@ -13,13 +13,13 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 public class SubjectDto {
-    private String email;
+    private String memberId;
     private String name;
     private String changeName;
 
     public Subject toEntity() {
         return Subject.builder()
-                .email(this.email)
+                .memberId(this.memberId)
                 .name(this.name)
                 .build();
     }

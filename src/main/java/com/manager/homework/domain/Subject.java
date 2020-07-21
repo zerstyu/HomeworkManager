@@ -18,7 +18,7 @@ import javax.persistence.Table;
 // 과목
 public class Subject extends BaseEntity {
     @Column(length = 20, nullable = false)
-    private String email;
+    private String memberId;
 
     @Column(length = 20, nullable = false)
     private String name;

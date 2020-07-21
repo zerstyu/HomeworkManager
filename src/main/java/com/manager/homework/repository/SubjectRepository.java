@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
-    List<Subject> findByEmail(String email);
-    Subject findByEmailAndName(String email, String name);
-    boolean existsSubjectByEmailAndName(String email, String name);
+    List<Subject> findByMemberId(String memberId);
+    Subject findByMemberIdAndName(String memberId, String name);
+    boolean existsByMemberIdAndName(String memberId, String name);
 }

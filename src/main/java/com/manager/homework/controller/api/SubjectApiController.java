@@ -20,8 +20,8 @@ public class SubjectApiController {
     private final SubjectService subjectService;
 
     @ApiOperation(value = "과목 리스트 조회", notes = "과목 리스트 조회")
-    @GetMapping("/{email}")
-    public Response<List<SubjectDto>> getSubjectList(@PathVariable("email") String email) {
+    @GetMapping("/{member_id}")
+    public Response<List<SubjectDto>> getSubjectList(@PathVariable("member_id") String email) {
         return Response.ok(subjectService.getSubjectList(email));
     }
 
