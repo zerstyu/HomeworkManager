@@ -16,13 +16,13 @@ import java.util.List;
 public class SubjectService {
     private final SubjectRepository subjectRepository;
 
-    public List<SubjectDto> getSubjectList(String email) {
-        List<Subject> subjectList = subjectRepository.findByEmail(email);
+    public List<SubjectDto> getSubjectList(String memberId) {
+        List<Subject> subjectList = subjectRepository.findByMemberId(memberId);
         List<SubjectDto> subjectDtoList = Lists.newArrayList();
 
         subjectList.forEach(
                 it -> subjectDtoList.add(SubjectDto.builder()
-                        .email(email)
+                        .memberId(memberId)
                         .name(it.getName())
                         .build()));
 
@@ -30,30 +30,30 @@ public class SubjectService {
     }
 
     public void createSubject(SubjectDto subjectDto) throws Exception {
-        if (isExistSubject(subjectDto.getEmail(), subjectDto.getName())) {
+        if (isExistSubject(subjectDto.getMemberId(), subjectDto.getName())) {
             throw new Exception("과목이 존재합니다.");
         }
         subjectRepository.save(subjectDto.toEntity());
     }
 
     public void updateSubject(SubjectDto subjectDto) throws Exception {
-        if (isExistSubject(subjectDto.getEmail(), subjectDto.getChangeName())) {
+        if (isExistSubject(subjectDto.getMemberId(), subjectDto.getChangeName())) {
             throw new Exception("변경하려는 과목이름이 존재합니다.");
         }
-        Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
+        Subject subject = subjectRepository.findByMemberIdAndName(subjectDto.getMemberId(), subjectDto.getName());
         subject.setName(subjectDto.getChangeName());
         subjectRepository.save(subject);
     }
 
     public void deleteSubject(SubjectDto subjectDto) throws Exception {
-        Subject subject = subjectRepository.findByEmailAndName(subjectDto.getEmail(), subjectDto.getName());
+        Subject subject = subjectRepository.findByMemberIdAndName(subjectDto.getMemberId(), subjectDto.getName());
         if (subject == null) {
             throw new Exception("삭제하려는 과목이 없습니다.");
         }
         subjectRepository.delete(subject);
     }
 
-    public boolean isExistSubject(String email, String name) {
-        return subjectRepository.existsSubjectByEmailAndName(email, name);
+    public boolean isExistSubject(String memberId, String name) {
+        return subjectRepository.existsByMemberIdAndName(memberId, name);
     }
 }
