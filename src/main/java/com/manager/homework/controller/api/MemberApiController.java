@@ -79,7 +79,7 @@ public class MemberApiController {
 
     @ApiOperation(value = "사용자 삭제", notes = "특정 사용자 삭제")
     @DeleteMapping("/members/{email}")
-    public ResponseEntity deleteMember(@PathVariable("email") String email, @RequestBody MemberDto memberDto) {
+    public ResponseEntity deleteMember(@PathVariable("email") String email) {
         try {
             memberService.deleteUserByUsername(email);
             return new ResponseEntity(new CommonResponse("SUCCESS", "정상적으로 삭제 되었습니다"), HttpStatus.OK);

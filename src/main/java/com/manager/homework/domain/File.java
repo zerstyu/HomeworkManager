@@ -1,14 +1,18 @@
 package com.manager.homework.domain;
 
+import com.manager.homework.type.FileType;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "modified_images")
+@Table(name = "files")
 @Data
-// 수정 이미지
-public class ModifiedImage extends BaseEntity {
+// 제출한 파일
+public class File extends BaseEntity {
+    @Column
+    private FileType type;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
