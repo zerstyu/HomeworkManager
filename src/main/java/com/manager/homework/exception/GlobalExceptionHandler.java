@@ -17,21 +17,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({CustomException.class})
     public Response<String> handleCustomException(CustomException e) {
-        log.error("{}", e.getErrorCode());
-        return Response.fail(e.getErrorCode().getMessage(), e.getErrorCode());
+        ErrorCode errorCode = e.getErrorCode();
+        log.error("{}", errorCode);
+        return Response.fail(errorCode.getMessage(), errorCode.getCode());
     }
 
     @ExceptionHandler({Exception.class})
     public Response<String> handleUnExpectedException(Exception e) {
         log.error("{}", e.getMessage(), e);
         return Response.fail(
-                Optional.ofNullable(e.getMessage()).orElse(e.toString()), ErrorCode.NOT_DEFINED);
+                Optional.ofNullable(e.getMessage()).orElse(e.toString()), ErrorCode.NOT_DEFINED.getCode());
     }
 
     @ExceptionHandler({NullPointerException.class})
     public Response<String> handleNullPointerException(Exception e) {
         log.error("{}", e.getMessage(), e);
         return Response.fail(
-                Optional.ofNullable(e.getMessage()).orElse(e.toString()), ErrorCode.NULL_POINT);
+                Optional.ofNullable(e.getMessage()).orElse(e.toString()), ErrorCode.NULL_POINT.getCode());
     }
 }

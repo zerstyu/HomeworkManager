@@ -2,7 +2,9 @@ package com.manager.homework.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
