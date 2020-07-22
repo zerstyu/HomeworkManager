@@ -32,8 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
         web.ignoring()
                 .antMatchers("/css/**", "/js/**", "/img/**", "/lib/**")
-                .antMatchers("/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/canvas_resource/**");
+                .antMatchers("/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/canvas_resource/**", "/h2-console/*");    
     }
 
     @Override
