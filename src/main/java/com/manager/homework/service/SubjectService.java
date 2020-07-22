@@ -2,7 +2,9 @@ package com.manager.homework.service;
 
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.Subject;
+import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.SubjectRepository;
+import com.manager.homework.type.ErrorCode;
 import com.manager.homework.vo.SubjectDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +37,14 @@ public class SubjectService {
 
     public void createSubject(SubjectDto subjectDto) throws Exception {
         if (isExistSubject(subjectDto.getMemberId(), subjectDto.getName())) {
-            throw new Exception("과목이 존재합니다.");
+            throw new CustomException(ErrorCode.SUBJECT_DUPLICATION);
         }
         subjectRepository.save(subjectDto.toEntity());
     }
 
     public void updateSubject(SubjectDto subjectDto) throws Exception {
         if (isExistSubject(subjectDto.getMemberId(), subjectDto.getChangeName())) {
-            throw new Exception("변경하려는 과목이름이 존재합니다.");
+            throw new CustomException(ErrorCode.SUBJECT_CHANGE_DUPLICATION);
         }
         Subject subject = subjectRepository.findByMemberIdAndName(subjectDto.getMemberId(), subjectDto.getName());
         subject.setName(subjectDto.getChangeName());
@@ -52,7 +54,7 @@ public class SubjectService {
     public void deleteSubject(SubjectDto subjectDto) throws Exception {
         Subject subject = subjectRepository.findByMemberIdAndName(subjectDto.getMemberId(), subjectDto.getName());
         if (subject == null) {
-            throw new Exception("삭제하려는 과목이 없습니다.");
+            throw new CustomException(ErrorCode.SUBJECT_REMOVE_NONE);
         }
         subjectRepository.delete(subject);
     }
