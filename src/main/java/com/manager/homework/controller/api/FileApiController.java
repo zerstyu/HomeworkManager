@@ -12,5 +12,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"3. File"})
 @AllArgsConstructor
 public class FileApiController {
-    public static final Logger logger = LoggerFactory.getLogger(MemberApiController.class);
+    public static final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 }

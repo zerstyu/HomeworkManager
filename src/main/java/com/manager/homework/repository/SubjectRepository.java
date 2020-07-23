@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long>, SubjectRepositoryCustom {
-    List<Subject> findByMemberId(String memberId);
+    List<Subject> findByUserId(Long userId);
 
-    Subject findByMemberIdAndName(String memberId, String name);
+    Subject findByUserIdAndName(Long userId, String name);
 
-    boolean existsByMemberIdAndName(String memberId, String name);
+    boolean existsByUserIdAndName(Long userId, String name);
 }

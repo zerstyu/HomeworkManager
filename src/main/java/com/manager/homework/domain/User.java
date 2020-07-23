@@ -16,13 +16,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "members")
 // 사용자
-public class Member extends BaseEntity {
+public class User extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String groupName;
 }

@@ -1,16 +1,16 @@
 package com.manager.homework.vo;
 
-import com.manager.homework.domain.Member;
+import com.manager.homework.domain.User;
 import lombok.Data;
 
 @Data
-public class MemberDto {
+public class UserDto {
     private String email;
     private String password;
     private String groupName;
 
-    public Member toEntity(){
-        return Member.builder()
+    public User toEntity(){
+        return User.builder()
                 .email(email)
                 .password(password)
                 .groupName(groupName)
