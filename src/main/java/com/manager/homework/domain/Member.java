@@ -1,10 +1,17 @@
 package com.manager.homework.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name = "members")
@@ -16,10 +23,6 @@ public class Member extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Builder
-    public Member(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
+    @Column(length = 20, nullable = false)
+    private String groupName;
 }
