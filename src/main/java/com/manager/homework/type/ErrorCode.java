@@ -14,7 +14,7 @@ public enum ErrorCode {
 
     // USER
     EMAIL_DUPLICATION("U001", "동일한 이메일이 존재합니다."),
-    LOGIN_INPUT_INVALID("U002", "로그인 입력 값이 잘못 되었습니다."),
+    LOGIN_INPUT_INVALID("U002", "이메일, 비밀번호를 확인해주세요."),
     LOGIN_USER_NONE("U003", "존재하지 않는 사용자입니다."),
     LOGIN_FAIL("U004", "로그인이 실패하였습니다."),
 

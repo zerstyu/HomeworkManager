@@ -65,7 +65,7 @@ public class UserService {
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (encoder.matches(password, user.getPassword())) {
+        if (!encoder.matches(password, user.getPassword())) {
             throw new CustomException(ErrorCode.LOGIN_INPUT_INVALID);
         }
     }
