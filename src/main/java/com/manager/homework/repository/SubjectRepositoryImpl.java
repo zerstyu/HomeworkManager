@@ -17,11 +17,11 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Subject> selectAll(String memberId) {
+    public List<Subject> selectAll(Long userId) {
         log.info("querydsl selectAll");
 
         return queryFactory.selectFrom(subject)
-                .where(subject.memberId.eq(memberId))
+                .where(subject.user.id.eq(userId))
                 .fetch();
     }
 }

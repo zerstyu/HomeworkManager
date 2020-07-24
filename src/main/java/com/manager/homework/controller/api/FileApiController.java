@@ -22,8 +22,6 @@ import java.util.List;
 @Api(tags = {"3. File"})
 @AllArgsConstructor
 public class FileApiController {
-    public static final Logger logger = LoggerFactory.getLogger(MemberApiController.class);
-
     private final FileService fileService;
 
     @ApiOperation(value = "파일 리스트 조회", notes = "파일 리스트 조회")

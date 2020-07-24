@@ -14,13 +14,14 @@ public class File extends BaseEntity {
     private FileType type;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SUBJECT_ID")
     private Subject subject;
 
+    @Lob
     @Column
     private String base64str;
 }

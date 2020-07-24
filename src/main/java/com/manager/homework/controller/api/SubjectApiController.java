@@ -20,9 +20,9 @@ public class SubjectApiController {
     private final SubjectService subjectService;
 
     @ApiOperation(value = "과목 리스트 조회", notes = "과목 리스트 조회")
-    @GetMapping("/{member_id}")
-    public Response<List<SubjectDto>> getSubjectList(@PathVariable("member_id") String email) {
-        return Response.ok(subjectService.getSubjectList(email));
+    @GetMapping("/{user_id}")
+    public Response<List<SubjectDto>> getSubjectList(@PathVariable("user_id") Long userId) {
+        return Response.ok(subjectService.getSubjectList(userId));
     }
 
     @ApiOperation(value = "과목 생성", notes = "과목 생성")
