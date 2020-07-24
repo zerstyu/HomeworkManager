@@ -22,7 +22,7 @@ public class FileRepositorySupport extends QuerydslRepositorySupport {
     public List<File> findByCondition(FileDto fileDto) {
         return queryFactory.selectFrom(file)
                 .where(file.type.eq(fileDto.getType()),
-                        file.member.id.eq(fileDto.getMemberId()),
+                        file.user.id.eq(fileDto.getUserId()),
                         file.subject.id.eq(fileDto.getSubjectId()))
                 .fetch();
     }
