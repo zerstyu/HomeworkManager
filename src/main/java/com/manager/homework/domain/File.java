@@ -21,6 +21,7 @@ public class File extends BaseEntity {
     @JoinColumn(name = "SUBJECT_ID")
     private Subject subject;
 
+    @Lob
     @Column
     private String base64str;
 }
