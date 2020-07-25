@@ -4,7 +4,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
-                    <h3>선생님에게 보여질 카드UI</h3>
+                    <h3>내가 만든 클래스</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="남은과제 : 3/12"
@@ -58,13 +58,13 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17">클래스 생성하기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17">클래스 만들기</base-button>
                 </div>
 
 
                 <div class="col-xl-12 col-lg-12">
                     <br/><br/>
-                    <h3>학생에게 보여질 카드UI</h3>
+                    <h3>현재 수강중인 클래스</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="남은과제 : 3/12"
@@ -91,11 +91,9 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17">클래스 추가하기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17">클래스 가입하기</base-button>
                 </div>
             </div>
-
-
 
         </base-header>
 
