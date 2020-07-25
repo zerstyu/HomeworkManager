@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Builder
 @Data
 @Entity
-@Table(name = "members")
+@Table(name = "users")
 // 사용자
 public class User extends BaseEntity {
     @Column(length = 20, nullable = false)

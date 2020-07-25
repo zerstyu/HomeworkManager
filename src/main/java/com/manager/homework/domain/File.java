@@ -1,12 +1,16 @@
 package com.manager.homework.domain;
 
 import com.manager.homework.type.FileType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "files")
 @Data
