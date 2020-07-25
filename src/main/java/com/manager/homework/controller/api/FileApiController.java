@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@Api(tags = {"3. File"})
+@Api(tags = {"5. File"})
 @AllArgsConstructor
 public class FileApiController {
     private final FileService fileService;

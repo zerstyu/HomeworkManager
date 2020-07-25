@@ -1,12 +1,10 @@
 package com.manager.homework.service;
 
 import com.manager.homework.domain.Assignment;
+import com.manager.homework.domain.Notice;
 import com.manager.homework.domain.Subject;
 import com.manager.homework.domain.User;
-import com.manager.homework.repository.AssignmentRepository;
-import com.manager.homework.repository.AssignmentRepositorySupport;
-import com.manager.homework.repository.SubjectRepository;
-import com.manager.homework.repository.UserRepository;
+import com.manager.homework.repository.*;
 import com.manager.homework.vo.AssignmentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +21,10 @@ public class AssignmentService {
     private final AssignmentRepositorySupport assignmentRepositorySupport;
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final NoticeRepository noticeRepository;
 
-    public List<Assignment> getAssignmentList(AssignmentDto assignmentDto) {
-        return assignmentRepositorySupport.findByCondition(assignmentDto);
+    public List<Assignment> getAssignmentList(AssignmentDto noticeDto) {
+        return assignmentRepositorySupport.findByCondition(noticeDto);
     }
 
     public void createAssignment(AssignmentDto assignmentDto) throws Exception {
@@ -47,8 +46,10 @@ public class AssignmentService {
         Optional<Subject> subjectEntityWrapper = subjectRepository.findById(assignmentDto.getSubjectId());
         assignment.setSubject(subjectEntityWrapper.get());
 
-        assignment.setTitle(assignmentDto.getTitle());
-        assignment.setContent(assignmentDto.getContent());
+        Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getSubjectId());
+        assignment.setNotice(noticeEntityWrapper.get());
+
+        assignment.setFeedback(assignmentDto.getFeedback());
 
         assignmentRepository.save(assignment);
         return assignment;
@@ -61,12 +62,13 @@ public class AssignmentService {
     private Assignment convertToEntity(AssignmentDto assignmentDto) {
         Optional<User> userEntityWrapper = userRepository.findById(assignmentDto.getUserId());
         Optional<Subject> subjectEntityWrapper = subjectRepository.findById(assignmentDto.getSubjectId());
+        Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getNoticeId());
 
         return Assignment.builder()
                 .user(userEntityWrapper.get())
                 .subject(subjectEntityWrapper.get())
-                .title(assignmentDto.getTitle())
-                .content(assignmentDto.getContent())
+                .notice(noticeEntityWrapper.get())
+                .feedback(assignmentDto.getFeedback())
                 .build();
     }
 }

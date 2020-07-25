@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assignments")
 @Data
-// 과제
+// 과제 공지
 public class Assignment extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
@@ -23,9 +23,13 @@ public class Assignment extends BaseEntity {
     @JoinColumn(name = "SUBJECT_ID")
     private Subject subject;
 
-    @Column
-    private String title;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "NOTICE_ID")
+    private Notice notice;
 
     @Column
-    private String content;
+    private String feedback;
+
+    @Column
+    private String grade;
 }
