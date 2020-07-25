@@ -26,7 +26,7 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 생성", notes = "과제 생성")
     @PostMapping("/assignments")
-    public Response<String> createUser(@RequestBody AssignmentDto assignmentDto) throws Exception {
+    public Response<String> createAssignment(@RequestBody AssignmentDto assignmentDto) throws Exception {
         assignmentService.createAssignment(assignmentDto);
         return Response.ok();
     }
@@ -46,7 +46,7 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 삭제", notes = "과제 삭제")
     @DeleteMapping("/assignments/{id}")
-    public Response<String> deleteUser(@PathVariable("id") Long id) {
+    public Response<String> deleteAssignment(@PathVariable("id") Long id) {
         assignmentService.deleteAssignment(id);
         return Response.ok();
     }

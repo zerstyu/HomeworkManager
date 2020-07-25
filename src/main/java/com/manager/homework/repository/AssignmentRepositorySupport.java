@@ -30,8 +30,12 @@ public class AssignmentRepositorySupport extends QuerydslRepositorySupport {
             builder.and(assignment.subject.id.eq(assignmentDto.getSubjectId()));
         }
 
-        if (assignmentDto.getTitle() != null) {
-            builder.and(assignment.title.contains(assignmentDto.getTitle()));
+        if (assignmentDto.getNoticeId() != null) {
+            builder.and(assignment.notice.id.eq(assignmentDto.getNoticeId()));
+        }
+
+        if (assignmentDto.getGrade() != null) {
+            builder.and(assignment.grade.eq(assignmentDto.getGrade()));
         }
 
         return queryFactory.selectFrom(assignment)

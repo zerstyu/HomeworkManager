@@ -48,7 +48,7 @@ public class FileService {
         Optional<Subject> subjectEntityWrapper = subjectRepository.findById(fileDto.getSubjectId());
         file.setSubject(subjectEntityWrapper.get());
 
-        file.setBase64str(fileDto.getBase64Str());
+        file.setBase64Str(fileDto.getBase64Str());
 
         fileRepository.save(file);
         return file;
@@ -66,7 +66,7 @@ public class FileService {
                 .type(fileDto.getType())
                 .user(userEntityWrapper.get())
                 .subject(subjectEntityWrapper.get())
-                .base64str(fileDto.getBase64Str())
+                .base64Str(fileDto.getBase64Str())
                 .build();
     }
 }

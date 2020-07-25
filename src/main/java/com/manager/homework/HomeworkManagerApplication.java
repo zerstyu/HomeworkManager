@@ -1,14 +1,8 @@
 package com.manager.homework;
 
 import com.google.common.collect.Lists;
-import com.manager.homework.domain.Assignment;
-import com.manager.homework.domain.File;
-import com.manager.homework.domain.Subject;
-import com.manager.homework.domain.User;
-import com.manager.homework.repository.AssignmentRepository;
-import com.manager.homework.repository.FileRepository;
-import com.manager.homework.repository.SubjectRepository;
-import com.manager.homework.repository.UserRepository;
+import com.manager.homework.domain.*;
+import com.manager.homework.repository.*;
 import com.manager.homework.type.FileType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -22,8 +16,9 @@ import java.util.List;
 public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
-    private final FileRepository fileRepository;
+    private final NoticeRepository noticeRepository;
     private final AssignmentRepository assignmentRepository;
+    private final FileRepository fileRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(HomeworkManagerApplication.class, args);
@@ -33,8 +28,9 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     public void run(String... args) {
         userRepository.saveAll(getUserList());
         subjectRepository.saveAll(getSubjectList());
-        fileRepository.saveAll(getFileList());
+        noticeRepository.saveAll(getNoticeList());
         assignmentRepository.saveAll(getAssignmentList());
+        fileRepository.saveAll(getFileList());
     }
 
     private List<User> getUserList(){
@@ -59,6 +55,39 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return subjectList;
     }
 
+    private List<Notice> getNoticeList(){
+        List noticeList = Lists.newArrayList();
+        Notice notice = Notice.builder()
+                .user(getUserList().get(0))
+                .subject(getSubjectList().get(0))
+                .title("수학 1번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .build();
+        noticeList.add(notice);
+
+        Notice notice2 = Notice.builder()
+                .user(getUserList().get(0))
+                .subject(getSubjectList().get(0))
+                .title("국어 1번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .build();
+        noticeList.add(notice2);
+        return noticeList;
+    }
+
+    private List<Assignment> getAssignmentList(){
+        List assignmentList = Lists.newArrayList();
+        Assignment assignment = Assignment.builder()
+                .user(getUserList().get(0))
+                .subject(getSubjectList().get(0))
+                .notice(getNoticeList().get(0))
+                .feedback("답안을 더 자세하게 써주세요. ")
+                .grade("B")
+                .build();
+        assignmentList.add(assignment);
+        return assignmentList;
+    }
+
     private List<File> getFileList(){
         List fileList = Lists.newArrayList();
         File originalFile = File.builder()
@@ -75,25 +104,5 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .build();
         fileList.add(modifiedFile);
         return fileList;
-    }
-
-    private List<Assignment> getAssignmentList(){
-        List assignmentList = Lists.newArrayList();
-        Assignment assignment = Assignment.builder()
-                .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
-                .title("수학 1번 과제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
-                .build();
-        assignmentList.add(assignment);
-
-        Assignment assignment2 = Assignment.builder()
-                .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
-                .title("국어 1번 과제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
-                .build();
-        assignmentList.add(assignment2);
-        return assignmentList;
     }
 }
