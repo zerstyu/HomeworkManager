@@ -7,12 +7,14 @@ import lombok.Data;
 public class UserDto {
     private String email;
     private String password;
+    private String name;
     private String groupName;
 
     public User toEntity(){
         return User.builder()
                 .email(email)
                 .password(password)
+                .name(name)
                 .groupName(groupName)
                 .build();
     }

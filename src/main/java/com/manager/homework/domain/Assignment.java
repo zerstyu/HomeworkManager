@@ -1,6 +1,5 @@
 package com.manager.homework.domain;
 
-import com.manager.homework.type.FileType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +11,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "files")
+@Table(name = "assignments")
 @Data
-// 제출한 파일
-public class File extends BaseEntity {
-    @Column
-    private FileType type;
-
+// 과제
+public class Assignment extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     private User user;
@@ -27,11 +23,9 @@ public class File extends BaseEntity {
     @JoinColumn(name = "SUBJECT_ID")
     private Subject subject;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOMEWORK_ID")
-    private Assignment assignment;
-
-    @Lob
     @Column
-    private String base64str;
+    private String title;
+
+    @Column
+    private String content;
 }

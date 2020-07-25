@@ -1,9 +1,9 @@
 package com.manager.homework.service;
 
-import com.google.common.collect.Lists;
 import com.manager.homework.domain.User;
 import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.UserRepository;
+import com.manager.homework.repository.UserRepositorySupport;
 import com.manager.homework.type.ErrorCode;
 import com.manager.homework.vo.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +19,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserRepositorySupport userRepositorySupport;
 
-    public List<User> getAllMemberList() {
-        List<User> userList = Lists.newArrayList(userRepository.findAll());
-        return userList;
+    public List<User> getUserList(UserDto userDto) {
+        return userRepositorySupport.findByCondition(userDto);
     }
 
     public void createUser(UserDto userDto) throws Exception {
@@ -33,7 +33,7 @@ public class UserService {
         userRepository.save(userDto.toEntity());
     }
 
-    public User getMember(Long id) {
+    public User getUser(Long id) {
         Optional<User> userEntityWrapper = userRepository.findById(id);
         return userEntityWrapper.get();
     }
@@ -58,7 +58,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void loginUser(String email, String password) throws Exception {
+    public User loginUser(String email, String password) throws Exception {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new CustomException(ErrorCode.LOGIN_USER_NONE);
@@ -68,6 +68,7 @@ public class UserService {
         if (!encoder.matches(password, user.getPassword())) {
             throw new CustomException(ErrorCode.LOGIN_INPUT_INVALID);
         }
+        return user;
     }
 
     private boolean isExistUser(String email) {
