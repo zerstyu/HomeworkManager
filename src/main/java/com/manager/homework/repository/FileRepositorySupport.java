@@ -2,6 +2,7 @@ package com.manager.homework.repository;
 
 import com.manager.homework.domain.File;
 import com.manager.homework.vo.FileDto;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
@@ -20,10 +21,21 @@ public class FileRepositorySupport extends QuerydslRepositorySupport {
     }
 
     public List<File> findByCondition(FileDto fileDto) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if (fileDto.getType() != null) {
+            builder.and(file.type.eq(fileDto.getType()));
+        }
+
+        if (fileDto.getUserId() != null) {
+            builder.and(file.user.id.eq(fileDto.getUserId()));
+        }
+
+        if (fileDto.getSubjectId() != null) {
+            builder.and(file.subject.id.eq(fileDto.getSubjectId()));
+        }
+
         return queryFactory.selectFrom(file)
-                .where(file.type.eq(fileDto.getType()),
-                        file.user.id.eq(fileDto.getUserId()),
-                        file.subject.id.eq(fileDto.getSubjectId()))
+                .where(builder)
                 .fetch();
     }
 }
