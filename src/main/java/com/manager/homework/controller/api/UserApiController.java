@@ -21,8 +21,8 @@ public class UserApiController {
 
     @ApiOperation(value = "전체 사용자 리스트 조회", notes = "전체 사용자 리스트 조회")
     @GetMapping("/users")
-    public Response<List<User>> getAllUserList() {
-        return Response.ok(userService.getAllMemberList());
+    public Response<List<User>> getAllUserList(UserDto userDto) {
+        return Response.ok(userService.getUserList(userDto));
     }
 
     @ApiOperation(value = "사용자 생성", notes = "회원가입")
@@ -35,7 +35,7 @@ public class UserApiController {
     @ApiOperation(value = "사용자 상세 조회", notes = "특정 사용자 상세 정보 조회")
     @GetMapping("/users/{id}")
     public Response<User> getUser(@PathVariable("id") Long id) {
-        return Response.ok(userService.getMember(id));
+        return Response.ok(userService.getUser(id));
     }
 
     @ApiOperation(value = "사용자 정보 수정", notes = "특정 사용자 정보 수정")
@@ -54,11 +54,11 @@ public class UserApiController {
 
     @ApiOperation(value = "로그인", notes = "로그인")
     @PostMapping("/login")
-    public Response<String> loginUser(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
+    public Response<User> loginUser(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
         String email = loginRequestDto.getEmail();
         String password = loginRequestDto.getPassword();
 
-        userService.loginUser(email, password);
-        return Response.ok();
+        User user = userService.loginUser(email, password);
+        return Response.ok(user);
     }
 }

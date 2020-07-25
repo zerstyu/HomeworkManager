@@ -25,9 +25,7 @@ public class FileService {
     private final SubjectRepository subjectRepository;
 
     public List<File> getFileList(FileDto fileDto) {
-        List<File> queryDslList = fileRepositorySupport.findByCondition(fileDto);
-        queryDslList.forEach(System.out::println);
-        return queryDslList;
+        return fileRepositorySupport.findByCondition(fileDto);
     }
 
     public void createFile(FileDto fileDto) throws Exception {
