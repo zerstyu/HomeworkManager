@@ -10,19 +10,19 @@ export default new Router({
     {
       path: '/',
       //redirect: 'dashboard',
-      redirect: 'homeworkEdit',
+      redirect: 'login',
       component: DashboardLayout,
       children: [
         {
           //path: '/dashboard',
           //name: 'dashboard',
-          path: '/teacherStage',
-          name: '과제리스트',
+          path: '/homeworkManage',
+          name: '과제관리',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
           //component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
-          component: () => import(/* webpackChunkName: "demo" */ './views/TeacherStage.vue')
+          component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')
         },
         {
           path: '/icons',
@@ -35,9 +35,9 @@ export default new Router({
           component: () => import('./views/HomeworkEdit.vue')
         },
         {
-          path: '/teacherStage',
+          path: '/homeworkManage',
           name: '과제 리스트',
-          component: () => import(/* webpackChunkName: "demo" */ './views/TeacherStage.vue')
+          component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')
         },
         {
           path: '/profile',

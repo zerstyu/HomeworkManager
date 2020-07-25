@@ -37,7 +37,7 @@
                                 <span class="text-muted">암호를 기억하시겠습니까?</span>
                             </base-checkbox>
                             <div class="text-center">
-                                <base-button type="primary" class="my-4">로그인</base-button>
+                                <base-button v-on:click="loginReq()" type="primary" class="my-4">로그인</base-button>
                             </div>
                         </form>
                     </div>
@@ -51,18 +51,76 @@
                     </div>
                 </div>
             </div>
+            <modal :show.sync="modals">
+                <template slot="header">
+                    <h5 class="modal-title" id="exampleModalLabel">알림</h5>
+                </template>
+                <div>
+                    {{responseMsg}}
+                </div>
+                <template slot="footer">
+                    <base-button type="secondary" @click="modals = false">확인</base-button>
+                    <!--base-button type="primary">Save changes</base-button-->
+                </template>
+            </modal>
+
+            <modal :show.sync="modals2">
+                <template slot="header">
+                    <h5 class="modal-title" id="exampleModalLabel2">알림</h5>
+                </template>
+                <div>
+                    회원가입에 성공하였습니다.
+                </div>
+                <template slot="footer">
+                    <base-button type="primary" @click="goLoginPage()" href="/#/login">로그인 하러가기</base-button>
+                    <!--base-button type="primary">Save changes</base-button-->
+                </template>
+            </modal>
         </div>
 </template>
 <script>
-  export default {
+const axios = require('axios');
+
+export default {
     name: 'login',
     data() {
       return {
         model: {
           email: '',
           password: ''
-        }
+        },
+        modals: false,
+        modals2: false
       }
+    },
+    methods: {
+        loginReq(){
+            let vm = this;
+
+            const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+            axios.post('/api/login',
+                '{' +
+                '"email": "' + vm.model.email + '",' +
+                '"password": "' + vm.model.password + '"' +
+                '}'
+                , axiosConfig)
+                .then(function(response){
+
+                    if(response.data.statusCode == 'OK'){
+                        location.href='/#/homeworkManage';
+                        vm.modals2 = true;
+                    }
+                    else{
+                        vm.modals = true;
+                        vm.responseMsg = response.data.message;
+                    }
+                });
+        },
+        goMainPage(){
+            this.modals2 = false;
+            location.href='/#/login';
+        }
     }
   }
 </script>

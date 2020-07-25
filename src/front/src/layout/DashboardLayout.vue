@@ -18,7 +18,7 @@
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/>
         <sidebar-item :link="{name: 'User Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
         <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/-->
-        <sidebar-item :link="{name: '과제리스트', icon: 'ni ni-planet text-blue', path: '/teacherStage'}"/>
+        <sidebar-item :link="{name: '과제관리', icon: 'ni ni-planet text-blue', path: '/homeworkManage'}"/>
         <sidebar-item :link="{name: '채점', icon: 'ni ni-planet text-blue', path: '/homeworkEdit'}"/>
         <sidebar-item :link="{name: '로그인', icon: 'ni ni-key-25 text-info', path: '/login'}"/>
         <sidebar-item :link="{name: '회원가입', icon: 'ni ni-circle-08 text-pink', path: '/register'}"/>

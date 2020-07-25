@@ -24,7 +24,13 @@
                     <form role="form">
 
                         <base-input class="input-group-alternative mb-3"
-                                    placeholder="Name"
+                                    placeholder="소속"
+                                    addon-left-icon="ni ni-hat-3"
+                                    v-model="model.groupName">
+                        </base-input>
+
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="이름"
                                     addon-left-icon="ni ni-hat-3"
                                     v-model="model.name">
                         </base-input>
@@ -37,7 +43,7 @@
 
                         <base-input class="input-group-alternative"
                                     placeholder="Password"
-                                    type="password"
+                                    type="패스워드"
                                     addon-left-icon="ni ni-lock-circle-open"
                                     v-model="model.password">
                         </base-input>
@@ -54,7 +60,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <base-button type="primary" class="my-4">회원가입</base-button>
+                            <base-button v-on:click="joinReq()" type="primary" class="my-4">회원가입</base-button>
                         </div>
                     </form>
                 </div>
@@ -72,20 +78,93 @@
                 </div>
             </div>
         </div>
+        <modal :show.sync="modals">
+            <template slot="header">
+                <h5 class="modal-title" id="exampleModalLabel">알림</h5>
+            </template>
+            <div>
+                {{responseMsg}}
+            </div>
+            <template slot="footer">
+                <base-button type="secondary" @click="modals = false">확인</base-button>
+                <!--base-button type="primary">Save changes</base-button-->
+            </template>
+        </modal>
+
+        <modal :show.sync="modals2">
+            <template slot="header">
+                <h5 class="modal-title" id="exampleModalLabel2">알림</h5>
+            </template>
+            <div>
+                회원가입에 성공하였습니다.
+            </div>
+            <template slot="footer">
+                <base-button type="primary" @click="goLoginPage()" href="/#/login">로그인 하러가기</base-button>
+                <!--base-button type="primary">Save changes</base-button-->
+            </template>
+        </modal>
+
     </div>
+
+
 </template>
 <script>
-  export default {
+    const axios = require('axios');
+
+    export default {
     name: 'register',
     data() {
       return {
         model: {
           name: '',
           email: '',
+          goupName: '',
           password: ''
-        }
+        },
+        modals : false,
+        modals2: false,
+        responseMsg : ''
       }
+    },
+    methods: {
+        joinReq(){
+            let vm = this;
+
+            /*
+            let form = new FormData();
+            form.append('email', vm.email);
+            form.append('groupName', vm.name);
+            form.append('password', vm.password);
+            */
+
+            const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+            axios.post('/api/users',
+                '{' +
+                        '"name": "' + vm.model.name + '",' +
+                        '"email": "' + vm.model.email + '",' +
+                        '"groupName": "' + vm.model.goupName + '",' +
+                        '"password": "' + vm.model.password + '"' +
+                      '}'
+                , axiosConfig)
+                .then(function(response){
+                    console.log(response);
+
+
+                    if(response.data.statusCode == 'OK'){
+                        vm.modals2 = true;
+                    }
+                    else{
+                        vm.modals = true;
+                        vm.responseMsg = response.data.message;                    }
+                });
+        },
+        goLoginPage(){
+            this.modals2 = false;
+            location.href='/#/login';
+        }
     }
+
   }
 </script>
 <style>

@@ -54,9 +54,9 @@
                                 </base-button-->
                                 <div class="col-md-12">
                                 <h2><i class="ni ni-ruler-pencil"></i> 채점</h2>
-                                </div>
-                                <iframe id="homeworkCanvasIframe" style="width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
-                                </iframe>
+                                    <iframe id="homeworkCanvasIframe" style="width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
+                                    </iframe> </div>
+
                                 <div>
                                     <base-pagination :page-count="10" v-model="pagination.default"></base-pagination>
                                 </div>
