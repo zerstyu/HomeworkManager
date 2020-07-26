@@ -1,12 +1,11 @@
 package com.manager.homework.service;
 
+import com.google.common.collect.Lists;
 import com.manager.homework.domain.Notice;
+import com.manager.homework.domain.NoticeFile;
 import com.manager.homework.domain.Subject;
 import com.manager.homework.domain.User;
-import com.manager.homework.repository.NoticeRepository;
-import com.manager.homework.repository.NoticeRepositorySupport;
-import com.manager.homework.repository.SubjectRepository;
-import com.manager.homework.repository.UserRepository;
+import com.manager.homework.repository.*;
 import com.manager.homework.vo.NoticeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +22,18 @@ public class NoticeService {
     private final NoticeRepositorySupport noticeRepositorySupport;
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final NoticeFileRepository noticeFileRepository;
+    private final NoticeFileService noticeFileService;
 
     public List<Notice> getNoticeList(NoticeDto noticeDto) {
         return noticeRepositorySupport.findByCondition(noticeDto);
     }
 
     public Notice createNotice(NoticeDto noticeDto) throws Exception {
-        return noticeRepository.save(convertToEntity(noticeDto));
+        Notice notice = noticeRepository.save(convertToNoticeEntity(noticeDto));
+        List<NoticeFile> noticeFileList = convertToEntity(notice, noticeDto.getNoticeFileStringList());
+        noticeFileRepository.saveAll(noticeFileList);
+        return notice;
     }
 
     public Notice getNotice(Long id) {
@@ -58,7 +62,7 @@ public class NoticeService {
         noticeRepository.deleteById(id);
     }
 
-    private Notice convertToEntity(NoticeDto noticeDto) {
+    private Notice convertToNoticeEntity(NoticeDto noticeDto) {
         Optional<User> userEntityWrapper = userRepository.findById(noticeDto.getUserId());
         Optional<Subject> subjectEntityWrapper = subjectRepository.findById(noticeDto.getSubjectId());
 
@@ -68,5 +72,19 @@ public class NoticeService {
                 .title(noticeDto.getTitle())
                 .content(noticeDto.getContent())
                 .build();
+    }
+
+    private List<NoticeFile> convertToEntity(Notice notice, List<String> noticeFileStringList) {
+        List<NoticeFile> noticeFileList = Lists.newArrayList();
+        for (String fileString : noticeFileStringList) {
+            NoticeFile noticeFile = NoticeFile.builder()
+                    .user(notice.getUser())
+                    .notice(notice)
+                    .base64Str(fileString)
+                    .build();
+
+            noticeFileList.add(noticeFile);
+        }
+        return noticeFileList;
     }
 }
