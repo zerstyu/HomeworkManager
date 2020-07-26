@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "files")
 @Data
 // 제출한 파일
-public class File extends BaseEntity {
+public class AssignmentFile extends BaseEntity {
     @Column
     private FileType type;
 
@@ -24,12 +24,8 @@ public class File extends BaseEntity {
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SUBJECT_ID")
-    private Subject subject;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOMEWORK_ID")
-    private Notice notice;
+    @JoinColumn(name = "ASSIGNMENT_ID")
+    private Assignment assignment;
 
     @Lob
     @Column

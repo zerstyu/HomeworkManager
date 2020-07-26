@@ -18,7 +18,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
     private final AssignmentRepository assignmentRepository;
-    private final FileRepository fileRepository;
+    private final AssignmentFileRepository assignmentFileRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(HomeworkManagerApplication.class, args);
@@ -30,7 +30,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         subjectRepository.saveAll(getSubjectList());
         noticeRepository.saveAll(getNoticeList());
         assignmentRepository.saveAll(getAssignmentList());
-        fileRepository.saveAll(getFileList());
+        assignmentFileRepository.saveAll(getFileList());
     }
 
     private List<User> getUserList(){
@@ -88,21 +88,21 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return assignmentList;
     }
 
-    private List<File> getFileList(){
+    private List<AssignmentFile> getFileList(){
         List fileList = Lists.newArrayList();
-        File originalFile = File.builder()
+        AssignmentFile originalAssignmentFile = AssignmentFile.builder()
                 .type(FileType.ORIGINAL)
                 .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
+                .assignment(getAssignmentList().get(0))
                 .build();
-        fileList.add(originalFile);
+        fileList.add(originalAssignmentFile);
 
-        File modifiedFile = File.builder()
+        AssignmentFile modifiedAssignmentFile = AssignmentFile.builder()
                 .type(FileType.MODIFIED)
                 .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
+                .assignment(getAssignmentList().get(0))
                 .build();
-        fileList.add(modifiedFile);
+        fileList.add(modifiedAssignmentFile);
         return fileList;
     }
 }
