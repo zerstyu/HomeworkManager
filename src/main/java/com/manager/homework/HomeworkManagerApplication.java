@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -37,9 +38,12 @@ public class HomeworkManagerApplication implements CommandLineRunner {
 
     private List<User> getUserList(){
         List userList = Lists.newArrayList();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode("admin");
+
         User user = User.builder()
                 .email("admin")
-                .password("admin")
+                .password(password)
                 .name("admin")
                 .groupName("HomeworkManager")
                 .build();

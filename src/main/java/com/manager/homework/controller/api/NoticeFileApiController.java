@@ -26,8 +26,8 @@ public class NoticeFileApiController {
 
     @ApiOperation(value = "공지 파일 생성", notes = "공지 파일 생성")
     @PostMapping("/notice_files")
-    public Response<NoticeFile> createNoticeFile(@RequestBody NoticeFileDto noticeFileDto) throws Exception {
-        return Response.ok(noticeFileService.createNoticeFile(noticeFileDto));
+    public Response<List<NoticeFile>> createNoticeFile(@RequestBody List<NoticeFileDto> noticeFileDtoList) throws Exception {
+        return Response.ok(noticeFileService.createNoticeFile(noticeFileDtoList));
     }
 
     @ApiOperation(value = "공지 파일 상세 정보 조회", notes = "공지 파일 상세 정보 조회")

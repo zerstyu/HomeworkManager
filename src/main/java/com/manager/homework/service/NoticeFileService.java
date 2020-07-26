@@ -1,5 +1,6 @@
 package com.manager.homework.service;
 
+import com.google.common.collect.Lists;
 import com.manager.homework.domain.*;
 import com.manager.homework.repository.NoticeFileRepository;
 import com.manager.homework.repository.NoticeFileRepositorySupport;
@@ -26,8 +27,8 @@ public class NoticeFileService {
         return noticeFileRepositorySupport.findByCondition(noticeFileDto);
     }
 
-    public NoticeFile createNoticeFile(NoticeFileDto noticeFileDto) throws Exception {
-        return noticeFileRepository.save(convertToEntity(noticeFileDto));
+    public List<NoticeFile> createNoticeFile(List<NoticeFileDto> noticeFileDtoList) throws Exception {
+        return noticeFileRepository.saveAll(convertToEntity(noticeFileDtoList));
     }
 
     public NoticeFile getNoticeFile(Long id) {
@@ -55,14 +56,21 @@ public class NoticeFileService {
         noticeFileRepository.deleteById(id);
     }
 
-    private NoticeFile convertToEntity(NoticeFileDto noticeFileDto) {
-        Optional<User> userEntityWrapper = userRepository.findById(noticeFileDto.getUserId());
-        Optional<Notice> noticeEntityWrapper = noticeRepository.findById(noticeFileDto.getNoticeId());
+    private List<NoticeFile> convertToEntity(List<NoticeFileDto> noticeFileDtoList) {
+        List<NoticeFile> noticeFileList = Lists.newArrayList();
+        for (NoticeFileDto noticeFileDto : noticeFileDtoList) {
+            Optional<User> userEntityWrapper = userRepository.findById(noticeFileDto.getUserId());
+            Optional<Notice> noticeEntityWrapper = noticeRepository.findById(noticeFileDto.getNoticeId());
 
-        return NoticeFile.builder()
-                .user(userEntityWrapper.get())
-                .notice(noticeEntityWrapper.get())
-                .base64Str(noticeFileDto.getBase64Str())
-                .build();
+            NoticeFile noticeFile = NoticeFile.builder()
+                    .user(userEntityWrapper.get())
+                    .notice(noticeEntityWrapper.get())
+                    .base64Str(noticeFileDto.getBase64Str())
+                    .build();
+
+            noticeFileList.add(noticeFile);
+        }
+
+        return noticeFileList;
     }
 }
