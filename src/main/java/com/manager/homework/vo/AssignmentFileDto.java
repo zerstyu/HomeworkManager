@@ -4,9 +4,9 @@ import com.manager.homework.type.FileType;
 import lombok.Data;
 
 @Data
-public class FileDto {
+public class AssignmentFileDto {
     private FileType type;
     private Long userId;
-    private Long subjectId;
+    private Long assignmentId;
     private String base64Str;
 }
