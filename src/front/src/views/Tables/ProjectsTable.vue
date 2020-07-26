@@ -7,11 +7,13 @@
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white': ''">
             {{title}}
+            {{dataSendTest}}
           </h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">클래스 정보수정</base-button>
           <base-button type="primary" size="sm">과제 추가</base-button>
+
 
         </div>
       </div>
@@ -115,7 +117,8 @@
       type: {
         type: String
       },
-      title: String
+      title: String,
+      dataSendTest: String
     },
     data() {
       return {
