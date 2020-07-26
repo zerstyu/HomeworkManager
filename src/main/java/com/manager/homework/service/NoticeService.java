@@ -28,8 +28,8 @@ public class NoticeService {
         return noticeRepositorySupport.findByCondition(noticeDto);
     }
 
-    public void createNotice(NoticeDto noticeDto) throws Exception {
-        noticeRepository.save(convertToEntity(noticeDto));
+    public Notice createNotice(NoticeDto noticeDto) throws Exception {
+        return noticeRepository.save(convertToEntity(noticeDto));
     }
 
     public Notice getNotice(Long id) {

@@ -25,12 +25,12 @@ public class UserService {
         return userRepositorySupport.findByCondition(userDto);
     }
 
-    public void createUser(UserDto userDto) throws Exception {
+    public User createUser(UserDto userDto) throws Exception {
         if (isExistUser(userDto.getEmail())) {
             throw new CustomException(ErrorCode.EMAIL_DUPLICATION);
         }
         userDto.setPassword(encodePassword(userDto.getPassword()));
-        userRepository.save(userDto.toEntity());
+        return userRepository.save(userDto.toEntity());
     }
 
     public User getUser(Long id) {

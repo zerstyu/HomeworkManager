@@ -26,9 +26,8 @@ public class AssignmentFileApiController {
 
     @ApiOperation(value = "파일 생성", notes = "파일 생성")
     @PostMapping("/assignment_files")
-    public Response<String> createAssignmentFile(@RequestBody AssignmentFileDto assignmentFileDto) throws Exception {
-        assignmentFileService.createAssignmentFile(assignmentFileDto);
-        return Response.ok();
+    public Response<AssignmentFile> createAssignmentFile(@RequestBody AssignmentFileDto assignmentFileDto) throws Exception {
+        return Response.ok(assignmentFileService.createAssignmentFile(assignmentFileDto));
     }
 
     @ApiOperation(value = "파일 상세 정보 조회", notes = "파일 상세 정보 조회")

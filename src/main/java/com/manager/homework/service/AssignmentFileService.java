@@ -28,8 +28,8 @@ public class AssignmentFileService {
         return assignmentFileRepositorySupport.findByCondition(assignmentFileDto);
     }
 
-    public void createAssignmentFile(AssignmentFileDto assignmentFileDto) throws Exception {
-        assignmentFileRepository.save(convertToEntity(assignmentFileDto));
+    public AssignmentFile createAssignmentFile(AssignmentFileDto assignmentFileDto) throws Exception {
+        return assignmentFileRepository.save(convertToEntity(assignmentFileDto));
     }
 
     public AssignmentFile getAssignmentFile(Long id) {

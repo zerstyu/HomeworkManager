@@ -17,6 +17,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
+    private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
     private final AssignmentFileRepository assignmentFileRepository;
 
@@ -29,8 +30,9 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         userRepository.saveAll(getUserList());
         subjectRepository.saveAll(getSubjectList());
         noticeRepository.saveAll(getNoticeList());
+        noticeFileRepository.saveAll(getNoticeFileList());
         assignmentRepository.saveAll(getAssignmentList());
-        assignmentFileRepository.saveAll(getFileList());
+        assignmentFileRepository.saveAll(getAssignmentFileList());
     }
 
     private List<User> getUserList(){
@@ -88,7 +90,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return assignmentList;
     }
 
-    private List<AssignmentFile> getFileList(){
+    private List<AssignmentFile> getAssignmentFileList(){
         List fileList = Lists.newArrayList();
         AssignmentFile originalAssignmentFile = AssignmentFile.builder()
                 .type(FileType.ORIGINAL)
@@ -103,6 +105,16 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .assignment(getAssignmentList().get(0))
                 .build();
         fileList.add(modifiedAssignmentFile);
+        return fileList;
+    }
+
+    private List<NoticeFile> getNoticeFileList(){
+        List fileList = Lists.newArrayList();
+        NoticeFile noticeFile = NoticeFile.builder()
+                .user(getUserList().get(0))
+                .notice(getNoticeList().get(0))
+                .build();
+        fileList.add(noticeFile);
         return fileList;
     }
 }

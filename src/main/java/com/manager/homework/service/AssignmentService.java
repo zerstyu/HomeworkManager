@@ -27,8 +27,8 @@ public class AssignmentService {
         return assignmentRepositorySupport.findByCondition(noticeDto);
     }
 
-    public void createAssignment(AssignmentDto assignmentDto) throws Exception {
-        assignmentRepository.save(convertToEntity(assignmentDto));
+    public Assignment createAssignment(AssignmentDto assignmentDto) throws Exception {
+        return assignmentRepository.save(convertToEntity(assignmentDto));
     }
 
     public Assignment getAssignment(Long id) {
