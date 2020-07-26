@@ -26,9 +26,8 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 생성", notes = "과제 생성")
     @PostMapping("/assignments")
-    public Response<String> createAssignment(@RequestBody AssignmentDto assignmentDto) throws Exception {
-        assignmentService.createAssignment(assignmentDto);
-        return Response.ok();
+    public Response<Assignment> createAssignment(@RequestBody AssignmentDto assignmentDto) throws Exception {
+        return Response.ok(assignmentService.createAssignment(assignmentDto));
     }
 
     @ApiOperation(value = "과제 상세 조회", notes = "과제 상세 조회")

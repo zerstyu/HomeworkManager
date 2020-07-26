@@ -27,9 +27,8 @@ public class UserApiController {
 
     @ApiOperation(value = "사용자 생성", notes = "회원가입")
     @PostMapping("/users")
-    public Response<String> createUser(@RequestBody UserDto userDto) throws Exception {
-        userService.createUser(userDto);
-        return Response.ok();
+    public Response<User> createUser(@RequestBody UserDto userDto) throws Exception {
+        return Response.ok(userService.createUser(userDto));
     }
 
     @ApiOperation(value = "사용자 상세 조회", notes = "특정 사용자 상세 정보 조회")
@@ -41,8 +40,7 @@ public class UserApiController {
     @ApiOperation(value = "사용자 정보 수정", notes = "특정 사용자 정보 수정")
     @PutMapping("/users/{id}")
     public Response<User> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) throws Exception {
-        User user = userService.updateUser(id, userDto);
-        return Response.ok(user);
+        return Response.ok(userService.updateUser(id, userDto));
     }
 
     @ApiOperation(value = "사용자 삭제", notes = "특정 사용자 삭제")

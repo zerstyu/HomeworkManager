@@ -26,9 +26,8 @@ public class NoticeApiController {
 
     @ApiOperation(value = "과제 공지 생성", notes = "과제 공지 생성")
     @PostMapping("/notices")
-    public Response<String> createNotice(@RequestBody NoticeDto noticeDto) throws Exception {
-        noticeService.createNotice(noticeDto);
-        return Response.ok();
+    public Response<Notice> createNotice(@RequestBody NoticeDto noticeDto) throws Exception {
+        return Response.ok(noticeService.createNotice(noticeDto));
     }
 
     @ApiOperation(value = "과제 공지 상세 조회", notes = "과제 공지 상세 조회")
