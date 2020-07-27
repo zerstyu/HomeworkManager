@@ -15,11 +15,11 @@ import javax.persistence.*;
 @Data
 // 과제 공지사항 파일
 public class NoticeFile extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "NOTICE_ID")
     private Notice notice;
 

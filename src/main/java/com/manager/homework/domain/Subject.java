@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "subjects")
 // 과목
 public class Subject extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 

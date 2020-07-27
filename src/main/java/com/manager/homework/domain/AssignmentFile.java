@@ -19,11 +19,11 @@ public class AssignmentFile extends BaseEntity {
     @Column
     private FileType type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ASSIGNMENT_ID")
     private Assignment assignment;
 
