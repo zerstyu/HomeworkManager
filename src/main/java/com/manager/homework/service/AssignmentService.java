@@ -27,7 +27,7 @@ public class AssignmentService {
         return assignmentRepositorySupport.findByCondition(noticeDto);
     }
 
-    public Assignment createAssignment(AssignmentDto assignmentDto) throws Exception {
+    public Assignment createAssignment(AssignmentDto assignmentDto) {
         return assignmentRepository.save(convertToEntity(assignmentDto));
     }
 
@@ -36,7 +36,7 @@ public class AssignmentService {
         return assignmentEntityWrapper.get();
     }
 
-    public Assignment updateAssignment(Long id, AssignmentDto assignmentDto) throws Exception {
+    public Assignment updateAssignment(Long id, AssignmentDto assignmentDto) {
         Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(id);
         Assignment assignment = assignmentEntityWrapper.get();
 

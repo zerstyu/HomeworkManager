@@ -26,7 +26,7 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 생성", notes = "과제 생성")
     @PostMapping("/assignments")
-    public Response<Assignment> createAssignment(@RequestBody AssignmentDto assignmentDto) throws Exception {
+    public Response<Assignment> createAssignment(@RequestBody AssignmentDto assignmentDto) {
         return Response.ok(assignmentService.createAssignment(assignmentDto));
     }
 
@@ -38,7 +38,7 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 정보 수정", notes = "과제 정보 수정")
     @PutMapping("/assignments/{id}")
-    public Response<Assignment> updateAssignment(@PathVariable("id") Long id, @RequestBody AssignmentDto assignmentDto) throws Exception {
+    public Response<Assignment> updateAssignment(@PathVariable("id") Long id, @RequestBody AssignmentDto assignmentDto) {
         Assignment assignment = assignmentService.updateAssignment(id, assignmentDto);
         return Response.ok(assignment);
     }

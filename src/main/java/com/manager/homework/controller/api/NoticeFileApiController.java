@@ -26,7 +26,7 @@ public class NoticeFileApiController {
 
     @ApiOperation(value = "공지 파일 생성", notes = "공지 파일 생성")
     @PostMapping("/notice_files")
-    public Response<List<NoticeFile>> createNoticeFile(@RequestBody List<NoticeFileDto> noticeFileDtoList) throws Exception {
+    public Response<List<NoticeFile>> createNoticeFile(@RequestBody List<NoticeFileDto> noticeFileDtoList) {
         return Response.ok(noticeFileService.createNoticeFile(noticeFileDtoList));
     }
 
@@ -38,7 +38,7 @@ public class NoticeFileApiController {
 
     @ApiOperation(value = "공지 파일 정보 수정", notes = "공지 파일 정보 수정")
     @PutMapping("/notice_files/{id}")
-    public Response<NoticeFile> updateNoticeFile(@PathVariable("id") Long id, @RequestBody NoticeFileDto noticeFileDto) throws Exception {
+    public Response<NoticeFile> updateNoticeFile(@PathVariable("id") Long id, @RequestBody NoticeFileDto noticeFileDto) {
         NoticeFile noticeFile = noticeFileService.updateNoticeFile(id, noticeFileDto);
         return Response.ok(noticeFile);
     }

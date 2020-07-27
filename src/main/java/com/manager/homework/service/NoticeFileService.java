@@ -1,7 +1,9 @@
 package com.manager.homework.service;
 
 import com.google.common.collect.Lists;
-import com.manager.homework.domain.*;
+import com.manager.homework.domain.Notice;
+import com.manager.homework.domain.NoticeFile;
+import com.manager.homework.domain.User;
 import com.manager.homework.repository.NoticeFileRepository;
 import com.manager.homework.repository.NoticeFileRepositorySupport;
 import com.manager.homework.repository.NoticeRepository;
@@ -27,7 +29,7 @@ public class NoticeFileService {
         return noticeFileRepositorySupport.findByCondition(noticeFileDto);
     }
 
-    public List<NoticeFile> createNoticeFile(List<NoticeFileDto> noticeFileDtoList) throws Exception {
+    public List<NoticeFile> createNoticeFile(List<NoticeFileDto> noticeFileDtoList) {
         return noticeFileRepository.saveAll(convertToEntity(noticeFileDtoList));
     }
 
@@ -36,7 +38,7 @@ public class NoticeFileService {
         return fileEntityWrapper.get();
     }
 
-    public NoticeFile updateNoticeFile(Long id, NoticeFileDto noticeFileDto) throws Exception {
+    public NoticeFile updateNoticeFile(Long id, NoticeFileDto noticeFileDto) {
         Optional<NoticeFile> fileEntityWrapper = noticeFileRepository.findById(id);
         NoticeFile noticeFile = fileEntityWrapper.get();
 
