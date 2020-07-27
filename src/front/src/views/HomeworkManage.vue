@@ -7,10 +7,11 @@
                     <h3>내가 만든 과제방</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6"
-                     v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id">
+                     v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id"
+                     @click="teacherSubjectsDetail(teacherSubject.idx)">
                     <stats-card v-bind:title="'방장 : ' + teacherSubject.userId"
+                                v-bind:icon="teacherSubject.icon"
                                 v-bind:sub-title="teacherSubject.name"
-                                @click="teacherSubjectsDetail()"
                                 class="mb-4 mb-xl-0">
 
                         <!--template slot="footer">
@@ -22,7 +23,7 @@
 
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="남은과제 : 3/12"
-                                icon="ni ni-settings"
+                                icon="ni ni-check-bold"
                                 sub-title="1학년 1반"
                                 class="mb-4 mb-xl-0">
 
@@ -113,6 +114,9 @@
                 </div>
             </div-->
         </div>
+        <div v-if="scrollOn" class="container-fluid mt--7">
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </div>
 
     </div>
 
@@ -130,14 +134,28 @@
           return {
               teacherSubjects : [],
               studentSubjects : [],
-              modals: false,
+              modals: true,
               modals2: false,
+              responseMsg: '데이터를 불러오고 있습니다.',
               createSubjectName: '',
-              datasend : 'xxxx'
+              datasend : 'xxxx',
+              scrollOn : true
           }
       },
       created() {
           this.getSubjects();
+          //let vm = this;
+          //vm.modals = false;
+/*
+          setTimeout(function() {
+              console.log('Works!');
+              vm.scrollOn = false;
+              vm.modals = false;
+          }, 500);
+*/
+      },
+      mounted() {
+          this.modals = false;
       },
       methods: {
           createSubject(){
@@ -172,7 +190,27 @@
               axios.get('/api/subjects/' + localStorage.getItem('userId'))
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
-                          vm.teacherSubjects = response.data.data;
+                          /*
+                          vm.teacherSubjectsIcons = [];
+                          for(let i = 0; i < response.data.data.length; i++){
+                              vm.teacherSubjectsIcons[response.data.data[i].name] = '';
+                              console.log("아이콘배열초기화 : " + vm.teacherSubjectsIcons[response.data.data[i].name] + " , " + response.data.data[i].name);
+                          }
+                          */
+
+                          //vm.teacherSubjects = response.data.data;
+
+                          vm.teacherSubjects = [];
+                          for(let i = 0; i < response.data.data.length; i++){
+                              vm.teacherSubjects.push({
+                                  userId : response.data.data[i].userId,
+                                  name :response.data.data[i].name,
+                                  icon : '',
+                                  idx : i
+                              });
+                          }
+
+
                       }
                       else{
                           vm.modals = true;
@@ -180,8 +218,21 @@
                       }
                   });
           },
-          teacherSubjectsDetail(){
-              ProjectsTable.props.dataSendTest = '테스트2';
+          teacherSubjectsDetail(idx){
+              console.log("click card" + idx);
+              for(let i = 0; i < this.teacherSubjects.length; i++){
+                  if(this.teacherSubjects[i].idx == idx){
+                      //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = 'ni ni-check-bold';
+                      this.teacherSubjects[i].icon = 'ni ni-check-bold';
+                  }
+                  else{
+                      //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = '';
+                      this.teacherSubjects[i].icon = '';
+                  }
+                  console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].name);
+              }
+              //console.log("res2 : " + this.teacherSubjects[idx].icon);
+
           }
       }
   };
