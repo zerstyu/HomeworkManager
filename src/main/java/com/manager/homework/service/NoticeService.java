@@ -29,7 +29,7 @@ public class NoticeService {
         return noticeRepositorySupport.findByCondition(noticeDto);
     }
 
-    public Notice createNotice(NoticeDto noticeDto) throws Exception {
+    public Notice createNotice(NoticeDto noticeDto) {
         Notice notice = noticeRepository.save(convertToNoticeEntity(noticeDto));
         List<NoticeFile> noticeFileList = convertToEntity(notice, noticeDto.getNoticeFileStringList());
         noticeFileRepository.saveAll(noticeFileList);
@@ -41,7 +41,7 @@ public class NoticeService {
         return noticeEntityWrapper.get();
     }
 
-    public Notice updateNotice(Long id, NoticeDto noticeDto) throws Exception {
+    public Notice updateNotice(Long id, NoticeDto noticeDto) {
         Optional<Notice> noticeEntityWrapper = noticeRepository.findById(id);
         Notice notice = noticeEntityWrapper.get();
 

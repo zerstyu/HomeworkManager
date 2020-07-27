@@ -26,7 +26,7 @@ public class NoticeApiController {
 
     @ApiOperation(value = "과제 공지 생성", notes = "과제 공지 생성")
     @PostMapping("/notices")
-    public Response<Notice> createNotice(@RequestBody NoticeDto noticeDto) throws Exception {
+    public Response<Notice> createNotice(@RequestBody NoticeDto noticeDto) {
         return Response.ok(noticeService.createNotice(noticeDto));
     }
 
@@ -38,7 +38,7 @@ public class NoticeApiController {
 
     @ApiOperation(value = "과제 공지 정보 수정", notes = "과제 공지 정보 수정")
     @PutMapping("/notices/{id}")
-    public Response<Notice> updateNotice(@PathVariable("id") Long id, @RequestBody NoticeDto noticeDto) throws Exception {
+    public Response<Notice> updateNotice(@PathVariable("id") Long id, @RequestBody NoticeDto noticeDto) {
         Notice notice = noticeService.updateNotice(id, noticeDto);
         return Response.ok(notice);
     }

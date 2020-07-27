@@ -26,7 +26,7 @@ public class AssignmentFileApiController {
 
     @ApiOperation(value = "파일 생성", notes = "파일 생성")
     @PostMapping("/assignment_files")
-    public Response<List<AssignmentFile>> createAssignmentFile(@RequestBody List<AssignmentFileDto> assignmentFileDtoList) throws Exception {
+    public Response<List<AssignmentFile>> createAssignmentFile(@RequestBody List<AssignmentFileDto> assignmentFileDtoList) {
         return Response.ok(assignmentFileService.createAssignmentFile(assignmentFileDtoList));
     }
 
@@ -38,7 +38,7 @@ public class AssignmentFileApiController {
 
     @ApiOperation(value = "파일 정보 수정", notes = "파일 정보 수정")
     @PutMapping("/assignment_files/{id}")
-    public Response<AssignmentFile> updateAssignmentFile(@PathVariable("id") Long id, @RequestBody AssignmentFileDto assignmentFileDto) throws Exception {
+    public Response<AssignmentFile> updateAssignmentFile(@PathVariable("id") Long id, @RequestBody AssignmentFileDto assignmentFileDto) {
         AssignmentFile assignmentFile = assignmentFileService.updateAssignmentFile(id, assignmentFileDto);
         return Response.ok(assignmentFile);
     }

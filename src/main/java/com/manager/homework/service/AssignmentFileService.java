@@ -29,7 +29,7 @@ public class AssignmentFileService {
         return assignmentFileRepositorySupport.findByCondition(assignmentFileDto);
     }
 
-    public List<AssignmentFile> createAssignmentFile(List<AssignmentFileDto> assignmentFileDtoList) throws Exception {
+    public List<AssignmentFile> createAssignmentFile(List<AssignmentFileDto> assignmentFileDtoList) {
         return assignmentFileRepository.saveAll(convertToEntity(assignmentFileDtoList));
     }
 
@@ -38,7 +38,7 @@ public class AssignmentFileService {
         return fileEntityWrapper.get();
     }
 
-    public AssignmentFile updateAssignmentFile(Long id, AssignmentFileDto assignmentFileDto) throws Exception {
+    public AssignmentFile updateAssignmentFile(Long id, AssignmentFileDto assignmentFileDto) {
         Optional<AssignmentFile> fileEntityWrapper = assignmentFileRepository.findById(id);
         AssignmentFile assignmentFile = fileEntityWrapper.get();
         assignmentFile.setType(assignmentFileDto.getType());

@@ -39,7 +39,7 @@ public class UserApiController {
 
     @ApiOperation(value = "사용자 정보 수정", notes = "특정 사용자 정보 수정")
     @PutMapping("/users/{id}")
-    public Response<User> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) throws Exception {
+    public Response<User> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         return Response.ok(userService.updateUser(id, userDto));
     }
 
@@ -52,7 +52,7 @@ public class UserApiController {
 
     @ApiOperation(value = "로그인", notes = "로그인")
     @PostMapping("/login")
-    public Response<User> loginUser(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
+    public Response<User> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
         String email = loginRequestDto.getEmail();
         String password = loginRequestDto.getPassword();
 

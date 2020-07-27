@@ -25,7 +25,7 @@ public class UserService {
         return userRepositorySupport.findByCondition(userDto);
     }
 
-    public User createUser(UserDto userDto) throws Exception {
+    public User createUser(UserDto userDto) {
         if (isExistUser(userDto.getEmail())) {
             throw new CustomException(ErrorCode.EMAIL_DUPLICATION);
         }
@@ -38,7 +38,7 @@ public class UserService {
         return userEntityWrapper.get();
     }
 
-    public User updateUser(Long id, UserDto userDto) throws Exception {
+    public User updateUser(Long id, UserDto userDto) {
         if (isExistUser(userDto.getEmail())) {
             throw new CustomException(ErrorCode.EMAIL_DUPLICATION);
         }
@@ -58,7 +58,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User loginUser(String email, String password) throws Exception {
+    public User loginUser(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new CustomException(ErrorCode.LOGIN_USER_NONE);
