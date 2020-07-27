@@ -24,10 +24,10 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
 
         return queryFactory
                 .select(Projections.fields(SubjectDto.class,
-                        subject.id,
-                        subject.name,
-                        user.id,
-                        user.name
+                        subject.id.as("subjectId"),
+                        subject.name.as("subjectName"),
+                        user.id.as("userId"),
+                        user.name.as("userName")
                 ))
                 .from(subject)
                 .join(user).on(subject.user.id.eq(user.id))

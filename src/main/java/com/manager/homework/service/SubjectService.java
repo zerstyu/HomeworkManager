@@ -21,60 +21,36 @@ public class SubjectService {
     private final UserRepository userRepository;
 
     public List<SubjectDto> getSubjectList(Long userId) {
-//        querydsl test
-        List<SubjectDto> subjectDtoList = subjectRepository.selectSubjectList(userId);
-        subjectDtoList.forEach(System.out::println);
-
-//        List<Subject> subjectList = subjectRepository.findByUserId(userId);
-
-//        List<SubjectDto> subjectDtoList = Lists.newArrayList();
-//
-//        subjectList.forEach(
-//                it -> subjectDtoList.add(
-//                        SubjectDto.builder()
-//                                .subjectId(it.getId())
-//                                .userId(userId)
-//                                .name(it.getName())
-//                                .build()));
-
-        return subjectDtoList;
+        return subjectRepository.selectSubjectList(userId);
     }
 
     public void createSubject(SubjectDto subjectDto) {
-        if (isExistSubject(subjectDto.getUserId(), subjectDto.getSubjectName())) {
-            throw new CustomException(ErrorCode.SUBJECT_DUPLICATION);
-        }
         subjectRepository.save(convertToEntity(subjectDto));
     }
 
-    private Subject convertToEntity(SubjectDto subjectDto) {
-        User userEntityWrapper = userRepository.findById(subjectDto.getUserId())
-                .orElseThrow(() -> new CustomException(ErrorCode.LOGIN_USER_NONE));
-        log.info("userEntityWrapper = {}", userEntityWrapper);
-        return Subject.builder()
-                .user(userEntityWrapper)
-                .name(subjectDto.getSubjectName())
-                .build();
-    }
-
     public void updateSubject(SubjectDto subjectDto) {
-        if (isExistSubject(subjectDto.getUserId(), subjectDto.getSubjectName())) {
-            throw new CustomException(ErrorCode.SUBJECT_CHANGE_DUPLICATION);
-        }
-        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getSubjectName());
+        Subject subject = checkSubject(subjectDto.getSubjectId());
         subject.setName(subjectDto.getSubjectName());
         subjectRepository.save(subject);
     }
 
     public void deleteSubject(SubjectDto subjectDto) {
-        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getSubjectName());
-        if (subject == null) {
-            throw new CustomException(ErrorCode.SUBJECT_REMOVE_NONE);
-        }
-        subjectRepository.delete(subject);
+        checkSubject(subjectDto.getSubjectId());
+        subjectRepository.deleteById(subjectDto.getSubjectId());
     }
 
-    public boolean isExistSubject(Long userId, String name) {
-        return subjectRepository.existsByUserIdAndName(userId, name);
+    private Subject checkSubject(Long subjectId) {
+        return subjectRepository.findById(subjectId).orElseThrow(
+                () -> new CustomException(ErrorCode.SUBJECT_NONE));
+    }
+
+    private Subject convertToEntity(SubjectDto subjectDto) {
+        User user = userRepository.findById(subjectDto.getUserId())
+                .orElseThrow(() -> new CustomException(ErrorCode.LOGIN_USER_NONE));
+
+        return Subject.builder()
+                .user(user)
+                .name(subjectDto.getSubjectName())
+                .build();
     }
 }

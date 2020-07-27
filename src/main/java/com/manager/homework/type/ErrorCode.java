@@ -19,9 +19,7 @@ public enum ErrorCode {
     LOGIN_FAIL("U004", "로그인이 실패하였습니다."),
 
     // Subject
-    SUBJECT_DUPLICATION("S001", "동일한 과목이 존재합니다."),
-    SUBJECT_CHANGE_DUPLICATION("S002", "변경하려는 과목이 존재합니다."),
-    SUBJECT_REMOVE_NONE("S003", "삭제하려는 과목이 없습니다.");
+    SUBJECT_NONE("S002", "과목이 존재하지 않습니다.");
 
     private final String code;
     private final String message;
