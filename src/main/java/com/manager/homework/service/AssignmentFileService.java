@@ -1,5 +1,6 @@
 package com.manager.homework.service;
 
+import com.google.common.collect.Lists;
 import com.manager.homework.domain.Assignment;
 import com.manager.homework.domain.AssignmentFile;
 import com.manager.homework.domain.User;
@@ -28,8 +29,8 @@ public class AssignmentFileService {
         return assignmentFileRepositorySupport.findByCondition(assignmentFileDto);
     }
 
-    public void createAssignmentFile(AssignmentFileDto assignmentFileDto) throws Exception {
-        assignmentFileRepository.save(convertToEntity(assignmentFileDto));
+    public List<AssignmentFile> createAssignmentFile(List<AssignmentFileDto> assignmentFileDtoList) throws Exception {
+        return assignmentFileRepository.saveAll(convertToEntity(assignmentFileDtoList));
     }
 
     public AssignmentFile getAssignmentFile(Long id) {
@@ -48,7 +49,7 @@ public class AssignmentFileService {
         Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
         assignmentFile.setAssignment(assignmentEntityWrapper.get());
 
-        assignmentFile.setBase64Str(assignmentFileDto.getBase64Str());
+        assignmentFile.setFileString(assignmentFileDto.getFileString());
 
         assignmentFileRepository.save(assignmentFile);
         return assignmentFile;
@@ -58,15 +59,21 @@ public class AssignmentFileService {
         assignmentFileRepository.deleteById(id);
     }
 
-    private AssignmentFile convertToEntity(AssignmentFileDto assignmentFileDto) {
-        Optional<User> userEntityWrapper = userRepository.findById(assignmentFileDto.getUserId());
-        Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
+    private List<AssignmentFile> convertToEntity(List<AssignmentFileDto> assignmentFileDtoList) {
+        List<AssignmentFile> assignmentFileList = Lists.newArrayList();
+        for (AssignmentFileDto assignmentFileDto : assignmentFileDtoList) {
+            Optional<User> userEntityWrapper = userRepository.findById(assignmentFileDto.getUserId());
+            Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
 
-        return AssignmentFile.builder()
-                .type(assignmentFileDto.getType())
-                .user(userEntityWrapper.get())
-                .assignment(assignmentEntityWrapper.get())
-                .base64Str(assignmentFileDto.getBase64Str())
-                .build();
+            AssignmentFile assignmentFile = AssignmentFile.builder()
+                    .type(assignmentFileDto.getType())
+                    .user(userEntityWrapper.get())
+                    .assignment(assignmentEntityWrapper.get())
+                    .fileString(assignmentFileDto.getFileString())
+                    .build();
+
+            assignmentFileList.add(assignmentFile);
+        }
+        return assignmentFileList;
     }
 }

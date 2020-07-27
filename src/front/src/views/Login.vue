@@ -72,7 +72,7 @@
                     회원가입에 성공하였습니다.
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="goLoginPage()" href="/#/login">로그인 하러가기</base-button>
+                    <base-button type="primary" @click="goLoginPage()" href="/login">로그인 하러가기</base-button>
                     <!--base-button type="primary">Save changes</base-button-->
                 </template>
             </modal>
@@ -108,7 +108,15 @@ export default {
                 .then(function(response){
 
                     if(response.data.statusCode == 'OK'){
-                        location.href='/#/homeworkManage';
+                        location.href='#';
+
+                        localStorage.setItem('userId', response.data.data.id);
+                        localStorage.setItem('userEmail', response.data.data.email);
+                        localStorage.setItem('userName', response.data.data.name);
+                        localStorage.setItem('userGroupName', response.data.data.groupName);
+
+                        //location.href='/#/homeworkManage';
+                        vm.$router.push({ path: 'homeworkManage' });
                         vm.modals2 = true;
                     }
                     else{

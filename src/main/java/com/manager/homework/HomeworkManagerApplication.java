@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
+    private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
     private final AssignmentFileRepository assignmentFileRepository;
 
@@ -26,18 +28,22 @@ public class HomeworkManagerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        userRepository.saveAll(getUserList());
-        subjectRepository.saveAll(getSubjectList());
-        noticeRepository.saveAll(getNoticeList());
-        assignmentRepository.saveAll(getAssignmentList());
-        assignmentFileRepository.saveAll(getFileList());
+        List<User> userList = userRepository.saveAll(getUserList());
+        List<Subject> subjectList = subjectRepository.saveAll(getSubjectList(userList));
+        List<Notice> noticeList = noticeRepository.saveAll(getNoticeList(subjectList));
+        noticeFileRepository.saveAll(getNoticeFileList(noticeList));
+        List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
+        assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
     }
 
     private List<User> getUserList(){
         List userList = Lists.newArrayList();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode("admin");
+
         User user = User.builder()
                 .email("admin")
-                .password("admin")
+                .password(password)
                 .name("admin")
                 .groupName("HomeworkManager")
                 .build();
@@ -52,29 +58,29 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return userList;
     }
 
-    private List<Subject> getSubjectList(){
+    private List<Subject> getSubjectList(List<User> userList){
         List subjectList = Lists.newArrayList();
         Subject subject = Subject.builder()
-                .user(getUserList().get(0))
+                .user(userList.get(0))
                 .name("수학")
                 .build();
         subjectList.add(subject);
         return subjectList;
     }
 
-    private List<Notice> getNoticeList(){
+    private List<Notice> getNoticeList(List<Subject> subjectList){
         List noticeList = Lists.newArrayList();
         Notice notice = Notice.builder()
-                .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
                 .title("수학 1번 과제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .build();
         noticeList.add(notice);
 
         Notice notice2 = Notice.builder()
-                .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
                 .title("국어 1번 과제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .build();
@@ -82,12 +88,12 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return noticeList;
     }
 
-    private List<Assignment> getAssignmentList(){
+    private List<Assignment> getAssignmentList(List<Notice> noticeList){
         List assignmentList = Lists.newArrayList();
         Assignment assignment = Assignment.builder()
-                .user(getUserList().get(0))
-                .subject(getSubjectList().get(0))
-                .notice(getNoticeList().get(0))
+                .user(noticeList.get(0).getUser())
+                .subject(noticeList.get(0).getSubject())
+                .notice(noticeList.get(0))
                 .feedback("답안을 더 자세하게 써주세요. ")
                 .grade("B")
                 .build();
@@ -95,21 +101,31 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return assignmentList;
     }
 
-    private List<AssignmentFile> getFileList(){
+    private List<AssignmentFile> getAssignmentFileList(List<Assignment> assignmentList){
         List fileList = Lists.newArrayList();
         AssignmentFile originalAssignmentFile = AssignmentFile.builder()
                 .type(FileType.ORIGINAL)
-                .user(getUserList().get(0))
-                .assignment(getAssignmentList().get(0))
+                .user(assignmentList.get(0).getUser())
+                .assignment(assignmentList.get(0))
                 .build();
         fileList.add(originalAssignmentFile);
 
         AssignmentFile modifiedAssignmentFile = AssignmentFile.builder()
                 .type(FileType.MODIFIED)
-                .user(getUserList().get(0))
-                .assignment(getAssignmentList().get(0))
+                .user(assignmentList.get(0).getUser())
+                .assignment(assignmentList.get(0))
                 .build();
         fileList.add(modifiedAssignmentFile);
+        return fileList;
+    }
+
+    private List<NoticeFile> getNoticeFileList(List<Notice> noticeList){
+        List fileList = Lists.newArrayList();
+        NoticeFile noticeFile = NoticeFile.builder()
+                .user(noticeList.get(0).getUser())
+                .notice(noticeList.get(0))
+                .build();
+        fileList.add(noticeFile);
         return fileList;
     }
 }

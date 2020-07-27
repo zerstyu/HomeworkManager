@@ -8,5 +8,5 @@ public class AssignmentFileDto {
     private FileType type;
     private Long userId;
     private Long assignmentId;
-    private String base64Str;
+    private String fileString;
 }

@@ -11,25 +11,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "assignments")
+@Table(name = "notice_files")
 @Data
-// 과제 공지
-public class Assignment extends BaseEntity {
+// 과제 공지사항 파일
+public class NoticeFile extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "SUBJECT_ID")
-    private Subject subject;
-
-    @ManyToOne
     @JoinColumn(name = "NOTICE_ID")
     private Notice notice;
 
+    @Lob
     @Column
-    private String feedback;
-
-    @Column
-    private String grade;
+    private String fileString;
 }

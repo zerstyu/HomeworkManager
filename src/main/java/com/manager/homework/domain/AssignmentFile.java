@@ -12,22 +12,22 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "files")
+@Table(name = "assignment_files")
 @Data
 // 제출한 파일
 public class AssignmentFile extends BaseEntity {
     @Column
     private FileType type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ASSIGNMENT_ID")
     private Assignment assignment;
 
     @Lob
     @Column
-    private String base64Str;
+    private String fileString;
 }
