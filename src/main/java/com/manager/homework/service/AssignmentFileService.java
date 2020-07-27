@@ -49,7 +49,7 @@ public class AssignmentFileService {
         Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
         assignmentFile.setAssignment(assignmentEntityWrapper.get());
 
-        assignmentFile.setBase64Str(assignmentFileDto.getBase64Str());
+        assignmentFile.setFileString(assignmentFileDto.getFileString());
 
         assignmentFileRepository.save(assignmentFile);
         return assignmentFile;
@@ -69,7 +69,7 @@ public class AssignmentFileService {
                     .type(assignmentFileDto.getType())
                     .user(userEntityWrapper.get())
                     .assignment(assignmentEntityWrapper.get())
-                    .base64Str(assignmentFileDto.getBase64Str())
+                    .fileString(assignmentFileDto.getFileString())
                     .build();
 
             assignmentFileList.add(assignmentFile);

@@ -6,5 +6,5 @@ import lombok.Data;
 public class NoticeFileDto {
     private Long userId;
     private Long noticeId;
-    private String base64Str;
+    private String fileString;
 }

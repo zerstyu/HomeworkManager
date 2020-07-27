@@ -29,5 +29,5 @@ public class AssignmentFile extends BaseEntity {
 
     @Lob
     @Column
-    private String base64Str;
+    private String fileString;
 }

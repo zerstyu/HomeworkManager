@@ -80,7 +80,7 @@ public class NoticeService {
             NoticeFile noticeFile = NoticeFile.builder()
                     .user(notice.getUser())
                     .notice(notice)
-                    .base64Str(fileString)
+                    .fileString(fileString)
                     .build();
 
             noticeFileList.add(noticeFile);

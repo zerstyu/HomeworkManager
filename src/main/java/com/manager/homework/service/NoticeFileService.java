@@ -46,7 +46,7 @@ public class NoticeFileService {
         Optional<Notice> noticeEntityWrapper = noticeRepository.findById(noticeFileDto.getNoticeId());
         noticeFile.setNotice(noticeEntityWrapper.get());
 
-        noticeFile.setBase64Str(noticeFileDto.getBase64Str());
+        noticeFile.setFileString(noticeFileDto.getFileString());
 
         noticeFileRepository.save(noticeFile);
         return noticeFile;
@@ -65,7 +65,7 @@ public class NoticeFileService {
             NoticeFile noticeFile = NoticeFile.builder()
                     .user(userEntityWrapper.get())
                     .notice(noticeEntityWrapper.get())
-                    .base64Str(noticeFileDto.getBase64Str())
+                    .fileString(noticeFileDto.getFileString())
                     .build();
 
             noticeFileList.add(noticeFile);
