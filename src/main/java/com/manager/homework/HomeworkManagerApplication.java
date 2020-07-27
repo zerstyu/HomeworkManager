@@ -42,6 +42,13 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .groupName("HomeworkManager")
                 .build();
         userList.add(user);
+
+        userList.add(User.builder()
+                .email("chu@naver.com")
+                .password("chu")
+                .name("chu")
+                .groupName("HomeworkManager")
+                .build());
         return userList;
     }
 

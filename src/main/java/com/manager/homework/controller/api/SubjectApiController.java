@@ -27,21 +27,21 @@ public class SubjectApiController {
 
     @ApiOperation(value = "과목 생성", notes = "과목 생성")
     @PostMapping
-    public Response<String> createSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+    public Response<String> createSubject(@RequestBody SubjectDto subjectDto) {
         subjectService.createSubject(subjectDto);
         return Response.ok();
     }
 
     @ApiOperation(value = "과목 수정", notes = "과목 수정")
     @PutMapping
-    public Response<String> updateSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+    public Response<String> updateSubject(@RequestBody SubjectDto subjectDto) {
         subjectService.updateSubject(subjectDto);
         return Response.ok();
     }
 
     @ApiOperation(value = "과목 삭제", notes = "과목 삭제")
     @DeleteMapping
-    public Response<String> deleteSubject(@RequestBody SubjectDto subjectDto) throws Exception {
+    public Response<String> deleteSubject(@RequestBody SubjectDto subjectDto) {
         subjectService.deleteSubject(subjectDto);
         return Response.ok();
     }

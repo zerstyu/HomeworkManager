@@ -12,7 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 public class SubjectDto {
+    private Long subjectId;
+    private String subjectName;
     private Long userId;
-    private String name;
-    private String changeName;
+    private String userName;
 }

@@ -1,6 +1,5 @@
 package com.manager.homework.service;
 
-import com.google.common.collect.Lists;
 import com.manager.homework.domain.Subject;
 import com.manager.homework.domain.User;
 import com.manager.homework.exception.CustomException;
@@ -13,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,49 +21,53 @@ public class SubjectService {
     private final UserRepository userRepository;
 
     public List<SubjectDto> getSubjectList(Long userId) {
-        //querydsl test
-        List<Subject> queryDslList = subjectRepository.selectAll(userId);
-        queryDslList.forEach(System.out::println);
+//        querydsl test
+        List<SubjectDto> subjectDtoList = subjectRepository.selectSubjectList(userId);
+        subjectDtoList.forEach(System.out::println);
 
-        List<Subject> subjectList = subjectRepository.findByUserId(userId);
-        List<SubjectDto> subjectDtoList = Lists.newArrayList();
+//        List<Subject> subjectList = subjectRepository.findByUserId(userId);
 
-        subjectList.forEach(
-                it -> subjectDtoList.add(SubjectDto.builder()
-                        .userId(userId)
-                        .name(it.getName())
-                        .build()));
+//        List<SubjectDto> subjectDtoList = Lists.newArrayList();
+//
+//        subjectList.forEach(
+//                it -> subjectDtoList.add(
+//                        SubjectDto.builder()
+//                                .subjectId(it.getId())
+//                                .userId(userId)
+//                                .name(it.getName())
+//                                .build()));
 
         return subjectDtoList;
     }
 
-    public void createSubject(SubjectDto subjectDto) throws Exception {
-        if (isExistSubject(subjectDto.getUserId(), subjectDto.getName())) {
+    public void createSubject(SubjectDto subjectDto) {
+        if (isExistSubject(subjectDto.getUserId(), subjectDto.getSubjectName())) {
             throw new CustomException(ErrorCode.SUBJECT_DUPLICATION);
         }
         subjectRepository.save(convertToEntity(subjectDto));
     }
 
     private Subject convertToEntity(SubjectDto subjectDto) {
-        Optional<User> userEntityWrapper = userRepository.findById(subjectDto.getUserId());
-
+        User userEntityWrapper = userRepository.findById(subjectDto.getUserId())
+                .orElseThrow(() -> new CustomException(ErrorCode.LOGIN_USER_NONE));
+        log.info("userEntityWrapper = {}", userEntityWrapper);
         return Subject.builder()
-                .user(userEntityWrapper.get())
-                .name(subjectDto.getName())
+                .user(userEntityWrapper)
+                .name(subjectDto.getSubjectName())
                 .build();
     }
 
-    public void updateSubject(SubjectDto subjectDto) throws Exception {
-        if (isExistSubject(subjectDto.getUserId(), subjectDto.getChangeName())) {
+    public void updateSubject(SubjectDto subjectDto) {
+        if (isExistSubject(subjectDto.getUserId(), subjectDto.getSubjectName())) {
             throw new CustomException(ErrorCode.SUBJECT_CHANGE_DUPLICATION);
         }
-        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getName());
-        subject.setName(subjectDto.getChangeName());
+        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getSubjectName());
+        subject.setName(subjectDto.getSubjectName());
         subjectRepository.save(subject);
     }
 
-    public void deleteSubject(SubjectDto subjectDto) throws Exception {
-        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getName());
+    public void deleteSubject(SubjectDto subjectDto) {
+        Subject subject = subjectRepository.findByUserIdAndName(subjectDto.getUserId(), subjectDto.getSubjectName());
         if (subject == null) {
             throw new CustomException(ErrorCode.SUBJECT_REMOVE_NONE);
         }
