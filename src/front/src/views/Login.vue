@@ -115,7 +115,8 @@ export default {
                         localStorage.setItem('userName', response.data.data.name);
                         localStorage.setItem('userGroupName', response.data.data.groupName);
 
-                        location.href='/#/homeworkManage';
+                        //location.href='/#/homeworkManage';
+                        vm.$router.push({ path: 'homeworkManage' });
                         vm.modals2 = true;
                     }
                     else{

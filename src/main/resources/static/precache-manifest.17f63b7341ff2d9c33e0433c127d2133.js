@@ -128,7 +128,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "46b1950ac9337815ca19",
+    "revision": "d6f55e00242ba85dfae5",
     "url": "/css/app.da2e7d67.css"
   },
   {
@@ -204,12 +204,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "3224498f31d04d20cceb7f58db543dbc",
+    "revision": "e64b319988134a4a584667f7a390799e",
     "url": "/index.html"
   },
   {
-    "revision": "46b1950ac9337815ca19",
-    "url": "/js/app.41992c39.js"
+    "revision": "d6f55e00242ba85dfae5",
+    "url": "/js/app.df2403a0.js"
   },
   {
     "revision": "6b622250a213feb403c2",
@@ -224,8 +224,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-vendors.0243d815.js"
   },
   {
-    "revision": "24a91ee413c702138943",
-    "url": "/js/demo.3e658f88.js"
+    "revision": "ef8b1f4bc3b2fde4c0bc",
+    "url": "/js/demo.bbfa9ad2.js"
   },
   {
     "revision": "2c6190eb814d2dd4d454ae170c43c7c2",
