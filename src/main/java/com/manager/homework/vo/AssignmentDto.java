@@ -9,4 +9,5 @@ public class AssignmentDto {
     private Long noticeId;
     private String feedback;
     private String grade;
+    private Boolean isOpen;
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor
@@ -32,4 +33,10 @@ public class Assignment extends BaseEntity {
 
     @Column
     private String grade;
+
+    @Column
+    private Boolean isOpen;
+
+    @Column(name = "EXPIRED_AT")
+    private LocalDate expiredAt;
 }

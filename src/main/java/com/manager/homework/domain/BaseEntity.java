@@ -3,7 +3,7 @@ package com.manager.homework.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
@@ -12,21 +12,19 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED_AT", nullable = false)
-    private Date createdAt;
+    private LocalDateTime  createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "UPDATED_AT", nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onPersist() {
-        this.createdAt = this.updatedAt = new Date();
+        this.createdAt = this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = new Date();
+        this.updatedAt = LocalDateTime.now();
     }
 }
