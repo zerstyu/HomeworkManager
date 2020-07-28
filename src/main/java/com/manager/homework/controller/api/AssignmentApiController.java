@@ -4,6 +4,7 @@ import com.manager.homework.common.Response;
 import com.manager.homework.domain.Assignment;
 import com.manager.homework.service.AssignmentService;
 import com.manager.homework.vo.AssignmentDto;
+import com.manager.homework.vo.AssignmentResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class AssignmentApiController {
 
     @ApiOperation(value = "과제 상세 조회", notes = "과제 상세 조회")
     @GetMapping("/assignments/{id}")
-    public Response<Assignment> getAssignment(@PathVariable("id") Long id) {
+    public Response<AssignmentResponse> getAssignment(@PathVariable("id") Long id) {
         return Response.ok(assignmentService.getAssignment(id));
     }
 

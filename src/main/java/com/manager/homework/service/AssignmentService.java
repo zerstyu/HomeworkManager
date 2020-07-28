@@ -1,15 +1,17 @@
 package com.manager.homework.service;
 
-import com.manager.homework.domain.Assignment;
-import com.manager.homework.domain.Notice;
-import com.manager.homework.domain.Subject;
-import com.manager.homework.domain.User;
+import com.google.common.collect.Lists;
+import com.manager.homework.domain.*;
 import com.manager.homework.repository.*;
 import com.manager.homework.vo.AssignmentDto;
+import com.manager.homework.vo.AssignmentFileResponse;
+import com.manager.homework.vo.AssignmentResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +24,19 @@ public class AssignmentService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
+    private final AssignmentFileRepository assignmentFileRepository;
 
-    public List<Assignment> getAssignmentList(AssignmentDto noticeDto) {
-        return assignmentRepositorySupport.findByCondition(noticeDto);
+    public List<Assignment> getAssignmentList(AssignmentDto assignmentDto) {
+        return assignmentRepositorySupport.findByCondition(assignmentDto);
     }
 
     public Assignment createAssignment(AssignmentDto assignmentDto) {
         return assignmentRepository.save(convertToEntity(assignmentDto));
     }
 
-    public Assignment getAssignment(Long id) {
+    public AssignmentResponse getAssignment(Long id) {
         Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(id);
-        return assignmentEntityWrapper.get();
+        return convertToResponse(assignmentEntityWrapper.get());
     }
 
     public Assignment updateAssignment(Long id, AssignmentDto assignmentDto) {
@@ -70,5 +73,43 @@ public class AssignmentService {
                 .notice(noticeEntityWrapper.get())
                 .feedback(assignmentDto.getFeedback())
                 .build();
+    }
+
+    private AssignmentResponse convertToResponse(Assignment assignment) {
+        AssignmentResponse assignmentResponse = new AssignmentResponse();
+        assignmentResponse.setFeedback(assignment.getFeedback());
+        assignmentResponse.setGrade(assignment.getGrade());
+        assignmentResponse.setIsOpen(assignment.getIsOpen());
+        assignmentResponse.setD_day(convertToDDay(assignment.getExpiredAt()));
+        assignmentResponse.setAssignmentFileList(getFileResponseList(assignment.getId()));
+        return assignmentResponse;
+    }
+
+    private List<AssignmentFileResponse> getFileResponseList(Long assigmentId) {
+        List<AssignmentFileResponse> assignmentFileResponseList = Lists.newArrayList();
+        List<AssignmentFile> assignmentFileList = assignmentFileRepository.findByAssignmentId(assigmentId);
+        for (AssignmentFile assignmentFile : assignmentFileList) {
+            AssignmentFileResponse assignmentFileResponse = new AssignmentFileResponse();
+            assignmentFileResponse.setType(assignmentFile.getType());
+            assignmentFileResponse.setFileString(assignmentFile.getFileString());
+            assignmentFileResponseList.add(assignmentFileResponse);
+        }
+        return assignmentFileResponseList;
+    }
+
+    private String convertToDDay(LocalDate date) {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = date;
+
+        Period period = Period.between(startDate, endDate);
+        int dday = period.getDays();
+
+        if (dday == 0) {
+            return "D-DAY";
+        } else if (dday > 0) {
+            return "D+" + dday;
+        } else {
+            return "D" + dday;
+        }
     }
 }
