@@ -17,6 +17,7 @@ import java.util.List;
 public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final JoinSubjectRepository joinSubjectRepository;
     private final NoticeRepository noticeRepository;
     private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
@@ -30,13 +31,14 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     public void run(String... args) {
         List<User> userList = userRepository.saveAll(getUserList());
         List<Subject> subjectList = subjectRepository.saveAll(getSubjectList(userList));
+        joinSubjectRepository.saveAll(getJoinSubjectList(userList, subjectList));
         List<Notice> noticeList = noticeRepository.saveAll(getNoticeList(subjectList));
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
         assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
     }
 
-    private List<User> getUserList(){
+    private List<User> getUserList() {
         List userList = Lists.newArrayList();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode("admin");
@@ -58,7 +60,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return userList;
     }
 
-    private List<Subject> getSubjectList(List<User> userList){
+    private List<Subject> getSubjectList(List<User> userList) {
         List subjectList = Lists.newArrayList();
         Subject subject = Subject.builder()
                 .user(userList.get(0))
@@ -68,7 +70,19 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return subjectList;
     }
 
-    private List<Notice> getNoticeList(List<Subject> subjectList){
+    private List<JoinSubject> getJoinSubjectList(List<User> userList, List<Subject> subjectList) {
+        List joinSubjectList = Lists.newArrayList();
+        JoinSubject jsonSubject = JoinSubject.builder()
+                .makeUser(userList.get(0))
+                .subject(subjectList.get(0))
+                .user(userList.get(1))
+//                .name("수학")
+                .build();
+        joinSubjectList.add(jsonSubject);
+        return joinSubjectList;
+    }
+
+    private List<Notice> getNoticeList(List<Subject> subjectList) {
         List noticeList = Lists.newArrayList();
         Notice notice = Notice.builder()
                 .user(subjectList.get(0).getUser())
@@ -88,7 +102,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return noticeList;
     }
 
-    private List<Assignment> getAssignmentList(List<Notice> noticeList){
+    private List<Assignment> getAssignmentList(List<Notice> noticeList) {
         List assignmentList = Lists.newArrayList();
         Assignment assignment = Assignment.builder()
                 .user(noticeList.get(0).getUser())
@@ -101,7 +115,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return assignmentList;
     }
 
-    private List<AssignmentFile> getAssignmentFileList(List<Assignment> assignmentList){
+    private List<AssignmentFile> getAssignmentFileList(List<Assignment> assignmentList) {
         List fileList = Lists.newArrayList();
         AssignmentFile originalAssignmentFile = AssignmentFile.builder()
                 .type(FileType.ORIGINAL)
@@ -119,7 +133,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return fileList;
     }
 
-    private List<NoticeFile> getNoticeFileList(List<Notice> noticeList){
+    private List<NoticeFile> getNoticeFileList(List<Notice> noticeList) {
         List fileList = Lists.newArrayList();
         NoticeFile noticeFile = NoticeFile.builder()
                 .user(noticeList.get(0).getUser())

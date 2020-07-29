@@ -6,12 +6,11 @@ import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.repository.UserRepository;
 import com.manager.homework.type.ErrorCode;
+import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -20,8 +19,8 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
 
-    public List<SubjectDto> getSubjectList(Long userId) {
-        return subjectRepository.selectSubjectList(userId);
+    public SearchSubjectDto getSubjectList(Long userId) {
+        return subjectRepository.selectAllSubjectList(userId);
     }
 
     public void createSubject(SubjectDto subjectDto) {
