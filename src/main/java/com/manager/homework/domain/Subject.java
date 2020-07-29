@@ -25,7 +25,7 @@ public class Subject extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private String inviteUrl;
+    private String inviteCode;
 
     public static SubjectDto toDto(Subject entity) {
         return new ModelMapper().map(entity, SubjectDto.class);

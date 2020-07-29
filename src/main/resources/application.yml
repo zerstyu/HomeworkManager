@@ -40,9 +40,6 @@ logging:
             sql:
               BasicBinder: TRACE
 
-subject:
-  inviteUrl: http://localhost:3000/invite/
-
 ---
 
 spring:

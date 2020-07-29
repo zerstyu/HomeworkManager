@@ -83,13 +83,13 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         subjectList.add(Subject.builder()
                 .user(userList.get(0))
                 .name("수학")
-                .inviteUrl("http://localhost:3000/invite/aaa")
+                .inviteCode("aaaaabbbbb")
                 .build());
 
         subjectList.add(Subject.builder()
                 .user(userList.get(2))
                 .name("국어")
-                .inviteUrl("http://localhost:3000/invite/bbb")
+                .inviteCode("cccccddddd")
                 .build());
 
         return subjectList;
