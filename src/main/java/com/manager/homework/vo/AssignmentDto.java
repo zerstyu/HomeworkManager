@@ -8,6 +8,7 @@ public class AssignmentDto {
     private Long subjectId;
     private Long noticeId;
     private String feedback;
-    private String grade;
+    private Integer score;
     private Boolean isOpen;
+    private String note;
 }

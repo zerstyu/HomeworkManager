@@ -7,10 +7,14 @@ import com.manager.homework.domain.Subject;
 import com.manager.homework.domain.User;
 import com.manager.homework.repository.*;
 import com.manager.homework.vo.NoticeDto;
+import com.manager.homework.vo.NoticeFileResponse;
+import com.manager.homework.vo.NoticeResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +27,14 @@ public class NoticeService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final NoticeFileRepository noticeFileRepository;
-    private final NoticeFileService noticeFileService;
 
-    public List<Notice> getNoticeList(NoticeDto noticeDto) {
-        return noticeRepositorySupport.findByCondition(noticeDto);
+    public List<NoticeResponse> getNoticeList(NoticeDto noticeDto) {
+        List<NoticeResponse> noticeResponseList = Lists.newArrayList();
+        List<Notice> noticeList = noticeRepositorySupport.findByCondition(noticeDto);
+        for (Notice notice : noticeList) {
+            noticeResponseList.add(convertToResponse(notice));
+        }
+        return noticeResponseList;
     }
 
     public Notice createNotice(NoticeDto noticeDto) {
@@ -36,9 +44,9 @@ public class NoticeService {
         return notice;
     }
 
-    public Notice getNotice(Long id) {
+    public NoticeResponse getNotice(Long id) {
         Optional<Notice> noticeEntityWrapper = noticeRepository.findById(id);
-        return noticeEntityWrapper.get();
+        return convertToResponse(noticeEntityWrapper.get());
     }
 
     public Notice updateNotice(Long id, NoticeDto noticeDto) {
@@ -67,10 +75,13 @@ public class NoticeService {
         Optional<Subject> subjectEntityWrapper = subjectRepository.findById(noticeDto.getSubjectId());
 
         return Notice.builder()
+                .type(noticeDto.getType())
                 .user(userEntityWrapper.get())
                 .subject(subjectEntityWrapper.get())
                 .title(noticeDto.getTitle())
                 .content(noticeDto.getContent())
+                .expiredAt(noticeDto.getExpiredAt())
+                .status(noticeDto.getStatus())
                 .build();
     }
 
@@ -86,5 +97,44 @@ public class NoticeService {
             noticeFileList.add(noticeFile);
         }
         return noticeFileList;
+    }
+
+    private NoticeResponse convertToResponse(Notice notice) {
+        NoticeResponse noticeResponse = new NoticeResponse();
+        noticeResponse.setTitle(notice.getTitle());
+        noticeResponse.setContent(notice.getContent());
+        noticeResponse.setD_day(convertToDDay(notice.getExpiredAt()));
+        noticeResponse.setType(notice.getType());
+        noticeResponse.setStatus(notice.getStatus());
+        List<NoticeFile> noticeFileList = noticeFileRepository.findByNoticeId(notice.getId());
+        List<NoticeFileResponse> noticeFileResponseList = Lists.newArrayList();
+        for (NoticeFile noticeFile : noticeFileList) {
+            noticeFileResponseList.add(convertToResponse(noticeFile));
+        }
+        noticeResponse.setNoticeFileResponseList(noticeFileResponseList);
+        return noticeResponse;
+    }
+
+    private NoticeFileResponse convertToResponse(NoticeFile noticeFile){
+        NoticeFileResponse noticeFileResponse = new NoticeFileResponse();
+        noticeFileResponse.setId(noticeFile.getId());
+        noticeFileResponse.setFileString(noticeFile.getFileString());
+        return noticeFileResponse;
+    }
+
+    private String convertToDDay(LocalDate date) {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = date;
+
+        Period period = Period.between(startDate, endDate);
+        int dday = period.getDays();
+
+        if (dday == 0) {
+            return "D-DAY";
+        } else if (dday > 0) {
+            return "D+" + dday;
+        } else {
+            return "D" + dday;
+        }
     }
 }

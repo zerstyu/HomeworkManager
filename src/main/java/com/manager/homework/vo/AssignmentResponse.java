@@ -6,9 +6,10 @@ import java.util.List;
 
 @Data
 public class AssignmentResponse {
+    private Long assignmentId;
     private String feedback;
-    private String grade;
+    private int score;
     private Boolean isOpen;
-    private String d_day;
+    private String note;
     private List<AssignmentFileResponse> assignmentFileList;
 }

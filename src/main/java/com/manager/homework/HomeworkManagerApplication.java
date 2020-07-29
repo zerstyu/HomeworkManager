@@ -5,6 +5,8 @@ import com.manager.homework.domain.*;
 import com.manager.homework.repository.*;
 import com.manager.homework.type.FileType;
 import com.manager.homework.type.Gender;
+import com.manager.homework.type.NoticeStatus;
+import com.manager.homework.type.NoticeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -90,18 +92,24 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private List<Notice> getNoticeList(List<Subject> subjectList) {
         List noticeList = Lists.newArrayList();
         Notice notice = Notice.builder()
+                .type(NoticeType.OPEN)
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(0))
+                .status(NoticeStatus.PROGRESS)
                 .title("수학 1번 과제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
                 .build();
         noticeList.add(notice);
 
         Notice notice2 = Notice.builder()
+                .type(NoticeType.PRIVATE)
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(0))
+                .status(NoticeStatus.PENDING)
                 .title("국어 1번 과제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(5))
                 .build();
         noticeList.add(notice2);
         return noticeList;
@@ -114,8 +122,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .subject(noticeList.get(0).getSubject())
                 .notice(noticeList.get(0))
                 .feedback("답안을 더 자세하게 써주세요. ")
-                .grade("B")
-                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
+                .score(75)
                 .isOpen(true)
                 .build();
         assignmentList.add(assignment);

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor
@@ -32,11 +31,11 @@ public class Assignment extends BaseEntity {
     private String feedback;
 
     @Column
-    private String grade;
+    private int score;
 
     @Column
     private Boolean isOpen;
 
-    @Column(name = "EXPIRED_AT")
-    private LocalDate expiredAt;
+    @Column
+    private String note;
 }

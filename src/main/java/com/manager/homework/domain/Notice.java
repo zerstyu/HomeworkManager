@@ -1,5 +1,6 @@
 package com.manager.homework.domain;
 
+import com.manager.homework.type.NoticeStatus;
 import com.manager.homework.type.NoticeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Builder
 @AllArgsConstructor
@@ -28,8 +30,14 @@ public class Notice extends BaseEntity {
     private Subject subject;
 
     @Column
+    private NoticeStatus status;
+
+    @Column
     private String title;
 
     @Column
     private String content;
+
+    @Column(name = "EXPIRED_AT")
+    private LocalDate expiredAt;
 }

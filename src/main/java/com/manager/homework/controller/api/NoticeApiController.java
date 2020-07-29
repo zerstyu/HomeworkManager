@@ -4,6 +4,7 @@ import com.manager.homework.common.Response;
 import com.manager.homework.domain.Notice;
 import com.manager.homework.service.NoticeService;
 import com.manager.homework.vo.NoticeDto;
+import com.manager.homework.vo.NoticeResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class NoticeApiController {
 
     @ApiOperation(value = "과제 공지 리스트 조회", notes = "과제 공지 리스트 조회")
     @GetMapping("/notices")
-    public Response<List<Notice>> getNoticeList(NoticeDto noticeDto) {
+    public Response<List<NoticeResponse>> getNoticeList(NoticeDto noticeDto) {
         return Response.ok(noticeService.getNoticeList(noticeDto));
     }
 
@@ -32,7 +33,7 @@ public class NoticeApiController {
 
     @ApiOperation(value = "과제 공지 상세 조회", notes = "과제 공지 상세 조회")
     @GetMapping("/notices/{id}")
-    public Response<Notice> getNotice(@PathVariable("id") Long id) {
+    public Response<NoticeResponse> getNotice(@PathVariable("id") Long id) {
         return Response.ok(noticeService.getNotice(id));
     }
 
