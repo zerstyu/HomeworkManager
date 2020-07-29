@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import com.manager.homework.domain.*;
 import com.manager.homework.repository.*;
 import com.manager.homework.type.FileType;
+import com.manager.homework.type.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,7 +19,6 @@ import java.util.List;
 public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
-    private final JoinSubjectRepository joinSubjectRepository;
     private final NoticeRepository noticeRepository;
     private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
@@ -31,7 +32,6 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     public void run(String... args) {
         List<User> userList = userRepository.saveAll(getUserList());
         List<Subject> subjectList = subjectRepository.saveAll(getSubjectList(userList));
-        joinSubjectRepository.saveAll(getJoinSubjectList(userList, subjectList));
         List<Notice> noticeList = noticeRepository.saveAll(getNoticeList(subjectList));
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
@@ -48,6 +48,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .password(password)
                 .name("admin")
                 .groupName("HomeworkManager")
+                .birthday(LocalDate.of(1989, 8, 12))
+                .gender(Gender.MAN)
                 .build();
         userList.add(user);
 
@@ -56,6 +58,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .password("chu")
                 .name("chu")
                 .groupName("HomeworkManager")
+                .birthday(LocalDate.of(1989, 11, 10))
+                .gender(Gender.MAN)
                 .build());
         return userList;
     }
@@ -110,6 +114,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .notice(noticeList.get(0))
                 .feedback("답안을 더 자세하게 써주세요. ")
                 .grade("B")
+                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
+                .isOpen(true)
                 .build();
         assignmentList.add(assignment);
         return assignmentList;
