@@ -63,8 +63,8 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <h1 class="text-white">환영합니다!</h1>
-                            <p class="text-lead text-white">로그인/회원가입을 해주세요</p>
+                            <h1 class="text-white">Welcome!</h1>
+                            <p class="text-lead text-white">모두의숙제에 오신것을 환영합니다!</p>
                         </div>
                     </div>
                 </div>

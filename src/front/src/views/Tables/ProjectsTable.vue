@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" id="notiTable">
       <base-table class="table align-items-center table-flush"
                   :class="type === 'dark' ? 'table-dark': ''"
                   :thead-classes="type === 'dark' ? 'thead-dark': 'thead-light'"
