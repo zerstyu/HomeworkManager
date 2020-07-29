@@ -19,6 +19,7 @@ import java.util.List;
 public class HomeworkManagerApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final JoinSubjectRepository joinSubjectRepository;
     private final NoticeRepository noticeRepository;
     private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
@@ -32,6 +33,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     public void run(String... args) {
         List<User> userList = userRepository.saveAll(getUserList());
         List<Subject> subjectList = subjectRepository.saveAll(getSubjectList(userList));
+        joinSubjectRepository.saveAll(getJoinSubjectList(userList, subjectList));
         List<Notice> noticeList = noticeRepository.saveAll(getNoticeList(subjectList));
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
@@ -80,7 +82,6 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .makeUser(userList.get(0))
                 .subject(subjectList.get(0))
                 .user(userList.get(1))
-//                .name("수학")
                 .build();
         joinSubjectList.add(jsonSubject);
         return joinSubjectList;
