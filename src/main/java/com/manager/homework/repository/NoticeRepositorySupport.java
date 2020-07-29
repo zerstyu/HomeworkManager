@@ -34,6 +34,14 @@ public class NoticeRepositorySupport extends QuerydslRepositorySupport {
             builder.and(notice.title.contains(noticeDto.getTitle()));
         }
 
+        if (noticeDto.getType() != null) {
+            builder.and(notice.type.eq(noticeDto.getType()));
+        }
+
+        if (noticeDto.getStatus() != null) {
+            builder.and(notice.status.eq(noticeDto.getStatus()));
+        }
+
         return queryFactory.selectFrom(notice)
                 .where(builder)
                 .fetch();

@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +51,9 @@ public class AssignmentService {
         assignment.setNotice(noticeEntityWrapper.get());
 
         assignment.setFeedback(assignmentDto.getFeedback());
+        assignment.setIsOpen(assignmentDto.getIsOpen());
+        assignment.setScore(assignmentDto.getScore());
+        assignment.setNote(assignmentDto.getNote());
 
         assignmentRepository.save(assignment);
         return assignment;
@@ -72,15 +73,18 @@ public class AssignmentService {
                 .subject(subjectEntityWrapper.get())
                 .notice(noticeEntityWrapper.get())
                 .feedback(assignmentDto.getFeedback())
+                .isOpen(assignmentDto.getIsOpen())
+                .score(assignmentDto.getScore())
+                .note(assignmentDto.getNote())
                 .build();
     }
 
     private AssignmentResponse convertToResponse(Assignment assignment) {
         AssignmentResponse assignmentResponse = new AssignmentResponse();
         assignmentResponse.setFeedback(assignment.getFeedback());
-        assignmentResponse.setGrade(assignment.getGrade());
+        assignmentResponse.setScore(assignment.getScore());
         assignmentResponse.setIsOpen(assignment.getIsOpen());
-        assignmentResponse.setD_day(convertToDDay(assignment.getExpiredAt()));
+        assignmentResponse.setNote(assignment.getNote());
         assignmentResponse.setAssignmentFileList(getFileResponseList(assignment.getId()));
         return assignmentResponse;
     }
@@ -90,26 +94,11 @@ public class AssignmentService {
         List<AssignmentFile> assignmentFileList = assignmentFileRepository.findByAssignmentId(assigmentId);
         for (AssignmentFile assignmentFile : assignmentFileList) {
             AssignmentFileResponse assignmentFileResponse = new AssignmentFileResponse();
+            assignmentFileResponse.setAssignmentFileId(assignmentFile.getId());
             assignmentFileResponse.setType(assignmentFile.getType());
             assignmentFileResponse.setFileString(assignmentFile.getFileString());
             assignmentFileResponseList.add(assignmentFileResponse);
         }
         return assignmentFileResponseList;
-    }
-
-    private String convertToDDay(LocalDate date) {
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = date;
-
-        Period period = Period.between(startDate, endDate);
-        int dday = period.getDays();
-
-        if (dday == 0) {
-            return "D-DAY";
-        } else if (dday > 0) {
-            return "D+" + dday;
-        } else {
-            return "D" + dday;
-        }
     }
 }
