@@ -1,5 +1,7 @@
 package com.manager.homework.repository;
 
+import com.manager.homework.vo.JoinSubjectDto;
+import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 
+import static com.manager.homework.domain.QJoinSubject.joinSubject;
 import static com.manager.homework.domain.QSubject.subject;
 import static com.manager.homework.domain.QUser.user;
 
@@ -19,19 +23,49 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<SubjectDto> selectSubjectList(Long userId) {
-        log.info("selectSubjectList");
+    public SearchSubjectDto selectAllSubjectList(Long userId) {
+        SearchSubjectDto searchSubjectDto = new SearchSubjectDto();
 
+        searchSubjectDto.setUserId(userId);
+        searchSubjectDto.setUserName(getUserName(userId));
+        searchSubjectDto.setSubjectDtoList(getSubjectDtoList(userId));
+        searchSubjectDto.setJoinSubjectDtoList(getJoinSubjectDtoList(userId));
+
+        return searchSubjectDto;
+    }
+
+    private String getUserName(Long userId) {
+        return Objects.requireNonNull(
+                queryFactory.selectFrom(user)
+                        .where(user.id.eq(userId))
+                        .fetchOne()).getName();
+    }
+
+    private List<SubjectDto> getSubjectDtoList(Long userId) {
         return queryFactory
                 .select(Projections.fields(SubjectDto.class,
                         subject.id.as("subjectId"),
                         subject.name.as("subjectName"),
                         user.id.as("userId"),
-                        user.name.as("userName")
-                ))
+                        user.name.as("userName")))
                 .from(subject)
-                .join(user).on(subject.user.id.eq(user.id))
+                .join(user).on(user.id.eq(subject.user.id))
                 .where(user.id.eq(userId))
+                .fetch();
+    }
+
+    private List<JoinSubjectDto> getJoinSubjectDtoList(Long userId) {
+        return queryFactory
+                .select(Projections.fields(JoinSubjectDto.class,
+                        joinSubject.id.as("joinSubjectId"),
+                        joinSubject.subject.id.as("subjectId"),
+                        subject.name.as("subjectName"),
+                        user.id.as("userId"),
+                        user.name.as("userName")))
+                .from(joinSubject)
+                .join(subject).on(subject.id.eq(joinSubject.subject.id))
+                .join(user).on(user.id.eq(joinSubject.makeUser.id))
+                .where(joinSubject.user.id.eq(userId))
                 .fetch();
     }
 }

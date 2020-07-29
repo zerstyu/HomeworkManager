@@ -74,6 +74,18 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return subjectList;
     }
 
+    private List<JoinSubject> getJoinSubjectList(List<User> userList, List<Subject> subjectList) {
+        List joinSubjectList = Lists.newArrayList();
+        JoinSubject jsonSubject = JoinSubject.builder()
+                .makeUser(userList.get(0))
+                .subject(subjectList.get(0))
+                .user(userList.get(1))
+//                .name("수학")
+                .build();
+        joinSubjectList.add(jsonSubject);
+        return joinSubjectList;
+    }
+
     private List<Notice> getNoticeList(List<Subject> subjectList) {
         List noticeList = Lists.newArrayList();
         Notice notice = Notice.builder()
