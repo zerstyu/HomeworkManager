@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: local
+
+---
+
+spring:
+  profiles: local
   h2:
     console:
       enabled: true
@@ -32,3 +39,8 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+---
+
+spring:
+  profiles: prd

@@ -65,27 +65,51 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .birthday(LocalDate.of(1989, 11, 10))
                 .gender(Gender.MAN)
                 .build());
+
+        userList.add(User.builder()
+                .email("lee@naver.com")
+                .password("lee")
+                .name("lee")
+                .groupName("HomeworkManager")
+                .birthday(LocalDate.of(2000, 11, 10))
+                .gender(Gender.WOMAN)
+                .build());
         return userList;
     }
 
     private List<Subject> getSubjectList(List<User> userList) {
         List subjectList = Lists.newArrayList();
-        Subject subject = Subject.builder()
+
+        subjectList.add(Subject.builder()
                 .user(userList.get(0))
                 .name("수학")
-                .build();
-        subjectList.add(subject);
+                .inviteCode("aaaaabbbbb")
+                .build());
+
+        subjectList.add(Subject.builder()
+                .user(userList.get(2))
+                .name("국어")
+                .inviteCode("cccccddddd")
+                .build());
+
         return subjectList;
     }
 
     private List<JoinSubject> getJoinSubjectList(List<User> userList, List<Subject> subjectList) {
         List joinSubjectList = Lists.newArrayList();
-        JoinSubject jsonSubject = JoinSubject.builder()
-                .makeUser(userList.get(0))
+
+        joinSubjectList.add(JoinSubject.builder()
+//                .makeUser(userList.get(0))
                 .subject(subjectList.get(0))
                 .user(userList.get(1))
-                .build();
-        joinSubjectList.add(jsonSubject);
+                .build());
+
+        joinSubjectList.add(JoinSubject.builder()
+//                .makeUser(userList.get(0))
+                .subject(subjectList.get(0))
+                .user(userList.get(2))
+                .build());
+
         return joinSubjectList;
     }
 

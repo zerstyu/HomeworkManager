@@ -1,6 +1,5 @@
 package com.manager.homework.repository;
 
-import com.manager.homework.vo.JoinSubjectDto;
 import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import com.querydsl.core.types.Projections;
@@ -46,6 +45,7 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
                 .select(Projections.fields(SubjectDto.class,
                         subject.id.as("subjectId"),
                         subject.name.as("subjectName"),
+                        subject.inviteCode.as("inviteCode"),
                         user.id.as("userId"),
                         user.name.as("userName")))
                 .from(subject)
@@ -54,17 +54,18 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
                 .fetch();
     }
 
-    private List<JoinSubjectDto> getJoinSubjectDtoList(Long userId) {
+    private List<SubjectDto> getJoinSubjectDtoList(Long userId) {
         return queryFactory
-                .select(Projections.fields(JoinSubjectDto.class,
+                .select(Projections.fields(SubjectDto.class,
                         joinSubject.id.as("joinSubjectId"),
-                        joinSubject.subject.id.as("subjectId"),
+                        subject.id.as("subjectId"),
                         subject.name.as("subjectName"),
+                        subject.inviteCode.as("inviteCode"),
                         user.id.as("userId"),
                         user.name.as("userName")))
                 .from(joinSubject)
                 .join(subject).on(subject.id.eq(joinSubject.subject.id))
-                .join(user).on(user.id.eq(joinSubject.makeUser.id))
+                .join(user).on(user.id.eq(subject.user.id))
                 .where(joinSubject.user.id.eq(userId))
                 .fetch();
     }
