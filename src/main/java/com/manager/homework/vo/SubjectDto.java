@@ -16,4 +16,5 @@ public class SubjectDto {
     private String subjectName;
     private Long userId;
     private String userName;
+    private String inviteUrl;
 }

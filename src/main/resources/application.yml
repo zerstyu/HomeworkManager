@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: local
+
+---
+
+spring:
+  profiles: local
   h2:
     console:
       enabled: true
@@ -32,3 +39,11 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+subject:
+  inviteUrl: http://localhost:3000/invite/
+
+---
+
+spring:
+  profiles: prd

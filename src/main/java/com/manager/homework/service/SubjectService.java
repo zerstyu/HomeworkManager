@@ -6,11 +6,14 @@ import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.repository.UserRepository;
 import com.manager.homework.type.ErrorCode;
+import com.manager.homework.utils.SubjectUtils;
 import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -19,37 +22,50 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
 
+    private String inviteUrl;
+    private static final int CODE_LENGTH = 10;
+
+    @Value("${subject.inviteUrl}")
+    public void setInviteUrl(String inviteUrl) {
+        this.inviteUrl = inviteUrl;
+    }
+
     public SearchSubjectDto getSubjectList(Long userId) {
         return subjectRepository.selectAllSubjectList(userId);
     }
 
-    public void createSubject(SubjectDto subjectDto) {
-        subjectRepository.save(convertToEntity(subjectDto));
+    public SubjectDto createSubject(Long userId, String subjectName) {
+        return Subject.toDto(
+                subjectRepository.save(
+                        Subject.builder()
+                                .user(getUser(userId))
+                                .name(subjectName)
+                                .inviteUrl(getInviteUrl())
+                                .build()));
     }
 
-    public void updateSubject(SubjectDto subjectDto) {
-        Subject subject = checkSubject(subjectDto.getSubjectId());
-        subject.setName(subjectDto.getSubjectName());
+    public void updateSubject(Long subjectId, String changeSubjectName) {
+        Subject subject = getSubject(subjectId);
+        subject.setName(changeSubjectName);
         subjectRepository.save(subject);
     }
 
-    public void deleteSubject(SubjectDto subjectDto) {
-        checkSubject(subjectDto.getSubjectId());
-        subjectRepository.deleteById(subjectDto.getSubjectId());
+    @Transactional
+    public void deleteSubject(Long subjectId) {
+        subjectRepository.deleteById(subjectId);
     }
 
-    private Subject checkSubject(Long subjectId) {
+    private User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.LOGIN_USER_NONE));
+    }
+
+    private Subject getSubject(Long subjectId) {
         return subjectRepository.findById(subjectId).orElseThrow(
                 () -> new CustomException(ErrorCode.SUBJECT_NONE));
     }
 
-    private Subject convertToEntity(SubjectDto subjectDto) {
-        User user = userRepository.findById(subjectDto.getUserId())
-                .orElseThrow(() -> new CustomException(ErrorCode.LOGIN_USER_NONE));
-
-        return Subject.builder()
-                .user(user)
-                .name(subjectDto.getSubjectName())
-                .build();
+    private String getInviteUrl() {
+        return inviteUrl + SubjectUtils.makeRandomCode(CODE_LENGTH);
     }
 }

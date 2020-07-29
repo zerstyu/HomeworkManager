@@ -19,4 +19,5 @@ public class JoinSubjectDto {
     private String userName;
     private Long makeUserId;
     private Long makeUserName;
+    private String inviteUrl;
 }

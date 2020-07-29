@@ -49,6 +49,8 @@ dependencies {
     compile 'com.querydsl:querydsl-jpa'
     compile 'com.querydsl:querydsl-apt'
 
+    compile 'org.modelmapper:modelmapper:2.3.0'
+
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     runtimeOnly 'com.h2database:h2'
