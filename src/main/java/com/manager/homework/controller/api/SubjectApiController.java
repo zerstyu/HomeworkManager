@@ -31,15 +31,15 @@ public class SubjectApiController {
     }
 
     @ApiOperation(value = "과목 수정", notes = "특정 과목 수정")
-    @PutMapping("/{subject_id}")
-    public Response<String> updateSubject(@PathVariable("subject_id") Long subjectId, @RequestBody String changeSubjectName) {
+    @PutMapping("/{id}")
+    public Response<String> updateSubject(@PathVariable("id") Long subjectId, @RequestBody String changeSubjectName) {
         subjectService.updateSubject(subjectId, changeSubjectName);
         return Response.ok();
     }
 
     @ApiOperation(value = "과목 삭제", notes = "특정 과목 삭제")
-    @DeleteMapping("/{subject_id}")
-    public Response<String> deleteSubject(@PathVariable("subject_id") Long subjectId) {
+    @DeleteMapping("/{id}")
+    public Response<String> deleteSubject(@PathVariable("id") Long subjectId) {
         subjectService.deleteSubject(subjectId);
         return Response.ok();
     }

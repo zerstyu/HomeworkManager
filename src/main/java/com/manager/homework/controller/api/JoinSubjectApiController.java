@@ -2,7 +2,6 @@ package com.manager.homework.controller.api;
 
 import com.manager.homework.common.Response;
 import com.manager.homework.service.JoinSubjectService;
-import com.manager.homework.vo.JoinSubjectDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class JoinSubjectApiController {
     private final JoinSubjectService joinSubjectService;
 
-    @ApiOperation(value = "과목 참여", notes = "과목 참여")
-    @PostMapping
-    public Response<String> createJoinSubject(@RequestBody JoinSubjectDto joinSubjectDto) {
-        joinSubjectService.createJoinSubject(joinSubjectDto);
+    @ApiOperation(value = "과목 참여", notes = "특정 과목 참여")
+    @PostMapping("/{subject_id}")
+    public Response<String> createJoinSubject(
+            @PathVariable("subject_id") Long subjectId, @RequestBody Long userId) {
+        joinSubjectService.createJoinSubject(subjectId, userId);
         return Response.ok();
     }
 
-    @ApiOperation(value = "참여한 과목 삭제", notes = "참여한 과목 삭제")
-    @DeleteMapping
-    public Response<String> deleteJoinSubject(@RequestBody JoinSubjectDto joinSubjectDto) {
-        joinSubjectService.deleteJoinSubject(joinSubjectDto);
+    @ApiOperation(value = "참여한 과목 삭제", notes = "참여한 특정 과목 삭제")
+    @DeleteMapping("/{id}")
+    public Response<String> deleteJoinSubject(@PathVariable("id") Long joinSubjectId) {
+        joinSubjectService.deleteJoinSubject(joinSubjectId);
         return Response.ok();
     }
 }

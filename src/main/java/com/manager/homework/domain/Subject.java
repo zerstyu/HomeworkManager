@@ -30,5 +30,4 @@ public class Subject extends BaseEntity {
     public static SubjectDto toDto(Subject entity) {
         return new ModelMapper().map(entity, SubjectDto.class);
     }
-
 }

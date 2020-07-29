@@ -17,5 +17,5 @@ public class SearchSubjectDto {
     private Long userId;
     private String userName;
     private List<SubjectDto> subjectDtoList;
-    private List<JoinSubjectDto> joinSubjectDtoList;
+    private List<SubjectDto> joinSubjectDtoList;
 }
