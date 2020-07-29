@@ -59,7 +59,7 @@
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="생년월일 (ex. 1992-01-11)"
                                     addon-left-icon="ni ni-zoom-split-in"
-                                    v-model="model.email">
+                                    v-model="model.birthday">
                         </base-input>
 
                         <!--div class="text-muted font-italic">
