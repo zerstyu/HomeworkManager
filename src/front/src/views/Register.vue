@@ -48,6 +48,20 @@
                                     v-model="model.password">
                         </base-input>
 
+                        <base-radio name="MAN" class="mb-3" v-model="model.radio1">
+                            남자
+                        </base-radio>
+
+                        <base-radio name="WOMAN" class="mb-3" v-model="model.radio1">
+                            여자
+                        </base-radio>
+
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="생년월일 (ex. 1992-01-11)"
+                                    addon-left-icon="ni ni-zoom-split-in"
+                                    v-model="model.email">
+                        </base-input>
+
                         <!--div class="text-muted font-italic">
                             <small>암호 안전함 : <span class="text-success font-weight-700">strong</span></small>
                         </div-->
@@ -119,7 +133,9 @@
           name: '',
           email: '',
           goupName: '',
-          password: ''
+          password: '',
+          birthday: '',
+          radio1: "WOMAN"
         },
         modals : false,
         modals2: false,
@@ -144,6 +160,9 @@
                         '"name": "' + vm.model.name + '",' +
                         '"email": "' + vm.model.email + '",' +
                         '"groupName": "' + vm.model.goupName + '",' +
+                        '"gender": "' + vm.model.radio1 + '",' +
+                        '"birthday": "' + vm.model.birthday + '",' +
+
                         '"password": "' + vm.model.password + '"' +
                       '}'
                 , axiosConfig)

@@ -9,9 +9,9 @@
                 <div class="col-xl-3 col-lg-6"
                      v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id"
                      @click="teacherSubjectsDetail(teacherSubject.idx)">
-                    <stats-card v-bind:title="'방장 : ' + teacherSubject.userId"
+                    <stats-card v-bind:title="'방장 : ' + teacherSubject.userName"
                                 v-bind:icon="teacherSubject.icon"
-                                v-bind:sub-title="teacherSubject.name"
+                                v-bind:sub-title="teacherSubject.subjectName"
                                 class="mb-4 mb-xl-0">
 
                         <!--template slot="footer">
@@ -69,7 +69,7 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17">과제방 가입하기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">과제방 가입하기</base-button>
                 </div>
             </div>
 
@@ -139,7 +139,9 @@
               responseMsg: '데이터를 불러오고 있습니다.',
               createSubjectName: '',
               datasend : 'xxxx',
-              scrollOn : true
+              scrollOn : true,
+
+              subjectPivot: ''
           }
       },
       created() {
@@ -166,9 +168,9 @@
 
               axios.post('/api/subjects',
                   '{' +
-                  '"changeName": "",' +
-                  '"name": "' + vm.createSubjectName + '",' +
-                  '"userId": "' + localStorage.getItem('userId') + '"' +
+                  '"subjectName": "' + vm.createSubjectName + '",' +
+                  '"userId": "' + localStorage.getItem('userId') + '",' +
+                  '"userName": "' + localStorage.getItem('userName') + '"' +
                   '}'
                   , axiosConfig)
                   .then(function(response){
@@ -201,10 +203,12 @@
                           //vm.teacherSubjects = response.data.data;
 
                           vm.teacherSubjects = [];
-                          for(let i = 0; i < response.data.data.length; i++){
+                          for(let i = 0; i < response.data.data.subjectDtoList.length; i++){
                               vm.teacherSubjects.push({
-                                  userId : response.data.data[i].userId,
-                                  name :response.data.data[i].name,
+                                  userId : response.data.data.subjectDtoList[i].userId,
+                                  userName : response.data.data.subjectDtoList[i].userName,
+                                  subjectId :response.data.data.subjectDtoList[i].subjectId,
+                                  subjectName :response.data.data.subjectDtoList[i].subjectName,
                                   icon : '',
                                   idx : i
                               });
@@ -224,16 +228,26 @@
                   if(this.teacherSubjects[i].idx == idx){
                       //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = 'ni ni-check-bold';
                       this.teacherSubjects[i].icon = 'ni ni-check-bold';
+                      this.subjectPivot = this.teacherSubjects[i].subjectId;
                   }
                   else{
                       //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = '';
                       this.teacherSubjects[i].icon = '';
                   }
-                  console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].name);
+                  console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].subjectId);
               }
-              //console.log("res2 : " + this.teacherSubjects[idx].icon);
 
+              location.href="#subjectRoomJoinButton";
+              //console.log("res2 : " + this.teacherSubjects[idx].icon);
           }
+
+          /*
+          *
+          *
+          * 과제공지의 메소드 영역
+          *
+          *
+           */
       }
   };
 </script>
