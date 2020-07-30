@@ -32,9 +32,9 @@ public class SubjectApiController {
     }
 
     @ApiOperation(value = "과목 수정", notes = "특정 과목 수정")
-    @PutMapping("/{id}")
-    public Response<String> updateSubject(@PathVariable("id") Long subjectId, @RequestBody String subjectName) {
-        subjectService.updateSubject(subjectId, subjectName);
+    @PutMapping
+    public Response<String> updateSubject(@RequestBody RequestSubjectDto dto) {
+        subjectService.updateSubject(dto);
         return Response.ok();
     }
 
