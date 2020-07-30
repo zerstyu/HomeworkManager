@@ -21,27 +21,6 @@ import static com.manager.homework.domain.QUser.user;
 public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
-//    @Override
-//    public SearchSubjectDto findByCondition(RequestSubjectDto dto) {
-//        BooleanBuilder builder = new BooleanBuilder();
-//
-//        if (dto.getUserId() != null) {
-//            builder.and(subject.user.id.eq(dto.getUserId()));
-//        }
-//
-//        if (dto.getSubjectId() != null) {
-//            builder.and(subject.id.eq(dto.getSubjectId()));
-//        }
-//
-//        if (dto.getSubjectName() != null) {
-//            builder.and(subject.name.eq(dto.getSubjectName()));
-//        }
-//
-//        return queryFactory.selectFrom(subject)
-//                .where(builder)
-//                .fetch();
-//    }
-
     @Override
     public SearchSubjectDto selectAllSubjectList(Long userId) {
         SearchSubjectDto searchSubjectDto = new SearchSubjectDto();
