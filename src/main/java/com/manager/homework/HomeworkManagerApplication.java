@@ -136,6 +136,50 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(5))
                 .build();
         noticeList.add(notice2);
+
+        Notice notice3 = Notice.builder()
+                .type(NoticeType.PRIVATE)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.PENDING)
+                .title("국어 2번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(15))
+                .build();
+        noticeList.add(notice3);
+
+        Notice notice4 = Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.COMPLETED)
+                .title("과학 1번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).minusDays(10))
+                .build();
+        noticeList.add(notice4);
+
+        Notice notice5 = Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.COMPLETED)
+                .title("과학 2번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).minusDays(5))
+                .build();
+        noticeList.add(notice5);
+
+        Notice notice6 = Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.COMPLETED)
+                .title("과학 3번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).minusDays(7))
+                .build();
+        noticeList.add(notice6);
         return noticeList;
     }
 
