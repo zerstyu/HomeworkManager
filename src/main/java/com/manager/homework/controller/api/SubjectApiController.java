@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/subjects")
@@ -21,7 +23,7 @@ public class SubjectApiController {
 
     @ApiOperation(value = "과목 리스트 조회", notes = "참여한 과목 리스트 조회")
     @GetMapping
-    public Response<SearchSubjectDto> getSubjectList(Long userId) {
+    public Response<List<SearchSubjectDto>> getSubjectList(Long userId) {
         return Response.ok(subjectService.getSubjectList(userId));
     }
 

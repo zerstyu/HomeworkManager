@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -22,7 +23,7 @@ public class SubjectService {
 
     private static final int MAX_MAKE_RETRY = 5;
 
-    public SearchSubjectDto getSubjectList(Long userId) {
+    public List<SearchSubjectDto> getSubjectList(Long userId) {
         return subjectRepository.selectAllSubjectList(userId);
     }
 
