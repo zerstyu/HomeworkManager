@@ -21,8 +21,8 @@ public class SubjectApiController {
 
     @ApiOperation(value = "과목 리스트 조회", notes = "참여한 과목 리스트 조회")
     @GetMapping
-    public Response<SearchSubjectDto> getSubjectList(RequestSubjectDto dto) {
-        return Response.ok(subjectService.getSubjectList(dto));
+    public Response<SearchSubjectDto> getSubjectList(Long userId) {
+        return Response.ok(subjectService.getSubjectList(userId));
     }
 
     @ApiOperation(value = "과목 생성", notes = "특정 과목 생성")

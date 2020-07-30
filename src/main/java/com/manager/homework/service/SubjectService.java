@@ -22,9 +22,8 @@ public class SubjectService {
 
     private static final int MAX_MAKE_RETRY = 5;
 
-    public SearchSubjectDto getSubjectList(RequestSubjectDto dto) {
-        return subjectRepository.selectAllSubjectList(dto.getUserId());
-//        return subjectRepository.findByCondition(dto);
+    public SearchSubjectDto getSubjectList(Long userId) {
+        return subjectRepository.selectAllSubjectList(userId);
     }
 
     public SubjectDto createSubject(RequestSubjectDto dto) {
