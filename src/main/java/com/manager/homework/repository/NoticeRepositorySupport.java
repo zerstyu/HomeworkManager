@@ -7,7 +7,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.manager.homework.domain.QNotice.notice;
 
@@ -42,8 +45,19 @@ public class NoticeRepositorySupport extends QuerydslRepositorySupport {
             builder.and(notice.status.eq(noticeDto.getStatus()));
         }
 
-        return queryFactory.selectFrom(notice)
+        List<Notice> aliveNoticeList = queryFactory.selectFrom(notice)
+                .where(notice.expiredAt.goe(LocalDate.now()))
                 .where(builder)
+                .orderBy(notice.expiredAt.asc())
                 .fetch();
+
+        List<Notice> pastNoticeList = queryFactory.selectFrom(notice)
+                .where(notice.expiredAt.before(LocalDate.now()))
+                .where(builder)
+                .orderBy(notice.expiredAt.asc())
+                .fetch();
+
+        return Stream.concat(aliveNoticeList.stream(), pastNoticeList.stream())
+                .collect(Collectors.toList());
     }
 }
