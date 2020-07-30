@@ -3,9 +3,10 @@ package com.manager.homework.repository;
 import com.manager.homework.vo.SearchSubjectDto;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SubjectRepositoryCustom {
-    SearchSubjectDto selectAllSubjectList(Long userId);
-//    SearchSubjectDto findByCondition(RequestSubjectDto dto);
+    List<SearchSubjectDto> selectAllSubjectList(Long userId);
 }
 
