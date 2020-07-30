@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubjectRepositoryCustom {
     SearchSubjectDto selectAllSubjectList(Long userId);
+//    SearchSubjectDto findByCondition(RequestSubjectDto dto);
 }
+

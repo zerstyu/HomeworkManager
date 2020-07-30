@@ -4,6 +4,7 @@ import com.manager.homework.domain.Subject;
 import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.type.ErrorCode;
+import com.manager.homework.vo.RequestSubjectDto;
 import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import lombok.RequiredArgsConstructor;
@@ -21,23 +22,24 @@ public class SubjectService {
 
     private static final int MAX_MAKE_RETRY = 5;
 
-    public SearchSubjectDto getSubjectList(Long userId) {
-        return subjectRepository.selectAllSubjectList(userId);
+    public SearchSubjectDto getSubjectList(RequestSubjectDto dto) {
+        return subjectRepository.selectAllSubjectList(dto.getUserId());
+//        return subjectRepository.findByCondition(dto);
     }
 
-    public SubjectDto createSubject(Long userId, String subjectName) {
+    public SubjectDto createSubject(RequestSubjectDto dto) {
         return Subject.toDto(
                 subjectRepository.save(
                         Subject.builder()
-                                .user(commonService.getUser(userId))
-                                .name(subjectName)
+                                .user(commonService.getUser(dto.getUserId()))
+                                .name(dto.getSubjectName())
                                 .inviteCode(makeRandomCode())
                                 .build()));
     }
 
-    public void updateSubject(Long subjectId, String changeSubjectName) {
+    public void updateSubject(Long subjectId, String subjectName) {
         Subject subject = commonService.getSubject(subjectId);
-        subject.setName(changeSubjectName);
+        subject.setName(subjectName);
         subjectRepository.save(subject);
     }
 
