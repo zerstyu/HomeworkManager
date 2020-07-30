@@ -29,10 +29,10 @@
                     <h5 class="modal-title" id="exampleModalLabel2">알림</h5>
                 </template>
                 <div>
-                    회원가입에 성공하였습니다.
+                    과목 가입에 성공하였습니다!
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="goLoginPage()" href="/login">로그인 하러가기</base-button>
+                    <base-button type="primary" @click="goMainPage()">과제 확인하기</base-button>
                     <!--base-button type="primary">Save changes</base-button-->
                 </template>
             </modal>
@@ -53,30 +53,31 @@ export default {
         modals2: false
       }
     },
+    mounted() {
+        //this.$route.params.inviteCode;
+    },
     methods: {
-        loginReq(){
-            let vm = this;
+        joinReq(){
+            //로그인 유효성 체크
+            if(localStorage.getItem('userId') == '' ||
+                localStorage.getItem('userId') == null){
+                this.responseMsg = "로그인이 필요한 서비스 입니다. 로그인 후 다시 시도해 주세요!";
+                this.modals = true;
+                return;
+            }
 
+            let vm = this;
             const axiosConfig = { headers:{ "Content-Type": "application/json"} };
 
-            axios.post('/api/login',
+            axios.post('/api/joinSubject',
                 '{' +
-                '"email": "' + vm.model.email + '",' +
-                '"password": "' + vm.model.password + '"' +
+                '"subjectId": "' + this.$route.params.inviteCode + '",' +
+                '"userId": "' + localStorage.getItem('userId') + '"' +
                 '}'
                 , axiosConfig)
                 .then(function(response){
 
                     if(response.data.statusCode == 'OK'){
-                        location.href='#';
-
-                        localStorage.setItem('userId', response.data.data.id);
-                        localStorage.setItem('userEmail', response.data.data.email);
-                        localStorage.setItem('userName', response.data.data.name);
-                        localStorage.setItem('userGroupName', response.data.data.groupName);
-
-                        //location.href='/#/homeworkManage';
-                        vm.$router.push({ path: 'homeworkManage' });
                         vm.modals2 = true;
                     }
                     else{
@@ -87,7 +88,7 @@ export default {
         },
         goMainPage(){
             this.modals2 = false;
-            location.href='/#/login';
+            location.href='/#/homeworkManage';
         }
     }
   }
