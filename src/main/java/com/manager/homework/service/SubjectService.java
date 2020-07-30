@@ -36,9 +36,9 @@ public class SubjectService {
                                 .build()));
     }
 
-    public void updateSubject(Long subjectId, String subjectName) {
-        Subject subject = commonService.getSubject(subjectId);
-        subject.setName(subjectName);
+    public void updateSubject(RequestSubjectDto dto) {
+        Subject subject = commonService.getSubject(dto.getSubjectId());
+        subject.setName(dto.getSubjectName());
         subjectRepository.save(subject);
     }
 
