@@ -133,9 +133,9 @@ public class NoticeService {
         if (dday == 0) {
             return "D-DAY";
         } else if (dday > 0) {
-            return "D+" + dday;
+            return "D-" + dday;
         } else {
-            return "D" + dday;
+            return "D+" + -dday;
         }
     }
 }
