@@ -7,14 +7,11 @@
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white': ''">
             {{title}}
-            {{dataSendTest}}
           </h3>
         </div>
         <div class="col text-right">
-          <base-button type="primary" size="sm">클래스 정보수정</base-button>
-          <base-button type="primary" size="sm">과제 추가</base-button>
-
-
+          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
+          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button>
         </div>
       </div>
     </div>
@@ -24,14 +21,13 @@
                   :class="type === 'dark' ? 'table-dark': ''"
                   :thead-classes="type === 'dark' ? 'thead-dark': 'thead-light'"
                   tbody-classes="list"
-                  :data="tableData">
+                  :data="noticeData">
         <template slot="columns">
           <th>과제명</th>
-          <th>최대점수</th>
+          <th>D-Day</th>
+          <th>과제유형</th>
           <th>상태</th>
-          <!--th>제출자</th-->
-          <th>마감률</th>
-          <th></th>
+          <th>마감일</th>
         </template>
 
         <template slot-scope="{row}">
@@ -46,14 +42,54 @@
             </div>
           </th>
           <td class="budget">
-            {{row.budget}}
+            {{row.d_day}}
           </td>
-          <td>
-            <badge class="badge-dot mr-4" :type="row.statusType">
+          <td v-if="row.type=='OPEN'">
+            <badge class="badge-dot mr-4" type="info">
+              <span class="status">OPEN</span>
+            </badge>
+            <!--badge class="badge-dot mr-4" :type="row.statusType">
               <i :class="`bg-${row.statusType}`"></i>
               <span class="status">{{row.status}}</span>
+            </badge-->
+          </td>
+          <td v-else>
+            <badge class="badge-dot mr-4" type="warning">
+              <span class="status">PRIVATE</span>
             </badge>
           </td>
+
+
+          <td v-if="row.status=='PENDING'">
+            <badge class="badge-dot mr-4" type="warning">
+              <i class="bg-warning"></i>
+              <span class="status">대기</span>
+            </badge>
+          </td>
+          <td v-else-if="row.status=='PROGRESS'">
+            <badge class="badge-dot mr-4" type="info">
+              <i class="bg-info"></i>
+              <span class="status">진행중</span>
+            </badge>
+          </td>
+          <td v-else-if="row.status=='COMPLETED'">
+            <badge class="badge-dot mr-4" type="success">
+              <i class="bg-success"></i>
+              <span class="status">완료</span>
+            </badge>
+          </td>
+          <td v-else>
+            <badge class="badge-dot mr-4" type="danger">
+              <i class="bg-danger"></i>
+              <span class="status">취소됨</span>
+            </badge>
+          </td>
+
+
+          <td>
+            {{row.expiredAt}}
+          </td>
+
           <!--td>
             <div class="avatar-group">
               <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
@@ -71,7 +107,7 @@
             </div>
           </td-->
 
-          <td>
+          <!--td>
             <div class="d-flex align-items-center">
               <span class="completion mr-2">{{row.completion}}%</span>
               <div>
@@ -96,7 +132,7 @@
                 <a class="dropdown-item" href="#">Something else here</a>
               </template>
             </base-dropdown>
-          </td>
+          </td-->
 
         </template>
 
@@ -108,9 +144,39 @@
       <base-pagination total="30"></base-pagination>
     </div>
 
+    <modal :show.sync="modals">
+      <template slot="header">
+        <h5 class="modal-title" id="exampleModalLabel">알림</h5>
+      </template>
+      <div>
+        {{responseMsg}}
+      </div>
+      <template slot="footer">
+        <base-button type="secondary" @click="modals = false">확인</base-button>
+        <!--base-button type="primary">Save changes</base-button-->
+      </template>
+    </modal>
+
+    <modal :show.sync="modals3">
+      <template slot="header">
+        <h5 class="modal-title" id="exampleModalLabel3">과목 정보수정</h5>
+      </template>
+      <div>
+        <base-input placeholder="과목" v-bind="subjectPivotNameEdit"></base-input>
+      </div>
+      <template slot="footer">
+        <base-button type="primary" @click="updateSubjectReq()">과목명 변경</base-button>
+        <base-button type="primary" @click="deleteSubjectReq()">과목 삭제</base-button>
+        <base-button type="default" @click="modals3 = false">취소</base-button>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
+  import {BUS} from "../EventBus";
+
+  const axios = require('axios');
+
   export default {
     name: 'projects-table',
     props: {
@@ -118,10 +184,17 @@
         type: String
       },
       title: String,
-      dataSendTest: String
+      noticeData: Array,
+      subjectMasterId: String,
+      subjectId: String,
+      subjectPivotNameEdit: String,
+      nowUser: String
     },
     data() {
       return {
+        modals: false,
+        modals3: false,
+        responseMsg: false,
         tableData: [
           {
             img: 'img/theme/bootstrap.jpg',
@@ -164,6 +237,36 @@
             completion: 100
           }
         ]
+      }
+    },
+    methods : {
+      updateSubjectReq(){
+        let vm = this;
+        const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+        axios.put('/api/subjects',
+                '{' +
+                '"subjectName": "' + vm.subjectPivotNameEdit + '",' +
+                '"subjectId": "' + vm.subjectId + '"' +
+                '}'
+                //vm.createSubjectName
+                //form
+                , axiosConfig)
+                .then(function(response){
+                  if(response.data.statusCode == 'OK'){
+                    vm.modals3 = false;
+                    vm.modals = true;
+                    vm.responseMsg = '성공하였습니다.';
+                    BUS.$emit('subjectUpdate', '');
+                  }
+                  else{
+                    vm.modals = true;
+                    vm.responseMsg = response.data.message;
+                  }
+                });
+      },
+      deleteSubjectReq(){
+        alert("준비중 입니다.");
       }
     }
   }

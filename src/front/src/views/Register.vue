@@ -26,7 +26,7 @@
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="소속"
                                     addon-left-icon="ni ni-hat-3"
-                                    v-model="model.groupName">
+                                    v-model="model.goupName">
                         </base-input>
 
                         <base-input class="input-group-alternative mb-3"

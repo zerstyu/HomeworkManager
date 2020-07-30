@@ -73,7 +73,7 @@ export default new Router({
         },
 
         {
-          path: '/subjectJoin',
+          path: '/subjectJoin/:inviteCode',
           name: '과목 가입',
           component: () => import(/* webpackChunkName: "demo" */ './views/SubjectJoin.vue')
         }
