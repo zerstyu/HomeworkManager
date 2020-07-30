@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "subjects")
+@Table(name = "subjects", indexes = {@Index(columnList ="inviteCode")})
 // 과목
 public class Subject extends BaseEntity {
     @ManyToOne

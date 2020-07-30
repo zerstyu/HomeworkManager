@@ -2,6 +2,7 @@ package com.manager.homework.controller.api;
 
 import com.manager.homework.common.Response;
 import com.manager.homework.service.JoinSubjectService;
+import com.manager.homework.vo.RequestSubjectDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,9 @@ public class JoinSubjectApiController {
     private final JoinSubjectService joinSubjectService;
 
     @ApiOperation(value = "과목 참여", notes = "특정 과목 참여")
-    @PostMapping("/{subject_id}")
-    public Response<String> createJoinSubject(
-            @PathVariable("subject_id") Long subjectId, @RequestBody Long userId) {
-        joinSubjectService.createJoinSubject(subjectId, userId);
+    @PostMapping
+    public Response<String> createJoinSubject(@RequestBody RequestSubjectDto dto) {
+        joinSubjectService.createJoinSubject(dto);
         return Response.ok();
     }
 
