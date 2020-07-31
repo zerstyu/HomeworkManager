@@ -99,13 +99,13 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         List joinSubjectList = Lists.newArrayList();
 
         joinSubjectList.add(JoinSubject.builder()
-//                .makeUser(userList.get(0))
+                .user(userList.get(0))
                 .subject(subjectList.get(0))
                 .user(userList.get(1))
                 .build());
 
         joinSubjectList.add(JoinSubject.builder()
-//                .makeUser(userList.get(0))
+                .user(userList.get(0))
                 .subject(subjectList.get(0))
                 .user(userList.get(2))
                 .build());
