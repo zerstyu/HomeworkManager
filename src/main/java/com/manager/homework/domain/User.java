@@ -6,9 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,8 +36,4 @@ public class User extends BaseEntity {
 
     @Column
     private Gender gender;
-
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="USER_ID")
-    private List<Subject> subjectList;
 }
