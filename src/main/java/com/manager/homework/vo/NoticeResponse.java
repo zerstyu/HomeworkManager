@@ -15,5 +15,7 @@ public class NoticeResponse {
     private NoticeType type;
     private NoticeStatus status;
     private LocalDate expiredAt;
+    private Long userId;
+    private String userName;
     private List<NoticeFileResponse> noticeFileResponseList;
 }

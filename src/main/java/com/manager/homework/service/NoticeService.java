@@ -107,6 +107,8 @@ public class NoticeService {
         noticeResponse.setType(notice.getType());
         noticeResponse.setStatus(notice.getStatus());
         noticeResponse.setExpiredAt(notice.getExpiredAt());
+        noticeResponse.setUserId(notice.getUser().getId());
+        noticeResponse.setUserName(notice.getUser().getName());
         List<NoticeFile> noticeFileList = noticeFileRepository.findByNoticeId(notice.getId());
         List<NoticeFileResponse> noticeFileResponseList = Lists.newArrayList();
         for (NoticeFile noticeFile : noticeFileList) {
