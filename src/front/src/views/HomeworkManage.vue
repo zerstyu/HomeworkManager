@@ -45,25 +45,18 @@
                     <br/><br/>
                     <h3>내가 참여한 과목</h3>
                 </div>
-                <div class="col-xl-3 col-lg-6">
-                    <stats-card title="남은과제 : 3/12"
-                                type="gradient-orange"
-                                sub-title="1학년 수학"
+                <div class="col-xl-3 col-lg-6"
+                     v-for="studentSubject in studentSubjects" v-bind:key="studentSubject.id"
+                     @click="teacherSubjectsDetail(studentSubject.idx)">
+                    <stats-card v-bind:title="studentSubject.userName + ' 선생님'"
+                                v-bind:icon="studentSubject.icon"
+                                v-bind:sub-title="studentSubject.subjectName"
                                 class="mb-4 mb-xl-0">
 
                         <template slot="footer">
-                            <span class="text-nowrap">안재홍 선생님</span>
-                        </template>
-                    </stats-card>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <stats-card title="남은과제 : 3/12"
-                                type="gradient-orange"
-                                sub-title="1학년 기술가정"
-                                class="mb-4 mb-xl-0">
-
-                        <template slot="footer">
-                            <span class="text-nowrap">추대윤 선생님</span>
+                            <!--span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span-->
+                            <span class="text-nowrap">{{studentSubject.inviteCode}}</span>
+                            <base-button type="info" size="sm" href="#" @click="copyToClipboard(studentSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
                 </div>
@@ -100,7 +93,19 @@
                 </template>
             </modal>
 
-
+            <modal :show.sync="modals3">
+                <template slot="header">
+                    <h5 class="modal-title" id="exampleModalLabel3">과목 정보수정</h5>
+                </template>
+                <div>
+                    <base-input placeholder="과목" v-model="subjectPivotNameEdit"></base-input>
+                </div>
+                <template slot="footer">
+                    <base-button type="primary" @click="updateSubjectReq()">과목명 변경</base-button>
+                    <base-button type="primary" @click="deleteSubjectReq()">과목 삭제</base-button>
+                    <base-button type="default" @click="modals3 = false">취소</base-button>
+                </template>
+            </modal>
 
         </base-header>
 
@@ -147,7 +152,7 @@
               createSubjectName: '',
               noticeDataSend : null,
               scrollOn : true,
-              subjectMasterId : '',
+              subjectMasterId : '-',
 
               subjectPivot: '',
               subjectPivotName: '전체 과제리스트',
@@ -167,9 +172,10 @@
               vm.modals = false;
           }, 500);
 */
-          BUS.$on('subjectUpdate',function() {
-              this.getSubjects();
-              this.getNotices();
+          let vm = this;
+          BUS.$on('subjectUpdate',function(data) {
+              vm.modals3 = data;
+              console.log("이벤트 수신 완료");
           });
 
       },
@@ -215,19 +221,31 @@
                       if(response.data.statusCode == 'OK'){
 
                           vm.teacherSubjects = [];
-                          for(let i = 0; i < response.data.data.subjectDtoList.length; i++){
+                          for(let i = 0; i < response.data.data[0].subjectDtoList.length; i++){
                               vm.teacherSubjects.push({
-                                  userId : response.data.data.subjectDtoList[i].userId,
-                                  userName : response.data.data.subjectDtoList[i].userName,
-                                  subjectId :response.data.data.subjectDtoList[i].subjectId,
-                                  subjectName :response.data.data.subjectDtoList[i].subjectName,
-                                  inviteCode : response.data.data.subjectDtoList[i].inviteCode,
-                                  inviteCodeURL : "http://" + location.hostname + ":" + location.port + "/#/subjectJoin/" + response.data.data.subjectDtoList[i].inviteCode,
+                                  userId : response.data.data[0].subjectDtoList[i].userId,
+                                  userName : response.data.data[0].subjectDtoList[i].userName,
+                                  subjectId :response.data.data[0].subjectDtoList[i].subjectId,
+                                  subjectName :response.data.data[0].subjectDtoList[i].subjectName,
+                                  inviteCode : response.data.data[0].subjectDtoList[i].inviteCode,
+                                  inviteCodeURL : "http://" + location.hostname + ":" + location.port + "/#/subjectJoin/" + response.data.data[0].subjectDtoList[i].inviteCode,
                                   icon : '',
                                   idx : i
                               });
                           }
-
+                          vm.studentSubjects = [];
+                          for(let i = 0; i < response.data.data[0].joinSubjectDtoList.length; i++){
+                              vm.teacherSubjects.push({
+                                  userId : response.data.data[0].joinSubjectDtoList[i].userId,
+                                  userName : response.data.data[0].joinSubjectDtoList[i].userName,
+                                  subjectId :response.data.data[0].joinSubjectDtoList[i].subjectId,
+                                  subjectName :response.data.data[0].joinSubjectDtoList[i].subjectName,
+                                  inviteCode : response.data.data[0].joinSubjectDtoList[i].inviteCode,
+                                  inviteCodeURL : "http://" + location.hostname + ":" + location.port + "/#/subjectJoin/" + response.data.data[0].joinSubjectDtoList[i].inviteCode,
+                                  icon : '',
+                                  idx : i
+                              });
+                          }
 
                       }
                       else{
@@ -259,6 +277,36 @@
 
               location.href="#subjectRoomJoinButton";
               //console.log("res2 : " + this.teacherSubjects[idx].icon);
+          },
+          updateSubjectReq(){
+              let vm = this;
+              const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+              axios.put('/api/subjects',
+                  '{' +
+                  '"subjectName": "' + vm.subjectPivotNameEdit + '",' +
+                  '"subjectId": "' + vm.subjectPivot + '"' +
+                  '}'
+                  //vm.createSubjectName
+                  //form
+                  , axiosConfig)
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+                          vm.modals3 = false;
+                          vm.modals = true;
+                          vm.responseMsg = '성공하였습니다.';
+
+                          vm.getSubjects();
+                          vm.getNotices();
+                      }
+                      else{
+                          vm.modals = true;
+                          vm.responseMsg = response.data.message;
+                      }
+                  });
+          },
+          deleteSubjectReq(){
+              alert("준비중 입니다.");
           },
           copyToClipboard(url){
               let t = document.createElement("textarea");
