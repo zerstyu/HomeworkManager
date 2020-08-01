@@ -27,6 +27,7 @@ public class BlockchainUnitTest {
         Block firstBlock = new Block("The is the First Block.", genesisBlock.getHash(), new Date().getTime());
         firstBlock.mineBlock(prefix);
         blockchain.add(firstBlock);
+        System.out.println();
     }
 
     @Test
