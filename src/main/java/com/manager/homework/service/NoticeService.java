@@ -53,11 +53,15 @@ public class NoticeService {
         Optional<Notice> noticeEntityWrapper = noticeRepository.findById(id);
         Notice notice = noticeEntityWrapper.get();
 
-        Optional<User> userEntityWrapper = userRepository.findById(noticeDto.getUserId());
-        notice.setUser(userEntityWrapper.get());
+        if (noticeDto.getUserId() != null) {
+            Optional<User> userEntityWrapper = userRepository.findById(noticeDto.getUserId());
+            notice.setUser(userEntityWrapper.get());
+        }
 
-        Optional<Subject> subjectEntityWrapper = subjectRepository.findById(noticeDto.getSubjectId());
-        notice.setSubject(subjectEntityWrapper.get());
+        if (noticeDto.getUserId() != null) {
+            Optional<Subject> subjectEntityWrapper = subjectRepository.findById(noticeDto.getSubjectId());
+            notice.setSubject(subjectEntityWrapper.get());
+        }
 
         notice.setTitle(noticeDto.getTitle());
         notice.setContent(noticeDto.getContent());

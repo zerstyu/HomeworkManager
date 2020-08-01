@@ -42,14 +42,17 @@ public class NoticeFileService {
         Optional<NoticeFile> fileEntityWrapper = noticeFileRepository.findById(id);
         NoticeFile noticeFile = fileEntityWrapper.get();
 
-        Optional<User> userEntityWrapper = userRepository.findById(noticeFileDto.getUserId());
-        noticeFile.setUser(userEntityWrapper.get());
+        if (noticeFileDto.getUserId() != null) {
+            Optional<User> userEntityWrapper = userRepository.findById(noticeFileDto.getUserId());
+            noticeFile.setUser(userEntityWrapper.get());
+        }
 
-        Optional<Notice> noticeEntityWrapper = noticeRepository.findById(noticeFileDto.getNoticeId());
-        noticeFile.setNotice(noticeEntityWrapper.get());
+        if (noticeFileDto.getNoticeId() != null) {
+            Optional<Notice> noticeEntityWrapper = noticeRepository.findById(noticeFileDto.getNoticeId());
+            noticeFile.setNotice(noticeEntityWrapper.get());
+        }
 
         noticeFile.setFileString(noticeFileDto.getFileString());
-
         noticeFileRepository.save(noticeFile);
         return noticeFile;
     }
