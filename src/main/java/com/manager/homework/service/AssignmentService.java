@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +25,18 @@ public class AssignmentService {
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
     private final AssignmentFileRepository assignmentFileRepository;
+    private final BlockRepository blockRepository;
+
+    public static List<Block> blockchain = new ArrayList<Block>();
+    public static int prefix = 4;
 
     public List<Assignment> getAssignmentList(AssignmentDto assignmentDto) {
         return assignmentRepositorySupport.findByCondition(assignmentDto);
     }
 
     public Assignment createAssignment(AssignmentDto assignmentDto) {
+        Assignment assignment = assignmentRepository.save(convertToEntity(assignmentDto));
+        addBlock(assignmentDto);
         return assignmentRepository.save(convertToEntity(assignmentDto));
     }
 
@@ -41,22 +49,39 @@ public class AssignmentService {
         Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(id);
         Assignment assignment = assignmentEntityWrapper.get();
 
-        Optional<User> userEntityWrapper = userRepository.findById(assignmentDto.getUserId());
-        assignment.setUser(userEntityWrapper.get());
+        if (assignmentDto.getUserId() != null) {
+            Optional<User> userEntityWrapper = userRepository.findById(assignmentDto.getUserId());
+            assignment.setUser(userEntityWrapper.get());
+        }
 
-        Optional<Subject> subjectEntityWrapper = subjectRepository.findById(assignmentDto.getSubjectId());
-        assignment.setSubject(subjectEntityWrapper.get());
+        if (assignmentDto.getSubjectId() != null) {
+            Optional<Subject> subjectEntityWrapper = subjectRepository.findById(assignmentDto.getSubjectId());
+            assignment.setSubject(subjectEntityWrapper.get());
+        }
 
-        Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getSubjectId());
-        assignment.setNotice(noticeEntityWrapper.get());
+        if (assignmentDto.getNoticeId() != null) {
+            Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getSubjectId());
+            assignment.setNotice(noticeEntityWrapper.get());
+        }
 
         assignment.setFeedback(assignmentDto.getFeedback());
         assignment.setIsOpen(assignmentDto.getIsOpen());
-        assignment.setScore(assignmentDto.getScore());
         assignment.setNote(assignmentDto.getNote());
+
+        if (assignmentDto.getScore() != null) {
+            assignment.setScore(assignmentDto.getScore());
+            addBlock(assignmentDto);
+        }
 
         assignmentRepository.save(assignment);
         return assignment;
+    }
+
+    private void addBlock(AssignmentDto assignmentDto) {
+        Block block = new Block(assignmentDto.getScore().toString(), "0", new Date().getTime());
+        block.mineBlock(prefix);
+        blockchain.add(block);
+        blockRepository.saveAll(blockchain);
     }
 
     public void deleteAssignment(Long id) {
