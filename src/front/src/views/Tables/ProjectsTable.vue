@@ -10,7 +10,7 @@
           </h3>
         </div>
         <div class="col text-right">
-          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
+          <base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
           <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button>
         </div>
       </div>
@@ -157,19 +157,6 @@
       </template>
     </modal>
 
-    <modal :show.sync="modals3">
-      <template slot="header">
-        <h5 class="modal-title" id="exampleModalLabel3">과목 정보수정</h5>
-      </template>
-      <div>
-        <base-input placeholder="과목" v-bind="subjectPivotNameEdit"></base-input>
-      </div>
-      <template slot="footer">
-        <base-button type="primary" @click="updateSubjectReq()">과목명 변경</base-button>
-        <base-button type="primary" @click="deleteSubjectReq()">과목 삭제</base-button>
-        <base-button type="default" @click="modals3 = false">취소</base-button>
-      </template>
-    </modal>
   </div>
 </template>
 <script>
@@ -240,6 +227,10 @@
       }
     },
     methods : {
+      clickChangeSunjectInfoButton(){
+        BUS.$emit('subjectUpdate', true);
+        console.log("이벤트버스: BUS.$emit('subjectUpdate', true);");
+      },
       updateSubjectReq(){
         let vm = this;
         const axiosConfig = { headers:{ "Content-Type": "application/json"} };
