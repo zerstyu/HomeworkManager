@@ -13,6 +13,7 @@ public class NoticeDto {
     private NoticeStatus status;
     private Long userId;
     private Long subjectId;
+    private String subjectName;
     private String title;
     private String content;
     private LocalDate expiredAt;

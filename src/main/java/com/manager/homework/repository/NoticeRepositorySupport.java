@@ -45,6 +45,10 @@ public class NoticeRepositorySupport extends QuerydslRepositorySupport {
             builder.and(notice.status.eq(noticeDto.getStatus()));
         }
 
+        if (noticeDto.getSubjectName() != null) {
+            builder.and(notice.subject.name.contains(noticeDto.getSubjectName()));
+        }
+
         List<Notice> aliveNoticeList = queryFactory.selectFrom(notice)
                 .where(notice.expiredAt.goe(LocalDate.now()))
                 .where(builder)
