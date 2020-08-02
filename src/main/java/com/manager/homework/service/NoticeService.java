@@ -105,6 +105,7 @@ public class NoticeService {
 
     private NoticeResponse convertToResponse(Notice notice) {
         NoticeResponse noticeResponse = new NoticeResponse();
+        noticeResponse.setId(notice.getId());
         noticeResponse.setTitle(notice.getTitle());
         noticeResponse.setContent(notice.getContent());
         noticeResponse.setD_day(convertToDDay(notice.getExpiredAt()));

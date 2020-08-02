@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class NoticeResponse {
+    private Long id;
     private String title;
     private String content;
     private String d_day;
