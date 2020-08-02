@@ -65,6 +65,9 @@ public class NoticeService {
 
         notice.setTitle(noticeDto.getTitle());
         notice.setContent(noticeDto.getContent());
+        notice.setType(noticeDto.getType());
+        notice.setStatus(noticeDto.getStatus());
+        notice.setExpiredAt(noticeDto.getExpiredAt());
 
         noticeRepository.save(notice);
         return notice;
