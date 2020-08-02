@@ -40,6 +40,11 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')
         },
         {
+          path: '/notice/:notiId',
+          name: '과목 공지사항',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Notice.vue')
+        },
+        {
           path: '/profile',
           name: 'profile',
           component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
@@ -71,7 +76,6 @@ export default new Router({
           name: 'register',
           component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
         },
-
         {
           path: '/subjectJoin/:inviteCode',
           name: '과목 가입',
