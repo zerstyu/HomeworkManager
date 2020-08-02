@@ -24,7 +24,7 @@ public class AssignmentFileService {
     private final AssignmentFileRepositorySupport assignmentFileRepositorySupport;
     private final UserRepository userRepository;
     private final AssignmentRepository assignmentRepository;
-    private final BlockService blockService;
+//    private final BlockService blockService;
 
     public List<AssignmentFile> getAssignmentFileList(AssignmentFileDto assignmentFileDto) {
         return assignmentFileRepositorySupport.findByCondition(assignmentFileDto);
@@ -32,11 +32,11 @@ public class AssignmentFileService {
 
     public List<AssignmentFile> createAssignmentFile(List<AssignmentFileDto> assignmentFileDtoList) {
         List<AssignmentFile> assignmentFileList = assignmentFileRepository.saveAll(convertToEntity(assignmentFileDtoList));
-        for (AssignmentFile assignmentFile : assignmentFileList) {
-            if (assignmentFile.getFileString() != null) {
-                blockService.addBlock(assignmentFile.getFileString());
-            }
-        }
+//        for (AssignmentFile assignmentFile : assignmentFileList) {
+//            if (assignmentFile.getFileString() != null) {
+//                blockService.addBlock(assignmentFile.getFileString());
+//            }
+//        }
         return assignmentFileList;
     }
 
@@ -62,7 +62,7 @@ public class AssignmentFileService {
 
         if (assignmentFile.getFileString() != null) {
             assignmentFile.setFileString(assignmentFileDto.getFileString());
-            blockService.addBlock(assignmentFile.getFileString());
+//            blockService.addBlock(assignmentFile.getFileString());
         }
 
         assignmentFileRepository.save(assignmentFile);
