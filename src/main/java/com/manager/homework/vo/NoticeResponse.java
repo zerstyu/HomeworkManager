@@ -17,5 +17,6 @@ public class NoticeResponse {
     private LocalDate expiredAt;
     private Long userId;
     private String userName;
+    private String subjectName;
     private List<NoticeFileResponse> noticeFileResponseList;
 }
