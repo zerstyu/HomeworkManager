@@ -19,5 +19,6 @@ public class NoticeResponse {
     private Long userId;
     private String userName;
     private String subjectName;
+    private Long subjectId;
     private List<NoticeFileResponse> noticeFileResponseList;
 }

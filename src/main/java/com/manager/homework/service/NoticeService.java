@@ -115,6 +115,7 @@ public class NoticeService {
         noticeResponse.setUserId(notice.getUser().getId());
         noticeResponse.setUserName(notice.getUser().getName());
         noticeResponse.setSubjectName(notice.getSubject().getName());
+        noticeResponse.setSubjectId(notice.getSubject().getId());
         List<NoticeFile> noticeFileList = noticeFileRepository.findByNoticeId(notice.getId());
         List<NoticeFileResponse> noticeFileResponseList = Lists.newArrayList();
         for (NoticeFile noticeFile : noticeFileList) {
