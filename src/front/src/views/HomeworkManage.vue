@@ -107,6 +107,62 @@
                 </template>
             </modal>
 
+            <modal :show.sync="modals4">
+                <template slot="header">
+                    <h5 class="modal-title" id="exampleModalLabel4">과제 공지사항 추가</h5>
+                </template>
+                <div>
+                    <h4>과제 공지 타이틀</h4>
+                    <base-input placeholder="과목 공지 타이틀" v-model="notiEditTitle"></base-input>
+
+                    <h4>과제 설명</h4>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
+                    v-model="notiEditContent"></textarea>
+                    <br/>
+
+                    <h4>마감일</h4>
+                    <base-input placeholder="과제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
+
+                    <h4>이미지 첨부</h4>
+                    <base-button size="sm" @click="createNotiFileMinus" type="primary">-</base-button>
+                    {{notiEditFileLen}}
+                    <base-button size="sm" @click="createNotiFilePlus()" type="primary">+</base-button>
+                    <br/>
+                    <div v-for="index in notiEditFileLen" :key="index">
+                        <input type="file" id="files" name="notiEditFileInput" @change="getBase64(index)"/>
+                    </div>
+                    <br/>
+
+                    <h4>과제 진행상태 설정</h4>
+                    <base-radio name="PENDING" class="mb-3" v-model="notiEditStatus">
+                        대기
+                    </base-radio>
+                    <base-radio name="PROGRESS" class="mb-3" v-model="notiEditStatus">
+                        진행
+                    </base-radio>
+                    <base-radio name="COMPLETED" class="mb-3" v-model="notiEditStatus">
+                        완료
+                    </base-radio>
+                    <base-radio name="CANCELED" class="mb-3" v-model="notiEditStatus">
+                        취소
+                    </base-radio>
+                    <br/>
+
+                    <h4>과제 유형</h4>
+                    <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
+                        오픈과제
+                    </base-radio>
+                    <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
+                        프라이빗과제
+                    </base-radio>
+
+                </div>
+                <template slot="footer">
+                    <base-button type="primary" @click="createNoti()">과제 추가</base-button>
+                    <base-button type="default" @click="modals4 = false">취소</base-button>
+                </template>
+            </modal>
+
         </base-header>
 
         <div class="container-fluid mt--7">
@@ -145,9 +201,10 @@
           return {
               teacherSubjects : [],
               studentSubjects : [],
-              modals: true,
+              modals: true, //알림
               modals2: false,
               modals3: false,
+              modals4: false, //노티등록
               responseMsg: '데이터를 불러오고 있습니다.',
               createSubjectName: '',
               noticeDataSend : null,
@@ -157,7 +214,23 @@
               subjectPivot: '',
               subjectPivotName: '전체 과제리스트',
               subjectPivotNameEdit: '',
-              nowUser: ''
+              nowUser: '',
+
+              /*noti 추가를 위한 data*/
+              notiEditContent: '',
+              notiEditExpiredAt: '',
+              notiEditFileStringList: ["","","","","","","","","","",
+                  "","","","","","","","","","",
+                  "","","","","","","","","","",
+                  "","","","","","","","","","",
+                  "","","","","","","","","",""],
+                notiEditFileLen: 1,
+              notiEditStatus: '', //
+              notiEditSubjectId: '',
+              notiEditTitle: '',
+              notiEditType: '',
+              notiEditUserId: ''
+
           }
       },
       created() {
@@ -177,6 +250,13 @@
               vm.modals3 = data;
               console.log("이벤트 수신 완료");
           });
+          BUS.$on('goNotiDetail',function(data) {
+              vm.goNotiDetail(data);
+          });
+          BUS.$on('createNoti',function(data) {
+              vm.modals4 = data;
+          });
+
 
       },
       mounted() {
@@ -282,10 +362,10 @@
               let vm = this;
               const axiosConfig = { headers:{ "Content-Type": "application/json"} };
 
-              axios.put('/api/subjects',
+              axios.put('/api/subjects/' + vm.subjectPivot,
                   '{' +
-                  '"subjectName": "' + vm.subjectPivotNameEdit + '",' +
-                  '"subjectId": "' + vm.subjectPivot + '"' +
+                  '"subjectName": "' + vm.subjectPivotNameEdit + '"' +
+//                  '"subjectId": "' + vm.subjectPivot + '"' +
                   '}'
                   //vm.createSubjectName
                   //form
@@ -327,6 +407,114 @@
           *
           *
            */
+          getBase64(idx) {
+              console.log("base64_1 변환 요청 idx : " + idx);
+              let file = document.getElementsByName("notiEditFileInput")[idx-1].files[0];
+              let idx2 = idx;
+              let vm = this;
+
+
+              let reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = function () {
+                  console.log("success!! base64 : " + reader.result);
+                  vm.notiEditFileStringList[idx2] = reader.result;
+              };
+              reader.onerror = function (error) {
+                  console.log('base 64 Error.... : ', error);
+              };
+          },
+          getBase64_2(idx) {
+              console.log("base64 변환 요청 idx : " + idx);
+              //var file = document.querySelector('#myFile');
+              let file = document.getElementsByName("notiEditFileInput")[idx-1];
+              let result;
+
+            // 정상 로드시 result에 인코딩 값을 저장하기
+              let idx2 = idx;
+              let vm = this;
+              let reader = new FileReader(file);
+              reader.onload = function() {
+                  result = reader.result;
+                  console.log("base64 입니다 : " + result);
+                  vm.notiEditFileStringList[idx2] = result;
+              }
+
+                // 실패할 경우 에러 출력하기
+              reader.onerror = function (error) {
+                  console.log('base64 Error : ' + error);
+              };
+          },
+          goNotiDetail(id){
+              location.href="/#/notice/" + id;
+          },
+          createNoti(){
+              this.modals4 = false;
+              let vm = this;
+              let base64Str = '';
+              let base64Flag = false;
+//              let fileInput = document.getElementsByName("notiEditFileInput");
+
+              for(let i = 1; i <= this.notiEditFileLen; i++){
+//              for(let i = 0; i < fileInput.length; i++){
+                  base64Flag = true;
+                  //let file = document.querySelector('#files > input[type="file"]').files[0];
+                  //var array_fruits = document.getElementsByName("fruits");
+                  base64Str += '"';
+                  //base64Str += this.getBase64(file);
+                  base64Str += this.notiEditFileStringList[i];
+                  base64Str += '",';
+              }
+              if(base64Flag == true){
+                  base64Str = base64Str.substr(0, base64Str.length -1);
+              }
+              //let form = new FormData();
+              //form.append('subjectName', this.createSubjectName);
+              //form.append('userId', localStorage.getItem('userId'));
+              const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+              axios.post('/api/notices',
+                  '{' +
+                  '"content": "' + vm.notiEditContent.replace(/(?:\r\n|\r|\n)/g, '<br/>') + '",' +
+                  '"expiredAt": "' + vm.notiEditExpiredAt + '",' +
+                  '"noticeFileStringList": [' + base64Str + '],' +
+                  '"status": "' + vm.notiEditStatus + '",' +
+                  '"subjectId": "' + vm.subjectPivot + '",' +
+                  '"title": "' + vm.notiEditTitle + '",' +
+                  '"type": "' + vm.notiEditType + '",' +
+                  '"userId": "' + localStorage.getItem('userId') + '"' +
+                  //'"userName": "' + localStorage.getItem('userName') + '"' +
+                  '}'
+                  //vm.createSubjectName
+                  //form
+                  , axiosConfig)
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+                          vm.modals = true;
+                          vm.responseMsg = '성공하였습니다.';
+                          vm.createSubjectName = '';
+                          vm.getNotices();
+                      }
+                      else{
+                          vm.modals = true;
+                          vm.responseMsg = response.data.message;
+                      }
+                  });
+          },
+          createNotiFilePlus(){
+              if(this.notiEditFileLen >= 50) {
+                  this.notiEditFileLen += 50;
+                  return;
+              }
+              this.notiEditFileLen += 1;
+          },
+          createNotiFileMinus(){
+              if(this.notiEditFileLen <= 0){
+                  this.notiEditFileLen = 0;
+                  return;
+              }
+              this.notiEditFileLen -= 1;
+          },
           getNotices(){
               let vm = this;
               let apiParam = '';
@@ -351,6 +539,7 @@
                           vm.noticeDataSend = [];
                           for(let i = 0; i < response.data.data.length; i++){
                               vm.noticeDataSend.push({
+                                  id : response.data.data[i].id,
                                   title : response.data.data[i].title,
                                   d_day : response.data.data[i].d_day,
                                   type :response.data.data[i].type,

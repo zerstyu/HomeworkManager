@@ -11,7 +11,7 @@
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
-          <base-button type="primary" size="sm" @click="clickAddNotiButton()" v-if="subjectMasterId==nowUser">과제 추가</base-button>
+          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
                 <img alt="Image placeholder" :src="row.img">
               </a-->
               <div class="media-body">
-                <span class="name mb-0 text-sm" @click="clickNotiDeatail(row.id)">{{row.title}}</span>
+                <span class="name mb-0 text-sm">{{row.title}}</span>
               </div>
             </div>
           </th>
@@ -230,12 +230,6 @@
       clickChangeSunjectInfoButton(){
         BUS.$emit('subjectUpdate', true);
         console.log("이벤트버스: BUS.$emit('subjectUpdate', true);");
-      },
-      clickNotiDeatail(id){
-        BUS.$emit('goNotiDetail', id);
-      },
-      clickAddNotiButton(){
-        BUS.$emit('createNoti', true);
       },
       updateSubjectReq(){
         let vm = this;
