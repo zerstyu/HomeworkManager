@@ -1,8 +1,8 @@
 package com.manager.homework.repository;
 
 import com.google.common.collect.Lists;
-import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
+import com.manager.homework.vo.SubjectResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -24,7 +24,7 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<SearchSubjectDto> selectAllSubjectList(Long userId) {
+    public List<SubjectResponse> selectAllSubjectList(Long userId) {
         BooleanBuilder builder = new BooleanBuilder();
 
         if (userId != null) {
@@ -35,19 +35,19 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
                 queryFactory.select(user.id).from(user).where(builder).fetch());
     }
 
-    private List<SearchSubjectDto> getSearchSubjectDtoList(List<Long> userIdList) {
-        List<SearchSubjectDto> searchSubjectDtoList = Lists.newArrayList();
+    private List<SubjectResponse> getSearchSubjectDtoList(List<Long> userIdList) {
+        List<SubjectResponse> subjectResponseList = Lists.newArrayList();
 
         userIdList.forEach(it -> {
-            searchSubjectDtoList.add(
-                    SearchSubjectDto.builder()
+            subjectResponseList.add(
+                    SubjectResponse.builder()
                             .userId(it)
                             .userName(getUserName(it))
                             .subjectDtoList(getSubjectDtoList(it))
                             .joinSubjectDtoList(getJoinSubjectDtoList(it)).build());
         });
 
-        return searchSubjectDtoList;
+        return subjectResponseList;
     }
 
     private String getUserName(Long userId) {

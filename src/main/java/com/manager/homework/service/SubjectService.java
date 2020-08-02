@@ -5,8 +5,8 @@ import com.manager.homework.exception.CustomException;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.type.ErrorCode;
 import com.manager.homework.vo.RequestSubjectDto;
-import com.manager.homework.vo.SearchSubjectDto;
 import com.manager.homework.vo.SubjectDto;
+import com.manager.homework.vo.SubjectResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class SubjectService {
 
     private static final int MAX_MAKE_RETRY = 5;
 
-    public List<SearchSubjectDto> getSubjectList(Long userId) {
+    public List<SubjectResponse> getSubjectList(Long userId) {
         return subjectRepository.selectAllSubjectList(userId);
     }
 
