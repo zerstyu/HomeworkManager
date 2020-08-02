@@ -21,7 +21,7 @@ import java.util.List;
 public class SubjectApiController {
     private final SubjectService subjectService;
 
-    @ApiOperation(value = "과목 리스트 조회", notes = "참여한 과목 리스트 조회")
+    @ApiOperation(value = "과목 리스트 조회", notes = "유저가 만든 과목과 참여한과목 리스트 조회")
     @GetMapping
     public Response<List<SearchSubjectDto>> getSubjectList(Long userId) {
         return Response.ok(subjectService.getSubjectList(userId));
@@ -48,8 +48,8 @@ public class SubjectApiController {
     }
 
     @ApiOperation(value = "초대코드로 과목 조회", notes = "초대코드로 과목 조회")
-    @GetMapping("/invites/{inviteCode}")
-    public Response<SubjectDto> getJoinSubject(@PathVariable("inviteCode") String inviteCode) {
+    @GetMapping("/invites")
+    public Response<SubjectDto> getJoinSubject(@RequestParam("inviteCode") String inviteCode) {
         return Response.ok(subjectService.getJoinSubject(inviteCode));
     }
 
