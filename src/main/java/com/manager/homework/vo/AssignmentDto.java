@@ -11,4 +11,5 @@ public class AssignmentDto {
     private Integer score;
     private Boolean isOpen;
     private String note;
+    private String subjectName;
 }
