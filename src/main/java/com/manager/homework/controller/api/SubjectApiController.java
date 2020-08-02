@@ -34,9 +34,9 @@ public class SubjectApiController {
     }
 
     @ApiOperation(value = "과목 수정", notes = "특정 과목 수정")
-    @PutMapping
-    public Response<String> updateSubject(@RequestBody RequestSubjectDto dto) {
-        subjectService.updateSubject(dto);
+    @PutMapping("/{id}")
+    public Response<String> updateSubject(@PathVariable("id") Long subjectId, @RequestBody RequestSubjectDto dto) {
+        subjectService.updateSubject(subjectId, dto);
         return Response.ok();
     }
 
@@ -46,4 +46,11 @@ public class SubjectApiController {
         subjectService.deleteSubject(subjectId);
         return Response.ok();
     }
+
+    @ApiOperation(value = "초대코드로 과목 조회", notes = "초대코드로 과목 조회")
+    @GetMapping("/invites/{inviteCode}")
+    public Response<SubjectDto> getJoinSubject(@PathVariable("inviteCode") String inviteCode) {
+        return Response.ok(subjectService.getJoinSubject(inviteCode));
+    }
+
 }

@@ -11,7 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 @AllArgsConstructor
-public class RequestSubjectDto {
+public class RequestJoinSubjectDto {
+    private Long subjectId;
     private String subjectName;
     private Long userId;
 }

@@ -37,14 +37,20 @@ public class SubjectService {
                                 .build()));
     }
 
-    public void updateSubject(RequestSubjectDto dto) {
-        Subject subject = commonService.getSubject(dto.getSubjectId());
+    public void updateSubject(Long subjectId, RequestSubjectDto dto) {
+        Subject subject = commonService.getSubject(subjectId);
         subject.setName(dto.getSubjectName());
         subjectRepository.save(subject);
     }
 
     public void deleteSubject(Long subjectId) {
         subjectRepository.deleteById(subjectId);
+    }
+
+    public SubjectDto getJoinSubject(String inviteCode) {
+        return Subject.toDto(
+                subjectRepository.findByInviteCode(inviteCode)
+                        .orElseThrow(() -> new CustomException(ErrorCode.SUBJECT_INVITE_CODE_NONE)));
     }
 
     private String makeRandomCode() {
