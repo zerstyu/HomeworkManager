@@ -224,4 +224,9 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         fileList.add(noticeFile);
         return fileList;
     }
+
+    private List<Product> getProductList() {
+
+        return null;
+    }
 }
