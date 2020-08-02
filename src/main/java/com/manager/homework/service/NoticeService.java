@@ -105,6 +105,7 @@ public class NoticeService {
 
     private NoticeResponse convertToResponse(Notice notice) {
         NoticeResponse noticeResponse = new NoticeResponse();
+        noticeResponse.setId(notice.getId());
         noticeResponse.setTitle(notice.getTitle());
         noticeResponse.setContent(notice.getContent());
         noticeResponse.setD_day(convertToDDay(notice.getExpiredAt()));
@@ -113,6 +114,7 @@ public class NoticeService {
         noticeResponse.setExpiredAt(notice.getExpiredAt());
         noticeResponse.setUserId(notice.getUser().getId());
         noticeResponse.setUserName(notice.getUser().getName());
+        noticeResponse.setSubjectName(notice.getSubject().getName());
         List<NoticeFile> noticeFileList = noticeFileRepository.findByNoticeId(notice.getId());
         List<NoticeFileResponse> noticeFileResponseList = Lists.newArrayList();
         for (NoticeFile noticeFile : noticeFileList) {

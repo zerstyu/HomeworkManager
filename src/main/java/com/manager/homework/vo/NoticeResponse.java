@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class NoticeResponse {
+    private Long id;
     private String title;
     private String content;
     private String d_day;
@@ -17,5 +18,6 @@ public class NoticeResponse {
     private LocalDate expiredAt;
     private Long userId;
     private String userName;
+    private String subjectName;
     private List<NoticeFileResponse> noticeFileResponseList;
 }
