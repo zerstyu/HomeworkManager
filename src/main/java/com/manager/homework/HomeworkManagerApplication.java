@@ -180,6 +180,17 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .expiredAt(LocalDate.from(LocalDate.now()).minusDays(7))
                 .build();
         noticeList.add(notice6);
+
+        Notice notice7 = Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(1).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.COMPLETED)
+                .title("과학 3번 과제")
+                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).minusDays(7))
+                .build();
+        noticeList.add(notice7);
         return noticeList;
     }
 
@@ -194,6 +205,37 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .isOpen(true)
                 .build();
         assignmentList.add(assignment);
+
+        assignmentList.add(
+                Assignment.builder()
+                        .user(noticeList.get(0).getUser())
+                        .subject(noticeList.get(0).getSubject())
+                        .notice(noticeList.get(1))
+                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .score(25)
+                        .isOpen(true)
+                        .build());
+
+        assignmentList.add(
+                Assignment.builder()
+                        .user(noticeList.get(6).getUser())
+                        .subject(noticeList.get(0).getSubject())
+                        .notice(noticeList.get(0))
+                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .score(80)
+                        .isOpen(true)
+                        .build());
+
+        assignmentList.add(
+                Assignment.builder()
+                        .user(noticeList.get(6).getUser())
+                        .subject(noticeList.get(0).getSubject())
+                        .notice(noticeList.get(6))
+                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .score(10)
+                        .isOpen(true)
+                        .build());
+
         return assignmentList;
     }
 
