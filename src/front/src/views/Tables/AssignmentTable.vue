@@ -10,8 +10,8 @@
           </h3>
         </div>
         <div class="col text-right">
-          <base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
-          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button>
+          <!--base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
+          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button-->
         </div>
       </div>
     </div>
@@ -21,118 +21,50 @@
                   :class="type === 'dark' ? 'table-dark': ''"
                   :thead-classes="type === 'dark' ? 'thead-dark': 'thead-light'"
                   tbody-classes="list"
-                  :data="noticeData">
+                  :data="assignmentsData">
         <template slot="columns">
-          <th>과제명</th>
-          <th>D-Day</th>
-          <th>과제유형</th>
-          <th>상태</th>
-          <th>마감일</th>
+          <th>제출자</th>
+          <th>제출타입</th>
+          <th>점수</th>
+          <th>제출날짜</th>
+          <th>확인</th>
         </template>
 
         <template slot-scope="{row}">
           <th scope="row">
             <div class="media align-items-center">
-              <!--a href="#" class="avatar rounded-circle mr-3">
-                <img alt="Image placeholder" :src="row.img">
-              </a-->
               <div class="media-body">
-                <span class="name mb-0 text-sm">{{row.title}}</span>
+                <span class="name mb-0 text-sm">{{row.userName}}</span>
               </div>
             </div>
           </th>
-          <td class="budget">
-            {{row.d_day}}
-          </td>
-          <td v-if="row.type=='OPEN'">
+
+          <td v-if="row.isOpen==true">
             <badge class="badge-dot mr-4" type="info">
               <span class="status">OPEN</span>
-            </badge>
-            <!--badge class="badge-dot mr-4" :type="row.statusType">
-              <i :class="`bg-${row.statusType}`"></i>
-              <span class="status">{{row.status}}</span>
-            </badge-->
-          </td>
-          <td v-else>
-            <badge class="badge-dot mr-4" type="warning">
-              <span class="status">PRIVATE</span>
-            </badge>
-          </td>
-
-
-          <td v-if="row.status=='PENDING'">
-            <badge class="badge-dot mr-4" type="warning">
-              <i class="bg-warning"></i>
-              <span class="status">대기</span>
-            </badge>
-          </td>
-          <td v-else-if="row.status=='PROGRESS'">
-            <badge class="badge-dot mr-4" type="info">
-              <i class="bg-info"></i>
-              <span class="status">진행중</span>
-            </badge>
-          </td>
-          <td v-else-if="row.status=='COMPLETED'">
-            <badge class="badge-dot mr-4" type="success">
-              <i class="bg-success"></i>
-              <span class="status">완료</span>
             </badge>
           </td>
           <td v-else>
             <badge class="badge-dot mr-4" type="danger">
-              <i class="bg-danger"></i>
-              <span class="status">취소됨</span>
+              <span class="status">PRIVATE</span>
             </badge>
           </td>
 
-
-          <td>
-            {{row.expiredAt}}
+          <td class="budget" v-if="row.score == null">
+            채점중
+          </td>
+          <td class="budget" v-else>
+            {{row.score}}
           </td>
 
-          <!--td>
-            <div class="avatar-group">
-              <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                <img alt="Image placeholder" src="img/theme/team-1-800x800.jpg">
-              </a>
-              <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                <img alt="Image placeholder" src="img/theme/team-2-800x800.jpg">
-              </a>
-              <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                <img alt="Image placeholder" src="img/theme/team-3-800x800.jpg">
-              </a>
-              <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg">
-              </a>
-            </div>
-          </td-->
-
-          <!--td>
-            <div class="d-flex align-items-center">
-              <span class="completion mr-2">{{row.completion}}%</span>
-              <div>
-                <base-progress :type="row.statusType"
-                               :show-percentage="false"
-                               class="pt-0"
-                               :value="row.completion"/>
-              </div>
-            </div>
+          <td class="budget">
+            {{row.createdAt}}
           </td>
 
-          <td class="text-right">
-            <base-dropdown class="dropdown"
-                           position="right">
-              <a slot="title" class="btn btn-sm btn-icon-only text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-ellipsis-v"></i>
-              </a>
-
-              <template>
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </template>
-            </base-dropdown>
-          </td-->
+          <td class="budget">
+            <base-button type="primary" size="sm" @click="clickAssignmentDetailButton(row.id)">상세보기</base-button>
+            <base-button type="primary" size="sm" v-if="isNotiMaster==true" @click="clickConfirmButton(row.id)">채점하기</base-button>
+          </td>
 
         </template>
 
@@ -170,12 +102,8 @@
       type: {
         type: String
       },
-      title: String,
-      noticeData: Array,
-      subjectMasterId: String,
-      subjectId: String,
-      subjectPivotNameEdit: String,
-      nowUser: String
+      assignmentsData: Array,
+      isNotiMaster: Array
     },
     data() {
       return {
@@ -227,9 +155,13 @@
       }
     },
     methods : {
-      clickChangeSunjectInfoButton(){
-        BUS.$emit('subjectUpdate', true);
-        console.log("이벤트버스: BUS.$emit('subjectUpdate', true);");
+      clickAssignmentDetailButton(id){
+        BUS.$emit('assignmentDetail', id);
+        console.log("이벤트버스: BUS.$emit('assignmentDetail', true);");
+      },
+      clickConfirmButton(id){
+        BUS.$emit('confirm', id);
+        console.log("이벤트버스: BUS.$emit('confirm', true);");
       },
       updateSubjectReq(){
         let vm = this;
