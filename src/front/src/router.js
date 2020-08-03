@@ -35,6 +35,11 @@ export default new Router({
           component: () => import('./views/HomeworkEdit.vue')
         },
         {
+          path: '/homeworkDetail/:assignId',
+          name: '제출과제 상세보기',
+          component: () => import('./views/HomeworkDetail.vue')
+        },
+        {
           path: '/homeworkManage',
           name: '과제 리스트',
           component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')

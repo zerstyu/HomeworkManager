@@ -6,7 +6,7 @@
                         <h2>과제에 참여하세요 !</h2>
                         <h3>{{masterName}}님의 {{subjectName}} 과목 입니다.</h3>
                         <div class="text-center">
-                            <base-button v-on:click="loginReq()" type="primary" class="my-4">로그인</base-button>
+                            <base-button v-on:click="joinReq()" type="primary" class="my-4">참여하기</base-button>
                         </div>
                     </div>
                 </div>
