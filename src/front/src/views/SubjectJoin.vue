@@ -4,7 +4,7 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-5">
                         <h2>과제에 참여하세요 !</h2>
-                        <h3>추대윤님의 수학 과목 입니다.</h3>
+                        <h3>{{masterName}}님의 {{subjectName}} 과목 입니다.</h3>
                         <div class="text-center">
                             <base-button v-on:click="loginReq()" type="primary" class="my-4">로그인</base-button>
                         </div>
@@ -49,12 +49,27 @@ export default {
           email: '',
           password: ''
         },
+          subjectName: '',
+          masterName: '',
         modals: false,
         modals2: false
       }
     },
     mounted() {
+        let vm = this;
         //this.$route.params.inviteCode;
+        axios.get('/api/subjects/invites?inviteCode='+ this.$route.params.inviteCode)
+            .then(function(response){
+
+                if(response.data.statusCode == 'OK'){
+                    vm.subjectName = response.data.data.subjectName;
+                    vm.masterName = response.data.data.userName;
+                }
+                else{
+                    vm.modals = true;
+                    vm.responseMsg = response.data.message;
+                }
+            });
     },
     methods: {
         joinReq(){

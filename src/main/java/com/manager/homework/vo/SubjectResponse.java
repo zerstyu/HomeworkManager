@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Data
 @AllArgsConstructor
-public class SearchSubjectDto {
+public class SubjectResponse {
     private Long userId;
     private String userName;
     private List<SubjectDto> subjectDtoList;
