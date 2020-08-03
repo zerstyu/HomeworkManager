@@ -15,8 +15,8 @@
                                 class="mb-4 mb-xl-0">
 
                         <template slot="footer">
-                            <!--span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span-->
-                            <span class="text-nowrap">{{teacherSubject.inviteCode}}</span>
+                            <span class="text-info mr-2"><i class="fa fa-arrow-up"></i>CODE </span>
+                            <span class="text-nowrap">{{teacherSubject.inviteCode}} </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
