@@ -30,4 +30,8 @@ public class AssignmentFile extends BaseEntity {
     @Lob
     @Column
     private String fileString;
+
+    @Lob
+    @Column
+    private String historyFileString;
 }

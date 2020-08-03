@@ -9,4 +9,5 @@ public class AssignmentFileDto {
     private Long userId;
     private Long assignmentId;
     private String fileString;
+    private String historyFileString;
 }

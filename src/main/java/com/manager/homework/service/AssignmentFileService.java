@@ -65,6 +65,10 @@ public class AssignmentFileService {
 //            blockService.addBlock(assignmentFile.getFileString());
         }
 
+        if (assignmentFile.getHistoryFileString() != null) {
+            assignmentFile.setHistoryFileString(assignmentFileDto.getHistoryFileString());
+        }
+
         assignmentFileRepository.save(assignmentFile);
         return assignmentFile;
     }
@@ -84,6 +88,7 @@ public class AssignmentFileService {
                     .user(userEntityWrapper.get())
                     .assignment(assignmentEntityWrapper.get())
                     .fileString(assignmentFileDto.getFileString())
+                    .historyFileString(assignmentFileDto.getHistoryFileString())
                     .build();
 
             assignmentFileList.add(assignmentFile);
