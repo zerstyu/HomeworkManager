@@ -42,8 +42,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
         assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
-        productRepository.saveAll(getProductList());
-        orderRepository.saveAll(getOrderList());
+        List<Product> productList = productRepository.saveAll(getProductList());
+        orderRepository.saveAll(getOrderList(userList, productList));
     }
 
     private List<User> getUserList() {
@@ -278,52 +278,52 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         return productList;
     }
 
-    private List<Order> getOrderList() {
+    private List<Order> getOrderList(List<User> userList, List<Product> productList) {
         List orderList = Lists.newArrayList();
 
         orderList.add(Order.builder()
-                .user(getUserList().get(1))
-                .product(getProductList().get(0))
+                .user(userList.get(1))
+                .product(productList.get(0))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(2))
-                .product(getProductList().get(0))
+                .user(userList.get(2))
+                .product(productList.get(0))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(3))
-                .product(getProductList().get(0))
+                .user(userList.get(3))
+                .product(productList.get(0))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(0))
-                .product(getProductList().get(1))
+                .user(userList.get(0))
+                .product(productList.get(1))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(2))
-                .product(getProductList().get(1))
+                .user(userList.get(2))
+                .product(productList.get(1))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(3))
-                .product(getProductList().get(1))
+                .user(userList.get(3))
+                .product(productList.get(1))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(0))
-                .product(getProductList().get(2))
+                .user(userList.get(0))
+                .product(productList.get(2))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(3))
-                .product(getProductList().get(2))
+                .user(userList.get(3))
+                .product(productList.get(2))
                 .build());
 
         orderList.add(Order.builder()
-                .user(getUserList().get(3))
-                .product(getProductList().get(3))
+                .user(userList.get(3))
+                .product(productList.get(3))
                 .build());
 
         return orderList;

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Data
 // 상품
 public class Product extends BaseEntity {
-    @Column(name = "name", length = 10)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "price", nullable = false)
