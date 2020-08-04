@@ -8,4 +8,5 @@ public class AssignmentFileResponse {
     private Long assignmentFileId;
     private FileType type;
     private String fileString;
+    private String historyFileString;
 }

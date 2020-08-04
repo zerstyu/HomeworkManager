@@ -11,5 +11,8 @@ public class AssignmentResponse {
     private int score;
     private Boolean isOpen;
     private String note;
+    private String userName;
+    private String subjectName;
+    private String noticeTitle;
     private List<AssignmentFileResponse> assignmentFileList;
 }

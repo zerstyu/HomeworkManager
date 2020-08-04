@@ -97,6 +97,9 @@ public class AssignmentService {
         assignmentResponse.setScore(assignment.getScore());
         assignmentResponse.setIsOpen(assignment.getIsOpen());
         assignmentResponse.setNote(assignment.getNote());
+        assignmentResponse.setUserName(assignment.getUser().getName());
+        assignmentResponse.setSubjectName(assignment.getSubject().getName());
+        assignmentResponse.setNoticeTitle(assignment.getNotice().getTitle());
         assignmentResponse.setAssignmentFileList(getFileResponseList(assignment.getId()));
         return assignmentResponse;
     }
@@ -109,6 +112,7 @@ public class AssignmentService {
             assignmentFileResponse.setAssignmentFileId(assignmentFile.getId());
             assignmentFileResponse.setType(assignmentFile.getType());
             assignmentFileResponse.setFileString(assignmentFile.getFileString());
+            assignmentFileResponse.setHistoryFileString(assignmentFile.getHistoryFileString());
             assignmentFileResponseList.add(assignmentFileResponse);
         }
         return assignmentFileResponseList;
