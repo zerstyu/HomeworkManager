@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,7 +32,8 @@ public class RecommendService {
             recommendResponse.setProductImageUrl(order.getProduct().getImageUrl());
             recommendResponseList.add(recommendResponse);
         }
+
         Collections.shuffle(recommendResponseList);
-        return recommendResponseList;
+        return recommendResponseList.stream().limit(3).collect(Collectors.toList());
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@Api(tags = {"9. Recommend"})
+@Api(tags = {"10. Recommend"})
 @AllArgsConstructor
 public class RecommendApiController {
     private RecommendService recommendService;

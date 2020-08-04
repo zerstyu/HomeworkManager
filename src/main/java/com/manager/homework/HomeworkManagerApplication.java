@@ -317,6 +317,28 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .build();
         productList.add(product5);
 
+        Product product6 = Product.builder()
+                .name("EBS 수능완성 사회탐구영역 경제")
+                .price(5700)
+                .imageUrl("http://image.yes24.com/goods/74211634/800x0")
+                .build();
+        productList.add(product6);
+
+        Product product7 = Product.builder()
+                .name("EBS 수능완성 국영수 자연계(이과) 세트")
+                .price(28700)
+                .imageUrl("http://image.yes24.com/goods/90445030/800x0")
+                .build();
+        productList.add(product7);
+
+        Product product8 = Product.builder()
+                .name("EBS 수능완성 국영수 인문계(문과) 세트")
+                .price(28100)
+                .imageUrl("http://image.yes24.com/goods/90445049/800x0")
+                .build();
+        productList.add(product8);
+
+
         return productList;
     }
 
@@ -366,6 +388,56 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         orderList.add(Order.builder()
                 .user(userList.get(3))
                 .product(productList.get(3))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(4))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(5))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(6))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(7))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(1))
+                .product(productList.get(4))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(1))
+                .product(productList.get(6))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(4))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(5))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(6))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(7))
                 .build());
 
         return orderList;
