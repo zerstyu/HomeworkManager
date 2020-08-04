@@ -11,6 +11,7 @@ public class AssignmentResponse {
     private int score;
     private Boolean isOpen;
     private String note;
+    private Long userId;
     private String userName;
     private Long subjectId;
     private String subjectName;
