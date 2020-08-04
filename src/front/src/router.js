@@ -30,7 +30,7 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
         },
         {
-          path: '/homeworkEdit',
+          path: '/homeworkEdit/:assignId',
           name: '채점하기',
           component: () => import('./views/HomeworkEdit.vue')
         },

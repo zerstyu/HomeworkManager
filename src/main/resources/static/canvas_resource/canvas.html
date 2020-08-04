@@ -75,7 +75,7 @@
       function loadData(data){
         var backgroundImage = new Image()
         //배경 지정
-        backgroundImage.src = data.bgImg;
+        backgroundImage.src = data.fileString;
         var lc = LC.init(
                 document.getElementsByClassName('literally localstorage')[0],
                 {
@@ -96,11 +96,27 @@
                 }
         );
 
-        lc.loadSnapshot(JSON.parse(data.data));
+        //히스토리 데이터가 비어있으면 원본상태이므로 히스토리를 그리지 않는다
+        if(data.historyFileString != null && data.historyFileString != '') {
+          //lc.loadSnapshot(JSON.parse(data.historyFileString.replaceAll('\\"', '"')));
+          lc.loadSnapshot(JSON.parse(data.historyFileString.replace(/&quot;/g, '"')));
+
+        }
         lc.on('drawingChange', function() {
           //localStorage.setItem(localStorageKey, JSON.stringify(lc.getSnapshot()));
           chaneData = JSON.stringify(lc.getSnapshot());
         });
+
+        return 'OK';
+      }
+
+      function getHistoryData(){
+        //chaneData = JSON.stringify(lc.getSnapshot());
+        return chaneData.replace(/\"/g,"&quot;");
+
+
+        //return chaneData.replaceAll('"', '\\"');
+
       }
     </script>
   </body>
