@@ -12,7 +12,9 @@ public class AssignmentResponse {
     private Boolean isOpen;
     private String note;
     private String userName;
+    private Long subjectId;
     private String subjectName;
+    private Long noticeId;
     private String noticeTitle;
     private List<AssignmentFileResponse> assignmentFileList;
 }

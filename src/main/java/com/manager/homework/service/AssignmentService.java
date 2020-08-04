@@ -98,7 +98,9 @@ public class AssignmentService {
         assignmentResponse.setIsOpen(assignment.getIsOpen());
         assignmentResponse.setNote(assignment.getNote());
         assignmentResponse.setUserName(assignment.getUser().getName());
+        assignmentResponse.setSubjectId(assignment.getSubject().getId());
         assignmentResponse.setSubjectName(assignment.getSubject().getName());
+        assignmentResponse.setNoticeId(assignment.getNotice().getId());
         assignmentResponse.setNoticeTitle(assignment.getNotice().getTitle());
         assignmentResponse.setAssignmentFileList(getFileResponseList(assignment.getId()));
         return assignmentResponse;
