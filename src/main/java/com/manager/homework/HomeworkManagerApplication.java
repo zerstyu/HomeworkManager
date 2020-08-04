@@ -26,6 +26,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private final NoticeFileRepository noticeFileRepository;
     private final AssignmentRepository assignmentRepository;
     private final AssignmentFileRepository assignmentFileRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(HomeworkManagerApplication.class, args);
@@ -40,6 +42,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(noticeList));
         assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
+        List<Product> productList = productRepository.saveAll(getProductList());
+        orderRepository.saveAll(getOrderList(userList, productList));
     }
 
     private List<User> getUserList() {
@@ -72,6 +76,15 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .name("lee")
                 .groupName("HomeworkManager")
                 .birthday(LocalDate.of(2000, 11, 10))
+                .gender(Gender.WOMAN)
+                .build());
+
+        userList.add(User.builder()
+                .email("highschool@naver.com")
+                .password("high")
+                .name("학생")
+                .groupName("HomeworkManager")
+                .birthday(LocalDate.of(2002, 7, 7))
                 .gender(Gender.WOMAN)
                 .build());
         return userList;
@@ -265,5 +278,96 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .build();
         fileList.add(noticeFile);
         return fileList;
+    }
+
+    private List<Product> getProductList() {
+        List productList = Lists.newArrayList();
+        Product product = Product.builder()
+                .name("EBS 고교 50일 수학 (상)")
+                .price(7000)
+                .imageUrl("http://image.yes24.com/goods/34421049/800x0")
+                .build();
+        productList.add(product);
+
+        Product product2 = Product.builder()
+                .name("EBS 수능특강 국어영역 문학")
+                .price(8200)
+                .imageUrl("http://image.yes24.com/goods/85927903/800x0")
+                .build();
+        productList.add(product2);
+
+        Product product3 = Product.builder()
+                .name("EBS 수능완성 영어영역 영어")
+                .price(9800)
+                .imageUrl("http://image.yes24.com/goods/90443862/800x0")
+                .build();
+        productList.add(product3);
+
+        Product product4 = Product.builder()
+                .name("EBS 수능완성 과학탐구영역 지구과학1")
+                .price(5900)
+                .imageUrl("http://image.yes24.com/goods/90444326/800x0")
+                .build();
+        productList.add(product4);
+
+        Product product5 = Product.builder()
+                .name("EBS 수능완성 사회탐구영역 사회·문화")
+                .price(6400)
+                .imageUrl("http://image.yes24.com/goods/90444094/800x0")
+                .build();
+        productList.add(product5);
+
+        return productList;
+    }
+
+    private List<Order> getOrderList(List<User> userList, List<Product> productList) {
+        List orderList = Lists.newArrayList();
+
+        orderList.add(Order.builder()
+                .user(userList.get(1))
+                .product(productList.get(0))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(2))
+                .product(productList.get(0))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(0))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(1))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(2))
+                .product(productList.get(1))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(1))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(0))
+                .product(productList.get(2))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(2))
+                .build());
+
+        orderList.add(Order.builder()
+                .user(userList.get(3))
+                .product(productList.get(3))
+                .build());
+
+        return orderList;
     }
 }
