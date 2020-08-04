@@ -6,7 +6,7 @@
                 <div class="col-xl-12 col-lg-12">
                     <stats-card title="제출 정보"
                                 type="gradient-red"
-                                sub-title="수학2 > 지수함수와 로그 그래프"
+                                v-bind:sub-title="subjectName + ' > ' + noticeTitle"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -22,7 +22,7 @@
                 <div class="col-xl-12 col-lg-12">
                     <stats-card title="제출자"
                                 type="gradient-red"
-                                sub-title="이태호"
+                                v-bind:sub-title="userName"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -62,17 +62,19 @@
 
                             <div class="row icon-examples" v-if="feedback != null">
 
-                                <!--base-button type="primary">
-                                    <span>80점</span>
-                                    <badge type="white">만점 : 100</badge>
-                                </base-button-->
                                 <div class="col-md-12">
-                                <h2><i class="ni ni-ruler-pencil"></i> 채점</h2>
-                                    <iframe id="homeworkCanvasIframe" style="width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
-                                    </iframe> </div>
+                                    <h2><i class="ni ni-ruler-pencil"></i> 채점 결과</h2>
+                                    <div v-for="index in paginationTotal" :key="index">
+                                        <iframe id="homeworkCanvasIframe" name="homeworkCanvasIframe" style="display: none;width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
+                                        </iframe>
+                                    </div>
+                                </div>
 
                                 <div>
-                                    <base-pagination :page-count="10" v-model="pagination.default"></base-pagination>
+                                    <base-pagination align="center" :page-count="paginationTotal" v-model="paginationDefault"></base-pagination>
+                                    <br/>
+                                    <br/>
+                                    <!--base-button type="info" icon="ni ni-bag-17" @click="movePage(paginationDefault)">으아2</base-button-->
                                 </div>
 
                                 <br/>
@@ -109,6 +111,7 @@
                                     <br/>
                                     <div class="col-md-12">
                                         <base-button type="default" icon="ni ni-bag-17" @click="modals3 = true">학생제출원본 확인</base-button>
+                                        <base-button type="warning" icon="ni ni-bag-17" @click="modals5 = true">제출과제 수정</base-button>
                                     </div>
                                     <br/>
                                     <br/>
@@ -167,7 +170,7 @@
 
         <modal :show.sync="modals5">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel5">과제 제출</h5>
+                <h5 class="modal-title" id="exampleModalLabel5">과제 제출 수정</h5>
             </template>
             <div>
 
@@ -222,9 +225,11 @@
                 icons: [
                     { name: "ni ni-air-baloon" }
                 ],
-                pagination: {
-                    default: 1
-                },
+                //pagination: {
+                //    default: 1
+                //},
+                paginationTotal: 5,
+                paginationDefault: 1,
 
                 isAssignMaster: '',
 
@@ -234,6 +239,12 @@
                 isOpen: false,
                 note: '',
                 score: '',
+                userName: '',//과제 제출학생의 네임값
+                userId: '',//과제 제출학생의 아이디값
+                subjectId: '',
+                subjectName: '',
+                noticeId: '',
+                noticeTitle: '',
 
 
                 createAssignIsOpen: 'OPEN',
@@ -256,6 +267,12 @@
                 modals3: false,
                 modals4: false,
                 modals5: false
+            }
+        },
+        watch: {
+            paginationDefault(newVal) {
+                console.log("watch " + newVal);
+                this.movePage(newVal);
             }
         },
         mounted() {
@@ -284,9 +301,9 @@
                     '{' +
                     '"note": "' + vm.createAssignNote.replace(/(?:\r\n|\r|\n)/g, '<br/>') + '",' +
                     '"isOpen": "' + isOpenOrClose + '",' +
-                    '"noticeId": "2",' +
+                    '"noticeId": "' + vm.noticeId + '",' +
                     '"score": "0",' +
-                    '"subjectId": "1",' +
+                    '"subjectId": "' + vm.subjectId + '",' +
                     '"userId": "' + localStorage.getItem('userId') + '"' +
                     '}'
                     , axiosConfig)
@@ -370,10 +387,22 @@
                             vm.isOpen = response.data.data.isOpen;
                             vm.note = response.data.data.note;
                             vm.score = response.data.data.score;
+                            vm.userId = response.data.data.userId;
+                            vm.subjectId = response.data.data.subjectId;
+                            vm.subjectName = response.data.data.subjectName;
+                            vm.noticeId = response.data.data.noticeId;
+                            vm.noticeTitle = response.data.data.noticeTitle;
 
                             if(vm.assignmentId == localStorage.getItem('userId')){
                                 vm.isAssignMaster = true;
                             }
+
+                            vm.paginationTotal = response.data.data.assignmentFileList.length;
+                            if(vm.paginationTotal > 0){
+                                vm.movePage(1);
+                            }
+
+                            vm.canvasOnLoad();
 
                         }
                         else{
@@ -388,19 +417,39 @@
 
 
             ////////////////////
-            onCopy() {
-                this.$notify({
-                    type: 'success',
-                    title: 'Copied to clipboard'
-                })
-            },
-            sendCanvas(canvasData) {
+            sendCanvas(canvasData, idx) {
                 //alert(canvasData);
-                let canvasIframe = document.getElementById("homeworkCanvasIframe");
-                canvasIframe.contentWindow.loadData(canvasData);
+                let canvasIframe = document.getElementsByName("homeworkCanvasIframe")[idx];
+                let responData = canvasIframe.contentWindow.loadData(canvasData);//
+                //let responData = canvasIframe.contentWindow.loadData(this.assignmentFileList[0]);
+                console.log("응답입니다 " + responData);
+            },
+            getHistoryData(idx){
+                let canvasIframe = document.getElementsByName("homeworkCanvasIframe")[idx];
+                let responData = canvasIframe.contentWindow.getHistoryData();
+
+                this.assignmentFileList[idx].historyFileString = responData;
+                console.log("히스토리 내역입니다" + responData);
+                return responData;
             },
             canvasOnLoad(){
-                this.sendCanvas(this.homeworkCanvasData[0]);
+                //this.sendCanvas(this.assignmentFileList[0]);
+                //let canvasIframe = document.getElementsByName("homeworkCanvasIframe");
+                for(let i = 0; i < this.paginationTotal; i++){
+                    this.sendCanvas(this.assignmentFileList[i], i);
+                }
+            },
+            movePage(page){
+                console.log("movePage : " + page);
+                let canvasIframe = document.getElementsByName("homeworkCanvasIframe");
+                for(let i = 0; i < this.paginationTotal; i++){
+                    if(i == (page - 1)){
+                        canvasIframe[i].style.display = 'block';
+                    }
+                    else{
+                        canvasIframe[i].style.display = 'none';
+                    }
+                }
             }
         }
     };

@@ -156,7 +156,7 @@
 
                     <h4>과제자료 첨부</h4>
                     <base-button size="sm" @click="createAssignFileMinus()" type="primary">-</base-button>
-                    {{notiEditFileLen}}
+                    {{createAssignmentFileLen}}
                     <base-button size="sm" @click="createAssignFilePlus()" type="primary">+</base-button>
                     <br/>
                     <div v-for="index in createAssignmentFileLen" :key="index">
@@ -283,7 +283,8 @@
               vm.goAssignDetail(data);
           });
           BUS.$on('confirm',function(data) {
-              location.href="/#/notice/" + data;
+              //location.href="/#/notice/" + data;
+              vm.goConfirm(data)
           });
       },
       mounted() {
@@ -355,6 +356,9 @@
           },
           goAssignDetail(id){
               location.href="/#/homeworkDetail/" + id;
+          },
+          goConfirm(id){
+              location.href="/#/homeworkEdit/" + id;
           },
           /*
           *
