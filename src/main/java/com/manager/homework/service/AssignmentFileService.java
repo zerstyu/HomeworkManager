@@ -45,11 +45,11 @@ public class AssignmentFileService {
         return fileEntityWrapper.get();
     }
 
-    public List<AssignmentFile> updateAssignmentFileList(Long id, List<AssignmentFileDto> assignmentFileDtoList) {
+    public List<AssignmentFile> updateAssignmentFileList(List<AssignmentFileDto> assignmentFileDtoList) {
         List<AssignmentFile> assignmentFileList = Lists.newArrayList();
-        Optional<AssignmentFile> fileEntityWrapper = assignmentFileRepository.findById(id);
 
         for(AssignmentFileDto assignmentFileDto: assignmentFileDtoList){
+            Optional<AssignmentFile> fileEntityWrapper = assignmentFileRepository.findById(assignmentFileDto.getAssignmentFileId());
             AssignmentFile assignmentFile = fileEntityWrapper.get();
             assignmentFile.setType(assignmentFileDto.getType());
 

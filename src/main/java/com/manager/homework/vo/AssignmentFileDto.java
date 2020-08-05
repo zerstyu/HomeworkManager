@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class AssignmentFileDto {
+    private Long assignmentFileId;
     private FileType type;
     private Long userId;
     private Long assignmentId;
