@@ -15,22 +15,9 @@
                                 class="mb-4 mb-xl-0">
 
                         <template slot="footer">
-                            <span class="text-info mr-2"><i class="fa fa-arrow-up"></i>CODE </span>
+                            <span class="text-success mr-2">접속코드 </span>
                             <span class="text-nowrap">{{teacherSubject.inviteCode}} </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
-                        </template>
-                    </stats-card>
-                </div>
-
-                <div class="col-xl-3 col-lg-6">
-                    <stats-card title="남은과제 : 3/12"
-                                icon="ni ni-check-bold"
-                                sub-title="1학년 1반"
-                                class="mb-4 mb-xl-0">
-
-                        <template slot="footer">
-                            <span class="text-nowrap">http://.2234234232342343423/4234</span>
-                            <base-button type="info" size="sm" @click="copyToClipboard('복사잘돼나')">복사</base-button>
                         </template>
                     </stats-card>
                 </div>
@@ -65,6 +52,27 @@
                     <br/>
                     <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">오픈 과제물 찾기</base-button>
                 </div>
+
+                <div class="col-xl-12 col-lg-12">
+                    <br/><br/>
+                    <h3>빅데이터 분석 나의 교육 추천 서비스</h3>
+                </div>
+                <div class="col-xl-3 col-lg-6"
+                     v-for="recommend in recommenedsEdu" v-bind:key="recommend.id">
+                    <stats-card v-bind:title="recommend.productPrice + '원'"
+                                v-bind:sub-title="recommend.productName"
+                                class="mb-4 mb-xl-0">
+                        <h4>{{recommend.productName}}</h4>
+                        {{recommend.productPrice}}원<br/>
+                        <img v-bind:src="recommend.productImageUrl" style="width:150px;"/>
+                        <template slot="footer">
+                        </template>
+                    </stats-card>
+                </div>
+
+
+                <div id="tableTop"></div>
+
             </div>
 
             <modal :show.sync="modals">
@@ -163,6 +171,29 @@
                 </template>
             </modal>
 
+            <modal :show.sync="modals100">
+                <template slot="header">
+                    <h5 class="modal-title" id="exampleModalLabel100">검색결과</h5>
+                </template>
+                <div v-if="searchData.length == 0">
+                    <h5>검색 결과가 없습니다.</h5>
+                </div>
+                <div v-for="search in searchData" :key="search.id">
+                    <h4>{{search.notice.subject.name}} > {{search.notice.title}}</h4>
+                    <p v-if="search.feedback == null">채점중입니다
+                    </p>
+                    <p v-if="search.feedback != null">평가결과 : {{search.score}}
+                    </p>
+                    <base-button type="danger" size="sm">과제마감일 : {{search.notice.expiredAt}}</base-button>
+                    <base-button type="info" size="sm" @click="goHomeworkDetail(search.id)">상세조회</base-button>
+                    <hr>
+                </div>
+                <template slot="footer">
+                    <base-button type="default" @click="modals100 = false">닫기</base-button>
+                </template>
+            </modal>
+
+
         </base-header>
 
         <div class="container-fluid mt--7">
@@ -205,6 +236,9 @@
               modals2: false,
               modals3: false,
               modals4: false, //노티등록
+              modals100: false, //검색결과 모달
+              searchData: [],
+
               responseMsg: '데이터를 불러오고 있습니다.',
               createSubjectName: '',
               noticeDataSend : null,
@@ -229,13 +263,16 @@
               notiEditSubjectId: '',
               notiEditTitle: '',
               notiEditType: '',
-              notiEditUserId: ''
+              notiEditUserId: '',
+
+              recommenedsEdu: []
 
           }
       },
       created() {
           this.getSubjects();
           this.getNotices();
+          this.getRecommends();
           //let vm = this;
           //vm.modals = false;
 /*
@@ -256,13 +293,36 @@
           BUS.$on('createNoti',function(data) {
               vm.modals4 = data;
           });
-
+          BUS.$on('searchComplete',function(data) {
+              vm.searchData = data;
+              vm.modals100 = true;
+          });
 
       },
       mounted() {
           this.modals = false;
       },
       methods: {
+          getRecommends(){
+              let vm = this;
+
+              axios.get('/api/recommends?userId=' + localStorage.getItem('userId'))
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+
+                          vm.recommenedsEdu = [];
+                          for(let i = 0; i < response.data.data.length; i++){
+                              vm.recommenedsEdu.push({
+                                  productImageUrl : response.data.data[i].productImageUrl,
+                                  productName : response.data.data[i].productName,
+                                  productPrice :response.data.data[i].productPrice,
+                              });
+                          }
+                          vm.recommenedsEdu = response.data.data;
+
+                      }
+                  });
+          },
           createSubject(){
               this.modals2 = false;
               let vm = this;
@@ -355,7 +415,7 @@
                   console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].subjectId);
               }
 
-              location.href="#subjectRoomJoinButton";
+              location.href="#tableTop";
               //console.log("res2 : " + this.teacherSubjects[idx].icon);
           },
           updateSubjectReq(){
@@ -447,6 +507,10 @@
           },
           goNotiDetail(id){
               location.href="/#/notice/" + id;
+          },
+          goHomeworkDetail(id){
+              console.log("과제 이동 " + id);
+              location.href="/#/homeworkDetail/" + id;
           },
           createNoti(){
               this.modals4 = false;
