@@ -63,17 +63,16 @@ public class AssignmentFileService {
                 assignmentFile.setAssignment(assignmentEntityWrapper.get());
             }
 
-            if (assignmentFile.getFileString() != null) {
+            if (assignmentFileDto.getFileString() != null) {
                 assignmentFile.setFileString(assignmentFileDto.getFileString());
 //            blockService.addBlock(assignmentFile.getFileString());
             }
 
-            if (assignmentFile.getHistoryFileString() != null) {
+            if (assignmentFileDto.getHistoryFileString() != null) {
                 assignmentFile.setHistoryFileString(assignmentFileDto.getHistoryFileString());
             }
             assignmentFileList.add(assignmentFile);
         }
-
 
         assignmentFileRepository.saveAll(assignmentFileList);
         return assignmentFileList;
