@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(swaggerInfo()).select()
                 .apis(RequestHandlerSelectors.basePackage("com.manager.homework.controller"))
-                .paths(PathSelectors.ant("/api/**"))
+                .paths(PathSelectors.ant("/**"))
                 .build();
     }
 
