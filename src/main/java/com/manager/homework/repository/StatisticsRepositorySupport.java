@@ -63,6 +63,11 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
 
     private void addStatisticsSubjectTotalScoreDto(
             List<StatisticsSubjectTotalScoreDto> dtoList, List<StatisticsResultDto> resultDtoList) {
+
+        if(resultDtoList.size() == 0) {
+            return;
+        }
+
         dtoList.add(
                 StatisticsSubjectTotalScoreDto.builder()
                         .subjectId(resultDtoList.get(0).getSubjectId())
