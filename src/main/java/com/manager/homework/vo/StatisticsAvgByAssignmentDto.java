@@ -6,18 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @RequiredArgsConstructor
 @Data
 @AllArgsConstructor
-public class StatisticsDto {
-    private Long userId;
-    private String userName;
-    private Long subjectId;
-    private String subjectName;
-    private Long assignmentId;
-    private String title;
-    private Integer totalScore;
-    private Double averageScore;
+public class StatisticsAvgByAssignmentDto {
+    Long subjectId;
+    String subjectName;
+    List<StatisticsDto> statisticsDtoList;
 }
