@@ -2,8 +2,8 @@ package com.manager.homework.repository;
 
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.Assignment;
+import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
 import com.manager.homework.vo.StatisticsDto;
-import com.manager.homework.vo.StatisticsResultDto;
 import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.manager.homework.domain.QAssignment.assignment;
+import static com.manager.homework.domain.QNotice.notice;
 import static com.manager.homework.domain.QSubject.subject;
 import static com.manager.homework.domain.QUser.user;
 
@@ -27,15 +28,10 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
         this.queryFactory = queryFactory;
     }
 
-    public List<StatisticsSubjectTotalScoreDto> findByCondition(Long subjectId) {
-        BooleanBuilder builder = new BooleanBuilder();
-        if (subjectId != null) {
-            builder.and(assignment.subject.id.eq(subjectId));
-        }
-
-        List<StatisticsResultDto> resultDtoList =
+    public List<StatisticsSubjectTotalScoreDto> findByTotalScore(Long subjectId) {
+        List<StatisticsDto> resultList =
                 queryFactory
-                        .select(Projections.fields(StatisticsResultDto.class,
+                        .select(Projections.fields(StatisticsDto.class,
                                 user.id.as("userId"),
                                 user.name.as("userName"),
                                 subject.id.as("subjectId"),
@@ -44,43 +40,101 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                         .from(assignment)
                         .join(user).on(user.id.eq(assignment.user.id))
                         .join(subject).on(subject.id.eq(assignment.subject.id))
-                        .where(builder)
+                        .where(getBooleanBuilderBySubjectId(subjectId).and(assignment.feedback.isNotNull()))
                         .groupBy(user.id, user.name, subject.id, subject.name)
                         .orderBy(assignment.score.sum().desc())
                         .fetch();
 
+        return getStatisticsSubjectTotalScoreDto(resultList);
+    }
+
+    private List<StatisticsSubjectTotalScoreDto> getStatisticsSubjectTotalScoreDto(
+            List<StatisticsDto> resultList) {
+
         List<StatisticsSubjectTotalScoreDto> dtoList = Lists.newArrayList();
-        addStatisticsSubjectTotalScoreDto(dtoList, resultDtoList);
+
+        resultList.stream()
+                .collect(Collectors.groupingBy(StatisticsDto::getSubjectId))
+                .forEach((key, value) -> dtoList.add(
+                        StatisticsSubjectTotalScoreDto.builder()
+                                .subjectId(value.get(0).getSubjectId())
+                                .subjectName(value.get(0).getSubjectName())
+                                .average(getAverage(value))
+                                .statisticsDtoList(getTotalScoreStatisticsDtoList(value))
+                                .build()));
+
         return dtoList;
     }
 
-    private double getAverage(List<StatisticsResultDto> resultDtoList) {
-        return resultDtoList.stream()
-                .mapToLong(StatisticsResultDto::getTotalScore)
+    public List<StatisticsAvgByAssignmentDto> findByAvg(Long subjectId) {
+        List<StatisticsDto> resultList =
+                queryFactory
+                        .select(Projections.fields(StatisticsDto.class,
+                                subject.id.as("subjectId"),
+                                subject.name.as("subjectName"),
+                                notice.title.as("title"),
+                                assignment.id.as("assignmentId"),
+                                assignment.score.avg().as("averageScore")))
+                        .from(assignment)
+                        .join(subject).on(subject.id.eq(assignment.subject.id))
+                        .join(notice).on(notice.id.eq(assignment.notice.id))
+                        .where(getBooleanBuilderBySubjectId(subjectId).and(assignment.feedback.isNotNull()))
+                        .groupBy(subject.id, subject.name, assignment.id, notice.title)
+                        .orderBy(assignment.score.avg().desc())
+                        .fetch();
+
+        return getStatisticsAvgByAssignmentDtoDto(resultList);
+    }
+
+    private List<StatisticsAvgByAssignmentDto> getStatisticsAvgByAssignmentDtoDto(
+            List<StatisticsDto> resultList) {
+
+        List<StatisticsAvgByAssignmentDto> dtoList = Lists.newArrayList();
+
+        resultList.stream()
+                .collect(Collectors.groupingBy(StatisticsDto::getSubjectId))
+                .forEach((key, value) -> dtoList.add(
+                        StatisticsAvgByAssignmentDto.builder()
+                                .subjectId(value.get(0).getSubjectId())
+                                .subjectName(value.get(0).getSubjectName())
+                                .statisticsDtoList(getAvgByStatisticsDtoList(value))
+                                .build()));
+
+        return dtoList;
+    }
+
+    private BooleanBuilder getBooleanBuilderBySubjectId(Long subjectId) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if (subjectId != null) {
+            builder.and(assignment.subject.id.eq(subjectId));
+        }
+        return builder;
+    }
+
+    private double getAverage(List<StatisticsDto> resultList) {
+        return resultList.stream()
+                .mapToLong(StatisticsDto::getTotalScore)
                 .average()
                 .orElse(0);
     }
 
-    private void addStatisticsSubjectTotalScoreDto(
-            List<StatisticsSubjectTotalScoreDto> dtoList, List<StatisticsResultDto> resultDtoList) {
+    private List<StatisticsDto> getTotalScoreStatisticsDtoList(List<StatisticsDto> value) {
+        return value.stream()
+                .map(v -> StatisticsDto.builder()
+                        .userId(v.getUserId())
+                        .userName(v.getUserName())
+                        .totalScore(v.getTotalScore())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
-        if(resultDtoList.size() == 0) {
-            return;
-        }
-
-        dtoList.add(
-                StatisticsSubjectTotalScoreDto.builder()
-                        .subjectId(resultDtoList.get(0).getSubjectId())
-                        .subjectName(resultDtoList.get(0).getSubjectName())
-                        .average(getAverage(resultDtoList))
-                        .statisticsDtoList(
-                                resultDtoList.stream()
-                                        .map(v -> StatisticsDto.builder()
-                                                .userId(v.getUserId())
-                                                .userName(v.getUserName())
-                                                .totalScore(v.getTotalScore())
-                                                .build())
-                                        .collect(Collectors.toList()))
-                        .build());
+    private List<StatisticsDto> getAvgByStatisticsDtoList(List<StatisticsDto> value) {
+        return value.stream()
+                .map(v -> StatisticsDto.builder()
+                        .assignmentId(v.getAssignmentId())
+                        .title(v.getTitle())
+                        .averageScore(v.getAverageScore())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
