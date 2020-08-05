@@ -5,10 +5,12 @@
               expand>
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div class="form-group mb-0">
-                <base-input placeholder="Search"
+                <base-input placeholder="오픈자료를 검색해보세요"
                             class="input-group-alternative"
-                            alternative=""
-                            addon-right-icon="fas fa-search">
+                            addon-right-icon="fas fa-search"
+                            v-model="searchQuery"
+                            v-on:keydown.enter="searchOpenHomework()"
+                >
                 </base-input>
             </div>
         </form>
@@ -56,15 +58,36 @@
     </base-nav>
 </template>
 <script>
+    import {BUS} from "../views/EventBus";
+    const axios = require('axios');
+
   export default {
     data() {
       return {
         activeNotifications: false,
         showMenu: false,
-        searchQuery: ''
+        searchQuery: '',
+        searchResult: []
       };
     },
     methods: {
+      searchOpenHomework(){
+          if(this.searchQuery == ''){
+              return;
+          }
+          let vm = this;
+
+          axios.get('/api/assignments?isOpen=true&subjectName=' + this.searchQuery)
+              .then(function(response){
+                  if(response.data.statusCode == 'OK'){
+                      vm.searchResult = [];
+                      vm.searchResult = response.data.data;
+                      BUS.$emit('searchComplete', vm.searchResult);
+                      console.log("검색완료");
+                      vm.searchQuery = '';
+                  }
+              });
+      },
       toggleSidebar() {
         this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
       },

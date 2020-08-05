@@ -344,7 +344,8 @@
 
                 for(let i = 0; i < this.assignmentFileList.length; i++){
                     base64Flag = true;
-                    base64Str += '{ "assignmentId" : "' + assId + '",';
+                    base64Str += '{ "assignmentId" : "' + assId + '",';//assignmentFileId
+                    base64Str += ' "assignmentFileId" : "' + this.assignmentFileList[i].assignmentFileId + '",';//assignmentFileId
                     base64Str += '  "historyFileString" : "' + this.getHistoryData(i) + '",';
                     base64Str += '  "type" : "ORIGINAL",';
                     base64Str += '  "userId" : "' + vm.userId + '"},';
@@ -354,7 +355,7 @@
                 }
                 const axiosConfig = { headers:{ "Content-Type": "application/json"} };
 
-                axios.put('/api/assignment_files/' + this.$route.params.assignId,
+                axios.put('/api/assignment_files/',
                     '[' + base64Str + ']'
                     , axiosConfig)
                     .then(function(response){

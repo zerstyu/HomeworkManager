@@ -48,15 +48,13 @@
                                 <div class="col-md-12">
                                     <h2><i class="ni ni-ruler-pencil"></i> 채점이 진행중 입니다.</h2>
                                     <br/>
-                                    <div class="col-md-12">
-                                        <h2><i class="ni ni-chat-round"></i> 학생 노트</h2>
-                                        <p v-html="note"></p>
-                                    </div>
+
+                                    <h2><i class="ni ni-chat-round"></i> 학생 노트</h2>
+                                    <p v-html="note"></p>
+
                                     <br/>
                                     <br/>
-                                    <div class="col-md-12">
-                                        <base-button type="default" icon="ni ni-bag-17" @click="modals3 = true">학생제출원본 확인</base-button>
-                                    </div>
+                                    <base-button type="default" icon="ni ni-bag-17" @click="modals3 = true">학생제출원본 확인</base-button>
                                 </div>
                             </div>
 
@@ -159,7 +157,7 @@
                 <h5 class="modal-title" id="exampleModalLabel3">과제 원본</h5>
             </template>
             <div v-for="item in assignmentFileList" v-bind:key="item.id">
-                <img v-bind:src="item.fileString" />
+                <img v-bind:src="item.fileString" style="max-width:400px;"/>
                 <br/>
             </div>
             <template slot="footer">
