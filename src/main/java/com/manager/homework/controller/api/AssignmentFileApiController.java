@@ -38,9 +38,8 @@ public class AssignmentFileApiController {
 
     @ApiOperation(value = "파일 정보 수정", notes = "파일 정보 수정")
     @PutMapping("/assignment_files/{id}")
-    public Response<AssignmentFile> updateAssignmentFile(@PathVariable("id") Long id, @RequestBody AssignmentFileDto assignmentFileDto) {
-        AssignmentFile assignmentFile = assignmentFileService.updateAssignmentFile(id, assignmentFileDto);
-        return Response.ok(assignmentFile);
+    public Response<List<AssignmentFile>> updateAssignmentFileList(@PathVariable("id") Long id, @RequestBody List<AssignmentFileDto> assignmentFileDtoList) {
+        return Response.ok(assignmentFileService.updateAssignmentFileList(id, assignmentFileDtoList));
     }
 
     @ApiOperation(value = "파일 삭제", notes = "파일 사용자 삭제")

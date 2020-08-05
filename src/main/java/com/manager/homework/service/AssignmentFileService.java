@@ -45,32 +45,38 @@ public class AssignmentFileService {
         return fileEntityWrapper.get();
     }
 
-    public AssignmentFile updateAssignmentFile(Long id, AssignmentFileDto assignmentFileDto) {
+    public List<AssignmentFile> updateAssignmentFileList(Long id, List<AssignmentFileDto> assignmentFileDtoList) {
+        List<AssignmentFile> assignmentFileList = Lists.newArrayList();
         Optional<AssignmentFile> fileEntityWrapper = assignmentFileRepository.findById(id);
-        AssignmentFile assignmentFile = fileEntityWrapper.get();
-        assignmentFile.setType(assignmentFileDto.getType());
 
-        if (assignmentFileDto.getUserId() != null) {
-            Optional<User> userEntityWrapper = userRepository.findById(assignmentFileDto.getUserId());
-            assignmentFile.setUser(userEntityWrapper.get());
-        }
+        for(AssignmentFileDto assignmentFileDto: assignmentFileDtoList){
+            AssignmentFile assignmentFile = fileEntityWrapper.get();
+            assignmentFile.setType(assignmentFileDto.getType());
 
-        if (assignmentFileDto.getAssignmentId() != null) {
-            Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
-            assignmentFile.setAssignment(assignmentEntityWrapper.get());
-        }
+            if (assignmentFileDto.getUserId() != null) {
+                Optional<User> userEntityWrapper = userRepository.findById(assignmentFileDto.getUserId());
+                assignmentFile.setUser(userEntityWrapper.get());
+            }
 
-        if (assignmentFile.getFileString() != null) {
-            assignmentFile.setFileString(assignmentFileDto.getFileString());
+            if (assignmentFileDto.getAssignmentId() != null) {
+                Optional<Assignment> assignmentEntityWrapper = assignmentRepository.findById(assignmentFileDto.getAssignmentId());
+                assignmentFile.setAssignment(assignmentEntityWrapper.get());
+            }
+
+            if (assignmentFile.getFileString() != null) {
+                assignmentFile.setFileString(assignmentFileDto.getFileString());
 //            blockService.addBlock(assignmentFile.getFileString());
+            }
+
+            if (assignmentFile.getHistoryFileString() != null) {
+                assignmentFile.setHistoryFileString(assignmentFileDto.getHistoryFileString());
+            }
+            assignmentFileList.add(assignmentFile);
         }
 
-        if (assignmentFile.getHistoryFileString() != null) {
-            assignmentFile.setHistoryFileString(assignmentFileDto.getHistoryFileString());
-        }
 
-        assignmentFileRepository.save(assignmentFile);
-        return assignmentFile;
+        assignmentFileRepository.saveAll(assignmentFileList);
+        return assignmentFileList;
     }
 
     public void deleteAssignmentFile(Long id) {
