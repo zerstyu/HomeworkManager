@@ -224,7 +224,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                         .user(noticeList.get(0).getUser())
                         .subject(noticeList.get(0).getSubject())
                         .notice(noticeList.get(1))
-                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .feedback("망했어요. ")
                         .score(25)
                         .isOpen(true)
                         .build());
@@ -234,7 +234,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                         .user(noticeList.get(6).getUser())
                         .subject(noticeList.get(0).getSubject())
                         .notice(noticeList.get(0))
-                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .feedback("잘했어요. ")
                         .score(80)
                         .isOpen(true)
                         .build());
@@ -244,7 +244,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                         .user(noticeList.get(6).getUser())
                         .subject(noticeList.get(0).getSubject())
                         .notice(noticeList.get(6))
-                        .feedback("답안을 더 자세하게 써주세요. ")
+                        .feedback("다시해와요. ")
                         .score(10)
                         .isOpen(true)
                         .build());

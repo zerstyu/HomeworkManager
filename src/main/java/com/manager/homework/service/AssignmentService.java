@@ -54,7 +54,7 @@ public class AssignmentService {
         }
 
         if (assignmentDto.getNoticeId() != null) {
-            Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getSubjectId());
+            Optional<Notice> noticeEntityWrapper = noticeRepository.findById(assignmentDto.getNoticeId());
             assignment.setNotice(noticeEntityWrapper.get());
         }
 
