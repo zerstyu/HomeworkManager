@@ -93,6 +93,7 @@ public class AssignmentService {
 
     private AssignmentResponse convertToResponse(Assignment assignment) {
         AssignmentResponse assignmentResponse = new AssignmentResponse();
+        assignmentResponse.setAssignmentId(assignment.getId());
         assignmentResponse.setFeedback(assignment.getFeedback());
         assignmentResponse.setScore(assignment.getScore());
         assignmentResponse.setIsOpen(assignment.getIsOpen());
