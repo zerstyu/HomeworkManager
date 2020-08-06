@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-6"
                      v-for="studentSubject in studentSubjects" v-bind:key="studentSubject.id"
-                     @click="teacherSubjectsDetail(studentSubject.idx)">
+                     @click="studentSubjectsDetail(studentSubject.idx)">
                     <stats-card v-bind:title="studentSubject.userName + ' 선생님'"
                                 v-bind:icon="studentSubject.icon"
                                 v-bind:sub-title="studentSubject.subjectName"
@@ -270,6 +270,7 @@
           }
       },
       created() {
+          this.subjectMasterId = localStorage.getItem('userId');
           this.getSubjects();
           this.getNotices();
           this.getRecommends();
@@ -375,7 +376,7 @@
                           }
                           vm.studentSubjects = [];
                           for(let i = 0; i < response.data.data[0].joinSubjectDtoList.length; i++){
-                              vm.teacherSubjects.push({
+                              vm.studentSubjects.push({
                                   userId : response.data.data[0].joinSubjectDtoList[i].userId,
                                   userName : response.data.data[0].joinSubjectDtoList[i].userName,
                                   subjectId :response.data.data[0].joinSubjectDtoList[i].subjectId,
@@ -413,6 +414,30 @@
                       this.teacherSubjects[i].icon = '';
                   }
                   console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].subjectId);
+              }
+
+              location.href="#tableTop";
+              //console.log("res2 : " + this.teacherSubjects[idx].icon);
+          },
+          studentSubjectsDetail(idx){
+              console.log("click card" + idx);
+              for(let i = 0; i < this.studentSubjects.length; i++){
+                  if(this.studentSubjects[i].idx == idx){
+
+                      //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = 'ni ni-check-bold';
+                      this.studentSubjects[i].icon = 'ni ni-check-bold';
+                      this.subjectPivot = this.studentSubjects[i].subjectId;
+                      this.subjectPivotName = this.studentSubjects[i].subjectName;
+                      this.subjectPivotNameEdit = this.studentSubjects[i].subjectName;
+                      this.subjectMasterId = this.studentSubjects[i].userId;
+                      this.nowUser = localStorage.getItem('userId');
+                      this.getNotices();
+                  }
+                  else{
+                      //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = '';
+                      this.studentSubjects[i].icon = '';
+                  }
+                  console.log("for문 도는 중.. : " + this.studentSubjects[i].icon + ", " + this.studentSubjects[i].subjectId);
               }
 
               location.href="#tableTop";
@@ -591,7 +616,7 @@
                   return;
               }
 
-              apiParam = 'userId=' + localStorage.getItem('userId');
+              apiParam = 'userId=' + this.subjectMasterId;
               //전체 과목 조회
               if(this.subjectPivot != ''){
                   apiParam += '&subjectId=' + this.subjectPivot;

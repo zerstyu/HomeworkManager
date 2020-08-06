@@ -51,6 +51,7 @@ export default {
         },
           subjectName: '',
           masterName: '',
+          subjectId: '',
         modals: false,
         modals2: false
       }
@@ -64,6 +65,7 @@ export default {
                 if(response.data.statusCode == 'OK'){
                     vm.subjectName = response.data.data.subjectName;
                     vm.masterName = response.data.data.userName;
+                    vm.subjectId = response.data.data.subjectId;
                 }
                 else{
                     vm.modals = true;
@@ -84,9 +86,9 @@ export default {
             let vm = this;
             const axiosConfig = { headers:{ "Content-Type": "application/json"} };
 
-            axios.post('/api/joinSubject',
+            axios.post('/api/joinSubjects',
                 '{' +
-                '"subjectId": "' + this.$route.params.inviteCode + '",' +
+                '"subjectId": "' + vm.subjectId + '",' +
                 '"userId": "' + localStorage.getItem('userId') + '"' +
                 '}'
                 , axiosConfig)

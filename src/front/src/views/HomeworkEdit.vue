@@ -64,7 +64,6 @@
                                     <base-pagination align="center" :page-count="paginationTotal" v-model="paginationDefault"></base-pagination>
                                     <br/>
                                     <br/>
-                                    <base-button type="info" icon="ni ni-bag-17" @click="getHistoryData(0)">으아2</base-button>
                                 </div>
 
                                 <br/>
@@ -104,21 +103,6 @@
 
                                 </form>
                                 <br/>
-
-                                <!--button v-on:click="sendCanvas(homeworkCanvasData[0])">테스트</button-->
-                                <div class="col-lg-3 col-md-6"
-                                     v-for="(icon, index) in icons" :key="icon.name + index">
-                                    <button type="button"
-                                            v-b-tooltip.hover.top
-                                            :title="icon.name"
-                                            v-on:click="sendCanvas(homeworkCanvasData[0])"
-                                            class="btn-icon-clipboard" data-clipboard-text="air-baloon">
-                                        <div>
-                                            <i :class="icon.name"></i>
-                                            <span>불러오기</span>
-                                        </div>
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
