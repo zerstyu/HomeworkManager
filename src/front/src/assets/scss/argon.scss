@@ -66,9 +66,13 @@
 // Vendor (Plugins)
 
 @import "custom/vendors";
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
 html {
   scroll-behavior: smooth;
+  font-family: NanumSquare;
 }
 
-
+body {
+  font-family: "NanumSquare";
+}

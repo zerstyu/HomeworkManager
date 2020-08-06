@@ -9,30 +9,20 @@
                                 v-bind:sub-title="subjectName + ' > ' + noticeTitle"
                                 class="mb-4 mb-xl-0"
                     >
-
                         <template slot="footer">
-                            <span class="text-info mr-2">선생님 정보 </span>
-                            <span class="text-nowrap">추대윤</span>
+                            <span class="text-info mr-2">제출자 정보 </span>
+                            <span class="text-nowrap">{{userName.toString()}}</span>
+                            <badge class="badge-dot mr-4" type="info" v-if="isOpen==true">
+                                <span class="status">오픈과제</span>
+                            </badge>
+                            <badge class="badge-dot mr-4" type="warning" v-else>
+                                <span class="status">개별과제</span>
+                            </badge>
                         </template>
                     </stats-card>
                 </div>
             </div>
             <br/>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12">
-                    <stats-card title="제출자"
-                                type="gradient-red"
-                                v-bind:sub-title="userName"
-                                class="mb-4 mb-xl-0"
-                    >
-
-                        <template slot="footer">
-                            <!-- span class="text-success mr-2"><i class="fa fa-arrow-up"></i> </span-->
-                            <span class="text-nowrap">안랩</span>
-                        </template>
-                    </stats-card>
-                </div>
-            </div>
         </base-header>
 
 
@@ -46,7 +36,8 @@
                         <div class="card-body">
                             <div class="row icon-examples" v-if="feedback == null">
                                 <div class="col-md-12">
-                                    <h2><i class="ni ni-ruler-pencil"></i> 채점이 진행중 입니다.</h2>
+                                    <h2><i class="ni ni-ruler-pencil"></i> 채점 결과</h2>
+                                    <p>채점이 진행중 입니다.</p>
                                     <br/>
 
                                     <h2><i class="ni ni-chat-round"></i> 학생 노트</h2>
@@ -179,7 +170,7 @@
 
                 <h4>과제자료 첨부</h4>
                 <base-button size="sm" @click="createAssignFileMinus()" type="primary">-</base-button>
-                {{notiEditFileLen}}
+                {{createAssignmentFileLen}}
                 <base-button size="sm" @click="createAssignFilePlus()" type="primary">+</base-button>
                 <br/>
                 <div v-for="index in createAssignmentFileLen" :key="index">
@@ -234,7 +225,7 @@
                 assignmentFileList: [],
                 assignmentId: '',
                 feedback: '',
-                isOpen: false,
+                isOpen: true,
                 note: '',
                 score: '',
                 userName: '',//과제 제출학생의 네임값
@@ -324,6 +315,7 @@
                 for(let i = 1; i <= this.createAssignmentFileLen; i++){
                     base64Flag = true;
                     base64Str += '{ "assignmentId" : "' + assId + '",';
+                    base64Str += ' "assignmentFileId" : "' + this.assignmentFileList[i].assignmentFileId + '",';//assignmentFileId
                     base64Str += '  "fileString" : "' + this.createAssignmentFileDtoList[i] + '",';
                     base64Str += '  "type" : "ORIGINAL",';
                     base64Str += '  "userId" : "' + localStorage.getItem('userId') + '"},';
@@ -395,6 +387,16 @@
                                 vm.isAssignMaster = true;
                             }
 
+                            if(vm.isOpen == true){
+                                vm.createAssignIsOpen = 'OPEN';
+                            }
+                            else{
+                                vm.createAssignIsOpen = 'PRIVATE';
+                            }
+                            vm.createAssignNote = vm.note;
+                            vm.createAssignScore = vm.score;
+                            vm.createAssignmentFileLen = vm.assignmentFileList.length;
+
                             vm.paginationTotal = response.data.data.assignmentFileList.length;
                             if(vm.paginationTotal > 0){
                                 vm.movePage(1);
@@ -451,13 +453,5 @@
             }
         }
     };
-/*
-
-    function sendCanvas(canvasData){
-        var canvasIframe = document.getElementById("homeworkCanvasIframe");
-        canvasIframe.contentWindow.loadData(canvasData);
-    }
-
- */
 </script>
 <style></style>

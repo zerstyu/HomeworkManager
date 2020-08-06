@@ -5,7 +5,8 @@
                   containerClasses="px-4 container"
                   expand>
             <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/white.png"/>
+                <!--img src="img/brand/white.png"/-->
+                모두의숙제
             </router-link>
 
             <template v-slot="{closeMenu}">

@@ -7,7 +7,8 @@
                 <span class="navbar-toggler-icon"></span>
             </navbar-toggle-button>
             <router-link class="navbar-brand" to="/">
-                <img :src="logo" class="navbar-brand-img" alt="...">
+                <!--img :src="logo" class="navbar-brand-img" alt="..."-->
+                모두의숙제
             </router-link>
 
             <slot name="mobile-right">

@@ -62,8 +62,8 @@
           </td>
 
           <td class="budget">
-            <base-button type="primary" size="sm" @click="clickAssignmentDetailButton(row.id)">상세보기</base-button>
-            <base-button type="primary" size="sm" v-if="isNotiMaster==true" @click="clickConfirmButton(row.id)">채점하기</base-button>
+            <base-button type="info" size="sm" @click="clickAssignmentDetailButton(row.id)">상세보기</base-button>
+            <base-button type="info" size="sm" v-if="isNotiMaster==true" @click="clickConfirmButton(row.id)">채점하기</base-button>
           </td>
 
         </template>
