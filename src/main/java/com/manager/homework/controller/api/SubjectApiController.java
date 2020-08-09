@@ -2,6 +2,7 @@ package com.manager.homework.controller.api;
 
 import com.manager.homework.common.Response;
 import com.manager.homework.service.SubjectService;
+import com.manager.homework.vo.CategoryGroupDto;
 import com.manager.homework.vo.RequestSubjectDto;
 import com.manager.homework.vo.SubjectDto;
 import com.manager.homework.vo.SubjectResponse;
@@ -30,6 +31,7 @@ public class SubjectApiController {
     @ApiOperation(value = "과목 생성", notes = "특정 과목 생성")
     @PostMapping
     public Response<SubjectDto> createSubject(@RequestBody RequestSubjectDto dto) {
+        log.info("createSubject = {} ", dto);
         return Response.ok(subjectService.createSubject(dto));
     }
 
@@ -53,4 +55,9 @@ public class SubjectApiController {
         return Response.ok(subjectService.getJoinSubject(inviteCode));
     }
 
+    @ApiOperation(value = "카레고리 리스트 조회", notes = "모든 카테고리 리스트 조회")
+    @GetMapping("/categories")
+    public Response<List<CategoryGroupDto>> getCategoryList() {
+        return Response.ok(subjectService.getCategoryList());
+    }
 }

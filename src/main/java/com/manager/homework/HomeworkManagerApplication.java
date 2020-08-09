@@ -3,10 +3,7 @@ package com.manager.homework;
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.*;
 import com.manager.homework.repository.*;
-import com.manager.homework.type.FileType;
-import com.manager.homework.type.Gender;
-import com.manager.homework.type.NoticeStatus;
-import com.manager.homework.type.NoticeType;
+import com.manager.homework.type.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -93,16 +90,25 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private List<Subject> getSubjectList(List<User> userList) {
         List subjectList = Lists.newArrayList();
 
+        CategoryGroupType categoryGroup1 = CategoryGroupType.findByCategoryCode(CategoryType.MATH);
+        CategoryGroupType categoryGroup2 = CategoryGroupType.findByCategoryCode(CategoryType.KOREAN);
+
         subjectList.add(Subject.builder()
                 .user(userList.get(0))
                 .name("수학")
                 .inviteCode("aaaaabbbbb")
+                .categoryGroup(categoryGroup1)
+                .category(CategoryType.MATH)
+                .classType(ClassType.ELEMENTARY_SCHOOL)
                 .build());
 
         subjectList.add(Subject.builder()
                 .user(userList.get(2))
                 .name("국어")
                 .inviteCode("cccccddddd")
+                .categoryGroup(categoryGroup2)
+                .category(CategoryType.KOREAN)
+                .classType(ClassType.MIDDLE_SCHOOL)
                 .build());
 
         return subjectList;

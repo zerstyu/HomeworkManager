@@ -63,6 +63,9 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
                         subject.id.as("subjectId"),
                         subject.name.as("subjectName"),
                         subject.inviteCode.as("inviteCode"),
+                        subject.categoryGroup,
+                        subject.category,
+                        subject.classType,
                         user.id.as("userId"),
                         user.name.as("userName")))
                 .from(subject)
@@ -78,6 +81,9 @@ public class SubjectRepositoryImpl implements SubjectRepositoryCustom {
                         subject.id.as("subjectId"),
                         subject.name.as("subjectName"),
                         subject.inviteCode.as("inviteCode"),
+                        subject.categoryGroup,
+                        subject.category,
+                        subject.classType,
                         user.id.as("userId"),
                         user.name.as("userName")))
                 .from(joinSubject)
