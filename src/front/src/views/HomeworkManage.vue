@@ -9,14 +9,14 @@
                 <div class="col-xl-3 col-lg-6"
                      v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id"
                      @click="teacherSubjectsDetail(teacherSubject.idx)">
-                    <stats-card v-bind:title="teacherSubject.userName + ' 선생님'"
+                    <stats-card v-bind:title="stringResizer(teacherSubject.userName, 20, null) + ' 선생님'"
                                 v-bind:icon="teacherSubject.icon"
-                                v-bind:sub-title="teacherSubject.subjectName"
+                                v-bind:sub-title="stringResizer(teacherSubject.subjectName, 7, null)"
                                 class="mb-4 mb-xl-0">
 
                         <template slot="footer">
-                            <span class="text-success mr-2">접속코드 </span>
-                            <span class="text-nowrap">{{teacherSubject.inviteCode}} </span>
+                            <!--span class="text-success mr-2">접속코드 </span>
+                            <span class="text-nowrap">{{teacherSubject.inviteCode}} </span-->
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -52,24 +52,6 @@
                     <br/>
                     <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">오픈 과제물 찾기</base-button>
                 </div>
-
-                <div class="col-xl-12 col-lg-12">
-                    <br/><br/>
-                    <h3>빅데이터 분석 나의 교육 추천 서비스</h3>
-                </div>
-                <div class="col-xl-3 col-lg-6"
-                     v-for="recommend in recommenedsEdu" v-bind:key="recommend.id">
-                    <stats-card v-bind:title="recommend.productPrice + '원'"
-                                v-bind:sub-title="recommend.productName"
-                                class="mb-4 mb-xl-0">
-                        <h4>{{recommend.productName}}</h4>
-                        {{recommend.productPrice}}원<br/>
-                        <img v-bind:src="recommend.productImageUrl" style="width:150px;"/>
-                        <template slot="footer">
-                        </template>
-                    </stats-card>
-                </div>
-
 
                 <div id="tableTop"></div>
 
@@ -131,7 +113,7 @@
                     <h4>마감일</h4>
                     <base-input placeholder="과제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
 
-                    <h4>이미지 첨부</h4>
+                    <h4>파일 첨부</h4>
                     <base-button size="sm" @click="createNotiFileMinus" type="primary">-</base-button>
                     {{notiEditFileLen}}
                     <base-button size="sm" @click="createNotiFilePlus()" type="primary">+</base-button>
@@ -204,6 +186,26 @@
                             v-bind:subject-pivot-name-edit="subjectPivotNameEdit" v-bind:subject-id="subjectPivot" v-bind:title="subjectPivotName" v-bind:subjectMasterId="subjectMasterId" v-bind:notice-data="noticeDataSend"></projects-table>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <br/><br/>
+                    <h3>빅데이터 분석 나의 교육 추천 서비스</h3>
+                </div>
+                <div class="col-xl-3 col-lg-6"
+                     v-for="recommend in recommenedsEdu" v-bind:key="recommend.id">
+                    <stats-card v-bind:title="recommend.productPrice + '원'"
+                                v-bind:sub-title="recommend.productName"
+                                class="mb-4 mb-xl-0">
+                        <h4>{{stringResizer(recommend.productName, 15, null)}}</h4>
+                        {{recommend.productPrice}}원<br/>
+                        <img v-bind:src="recommend.productImageUrl" style="height:150px;"/>
+                        <template slot="footer">
+                        </template>
+                    </stats-card>
+                </div>
+            </div>
+
             <!--div class="row mt-5">
                 <div class="col">
                     <projects-table type="dark" title="Dark Table"></projects-table>
@@ -304,6 +306,18 @@
           this.modals = false;
       },
       methods: {
+        stringResizer(str, len, lastTxt){
+            if (len == "" || len == null) { // 기본값
+                len = 20;
+            }
+            if (lastTxt == "" || lastTxt == null) { // 기본값
+                lastTxt = "...";
+            }
+            if (str.length > len) {
+                str = str.substr(0, len) + lastTxt;
+            }
+            return str;
+        },
           getRecommends(){
               let vm = this;
 

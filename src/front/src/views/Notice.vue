@@ -39,8 +39,9 @@
                 <div class="col-xl-12 col-lg-12">
                     <br/>
                     <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">공지글 수정</base-button>
-                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">과제 제출하기</base-button>
-                    <base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">테스트 과제 제출하기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" @click="modals5 = true">과제 제출하기</base-button>
+                    <!--base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">과제 제출하기</base-button-->
+                    <!--base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">과제 제출하기</base-button-->
 
                 </div>
 
@@ -102,7 +103,7 @@
                     <h4>마감일</h4>
                     <base-input placeholder="과제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
 
-                    <h4>이미지 첨부</h4>
+                    <h4>파일 첨부</h4>
                     <base-button size="sm" @click="createNotiFileMinus" type="primary">-</base-button>
                     {{notiEditFileLen}}
                     <base-button size="sm" @click="createNotiFilePlus()" type="primary">+</base-button>
@@ -200,12 +201,61 @@
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div-->
 
+
+        <!--Charts-->
+        <div class="container-fluid mt--7">
+            <div class="row" style="margin-top: 150px;">
+                <div class="col-xl-8 mb-5 mb-xl-0">
+                    <card type="default" header-classes="bg-transparent">
+                        <div slot="header" class="row align-items-center">
+                            <div class="col">
+                                <h6 class="text-light text-uppercase ls-1 mb-1">통계자료</h6>
+                                <h5 class="h3 text-white mb-0">과제별 평균점수</h5>
+                            </div>
+                        </div>
+                        <line-chart
+                                :height="350"
+                                ref="bigChart"
+                                :chart-data="bigLineChart.chartData"
+                                :extra-options="bigLineChart.extraOptions"
+                        >
+                        </line-chart>
+
+                    </card>
+                </div>
+
+                <div class="col-xl-4">
+                    <card header-classes="bg-transparent">
+                        <div slot="header" class="row align-items-center">
+                            <div class="col">
+                                <h6 class="text-uppercase text-muted ls-1 mb-1">학생 통계</h6>
+                                <h5 class="h3 mb-0">학생별 점수총합</h5>
+                            </div>
+                        </div>
+
+                        <bar-chart
+                                :height="350"
+                                ref="barChart"
+                                :chart-data="redBarChart.chartData"
+                        >
+                        </bar-chart>
+                    </card>
+                </div>
+            </div>
+        </div>
+            <!-- End charts-->
+
+
     </div>
 
 </template>
 <script>
   import ProjectsTable from './Tables/AssignmentTable'
   import {BUS} from "./EventBus";
+  // Charts
+  import * as chartConfigs from '../components/Charts/config';
+  import LineChart from '../components/Charts/LineChart';
+  import BarChart from '../components/Charts/BarChart';
   //import {BUS} from "./EventBus";
 
   const axios = require('axios');
@@ -213,10 +263,34 @@
   export default {
     name: 'tables',
     components: {
-      ProjectsTable
+      ProjectsTable,
+      LineChart,
+      BarChart
     },
       data() {
           return {
+              bigLineChart: {//bigLineChart.allData.allData
+                  allData: [
+                      []
+                  ],
+                  activeIndex: 0,
+                  chartData: {
+                      datasets: [],
+                      labels: [],
+                  },
+                  extraOptions: chartConfigs.blueChartOptions,
+                  labels: []
+              },
+              redBarChart: {
+                  chartData: {
+                      labels: ['안재홍', '추대윤'],
+                      datasets: [{
+                          label: '총점',
+                          data: [80, 85]
+                      }]
+                  }
+              },
+
               isNotiMaster: false,
               nowUser: '',
 
@@ -276,6 +350,8 @@
       created() {
           let vm = this;
           this.getNotices();
+          this.getStaticsAverages();
+          this.getStaticsTotalScore();
 
           BUS.$on('assignmentDetail',function(data) {
               //vm.goNotiDetail(data);
@@ -290,8 +366,25 @@
       mounted() {
           this.modals = false;
           this.nowUser = localStorage.getItem('userId');
+          this.initBigChart(0);
+
       },
       methods: {
+          initBigChart(index) {
+              let chartData = {
+                  datasets: [
+                      {
+                          label: '과제평균',
+                          data: this.bigLineChart.allData[index]
+                      }
+                  ],
+                  //labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                  labels: this.bigLineChart.labels
+              };
+              this.bigLineChart.chartData = chartData;
+              console.log(this.bigLineChart.chartData);
+              this.bigLineChart.activeIndex = index;
+          },
           homeworkSubmit(){
               this.modals5 = false;
               let vm = this;
@@ -359,6 +452,56 @@
           },
           goConfirm(id){
               location.href="/#/homeworkEdit/" + id;
+          },
+          /** 통계 **/
+          getStaticsAverages(){
+              let vm = this;
+
+              axios.get('/api/statistics/subjects/averages?id=' + this.$route.params.notiId)
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+                          vm.bigLineChart.allData[0] = [];
+                          vm.bigLineChart.labels = [];
+
+                          for(let i = 0; i < response.data.data[0].statisticsDtoList.length; i++){
+                              vm.bigLineChart.allData[0].push(response.data.data[0].statisticsDtoList[i].averageScore);
+                              vm.bigLineChart.labels.push(response.data.data[0].statisticsDtoList[i].title);
+                              console.log("에버리지 : " + vm.bigLineChart.allData[0][i]);
+
+                              if(i == response.data.data[0].statisticsDtoList.length - 1){
+                                  vm.bigLineChart.allData[0].push(response.data.data[0].statisticsDtoList[i].averageScore);
+                              }
+                          }
+                          console.log(vm.bigLineChart.allData[0]);
+                          console.log(vm.bigLineChart.labels);
+
+
+                          vm.initBigChart(0);
+                      }
+                      else{
+                          vm.modals = true;
+                          vm.responseMsg = response.data.message;
+                      }
+                  });
+          },
+          getStaticsTotalScore(){
+              let vm = this;
+              axios.get('/api/statistics/subjects/total-scores?id=' + this.$route.params.notiId)
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+                          vm.redBarChart.chartData.labels = [];
+                          vm.redBarChart.chartData.datasets[0].data = [];
+
+                          for(let i = 0; i < response.data.data[0].statisticsDtoList.length; i++){
+                              vm.redBarChart.chartData.labels.push(response.data.data[0].statisticsDtoList[i].userName);
+                              vm.redBarChart.chartData.datasets[0].data.push(response.data.data[0].statisticsDtoList[i].totalScore);
+                          }
+                      }
+                      else{
+                          vm.modals = true;
+                          vm.responseMsg = response.data.message;
+                      }
+                  });
           },
           /*
           *

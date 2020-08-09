@@ -4,12 +4,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/2.png"
   },
   {
-    "revision": "4addc8a10e99033b98ae9947a3642c9b",
+    "revision": "1ea622363cffbaa4f3f2ac65f1097058",
     "url": "/canvas_resource/canvas.html"
+  },
+  {
+    "revision": "e40822930ea9d2720bbf07d9fee6393c",
+    "url": "/canvas_resource/canvas_0809dev.html"
   },
   {
     "revision": "0f985adaa40a517a068752bcec264bb4",
     "url": "/canvas_resource/canvas_backup.html"
+  },
+  {
+    "revision": "4bb7f822265f8280b57ae37fed991393",
+    "url": "/canvas_resource/canvas_m.html"
+  },
+  {
+    "revision": "e779d2b05db6b2cfc8ff01c4ceb03fc9",
+    "url": "/canvas_resource/canvas_실험.html"
   },
   {
     "revision": "9ab98c642afc11ab892b5c90a3bf2c36",
@@ -132,7 +144,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "9f8637dacc4db7e40602",
+    "revision": "f18438934b2439c368bc",
     "url": "/css/app.f928a4fa.css"
   },
   {
@@ -208,32 +220,32 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "2773cf350ca900d0cd8b0cdbd8822369",
+    "revision": "518fd20e4f060a8761847130d91f95df",
     "url": "/index.html"
   },
   {
-    "revision": "9f8637dacc4db7e40602",
-    "url": "/js/app.b2710187.js"
+    "revision": "f18438934b2439c368bc",
+    "url": "/js/app.8b3f04a6.js"
   },
   {
     "revision": "9358c838796b770629fd",
     "url": "/js/chunk-0c1acfa2.d1a55066.js"
   },
   {
-    "revision": "8583c6516e6268453c17",
-    "url": "/js/chunk-2d0b9de2.068b38f5.js"
+    "revision": "4192f44a0dd4ccc48a44",
+    "url": "/js/chunk-2d0b9de2.410e0479.js"
   },
   {
-    "revision": "e5d92b11af5f71e8525a",
-    "url": "/js/chunk-2d0cbf0e.5e3d8089.js"
+    "revision": "0491b734c6814f351e8e",
+    "url": "/js/chunk-2d0cbf0e.94146bdd.js"
   },
   {
-    "revision": "583cc1b99e58152270df",
-    "url": "/js/chunk-vendors.5467659b.js"
+    "revision": "de287ca80bd654f212a8",
+    "url": "/js/chunk-vendors.b76e5953.js"
   },
   {
-    "revision": "b467a31d5183e9b37fb7",
-    "url": "/js/demo.5cb89e06.js"
+    "revision": "25c096f2343719198fdd",
+    "url": "/js/demo.0a382b0b.js"
   },
   {
     "revision": "2c6190eb814d2dd4d454ae170c43c7c2",

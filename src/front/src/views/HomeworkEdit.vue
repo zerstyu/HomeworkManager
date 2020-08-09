@@ -23,7 +23,7 @@
                 <div class="col-xl-12 col-lg-12">
                     <stats-card title="제출자"
                                 type="gradient-red"
-                                v-bind:sub-title="userName"
+                                v-bind:sub-title="userName + ''"
                                 icon="ni ni-circle-08"
                                 class="mb-4 mb-xl-0"
                     >
@@ -123,6 +123,18 @@
             </template>
         </modal>
 
+        <modal :show.sync="modals2">
+            <template slot="header">
+                <h5 class="modal-title" id="exampleModalLabel2">알림</h5>
+            </template>
+            <div>
+                채점이 완료되었습니다.
+            </div>
+            <template slot="footer">
+                <base-button type="secondary" @click="goNoti()">확인</base-button>
+                <!--base-button type="primary">Save changes</base-button-->
+            </template>
+        </modal>
 
     </div>
 </template>
@@ -199,6 +211,10 @@
             //this.sendCanvas(this.homeworkCanvasData[0]);
         },
         methods: {
+            goNoti(){
+                this.modals2 = false;
+                location.href = "/#/notice/" + this.noticeId;
+            },
             movePage(page){
                 console.log("movePage : " + page);
                 let canvasIframe = document.getElementsByName("homeworkCanvasIframe");
@@ -344,8 +360,7 @@
                     , axiosConfig)
                     .then(function(response){
                         if(response.data.statusCode == 'OK'){
-                            vm.modals = true;
-                            vm.responseMsg = '성공하였습니다.';
+                            vm.modals2 = true;
                         }
                         else{
                             vm.modals = true;
