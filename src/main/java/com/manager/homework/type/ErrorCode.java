@@ -22,6 +22,7 @@ public enum ErrorCode {
     SUBJECT_NONE("S001", "과목이 존재하지 않습니다."),
     SUBJECT_INVITE_CODE_MAX_RETRY("S002", "초대코드 증복으로 최대 생성시도 횟수를 초과하였습니다."),
     SUBJECT_INVITE_CODE_NONE("S003", "초대코드가 존재 하지 않습니다."),
+    SUBJECT_CATEGORY_INPUT_INVALID("S004", "카테고리 input 값이 잘못 되었습니다."),
 
     // JoinSubject
     JOIN_SUBJECT_NONE("J001", "참여한 과목이 존재하지 않습니다.");
