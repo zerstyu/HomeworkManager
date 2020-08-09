@@ -52,7 +52,7 @@
                             <div class="row icon-examples" v-if="feedback != null">
 
                                 <div class="col-md-12">
-                                    <h2><i class="ni ni-ruler-pencil"></i> 채점 결과</h2>
+                                    <h4><i class="ni ni-ruler-pencil"></i> 채점 내용</h4>
                                     <div v-for="index in paginationTotal" :key="index">
                                         <iframe id="homeworkCanvasIframe" name="homeworkCanvasIframe" style="display: none;width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
                                         </iframe>
@@ -74,7 +74,7 @@
                                 <!-- 폼 -->
                                 <form style="width:100%;">
                                     <div class="col-md-12">
-                                        <h2><i class="ni ni-chat-round"></i> 선생님의 피드백</h2>
+                                        <h4><i class="ni ni-chat-round"></i> 선생님의 피드백</h4>
                                         <p v-html="feedback"></p>
                                     </div>
 
@@ -82,9 +82,9 @@
                                     <br/>
 
                                     <div class="col-md-3">
-                                        <h2><i class="ni ni-paper-diploma"></i> 점수</h2>
-                                        <span class="text-nowrap">※ 이 과제의 최대 점수는 100점 입니다.</span>
-                                        <h3>{{score}}점</h3>
+                                        <h4><i class="ni ni-paper-diploma"></i> 점수</h4>
+                                        <!--span class="text-nowrap">※ 이 과제의 최대 점수는 100점 입니다.</span-->
+                                        <span class="text-nowrap">{{score}}점</span>
                                     </div>
 
                                     <br/>
