@@ -9,14 +9,26 @@
                 <div class="col-xl-3 col-lg-6"
                      v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id"
                      @click="teacherSubjectsDetail(teacherSubject.idx)">
-                    <stats-card v-bind:title="stringResizer(teacherSubject.userName, 20, null) + ' 선생님'"
+                    <stats-card v-bind:title="stringResizer(teacherSubject.userName + '', 20, null) + ' 선생님'"
                                 v-bind:icon="teacherSubject.icon"
-                                v-bind:sub-title="stringResizer(teacherSubject.subjectName, 7, null)"
+                                v-bind:sub-title="stringResizer(teacherSubject.subjectName + '', 7, null) + ''"
                                 class="mb-4 mb-xl-0">
-
                         <template slot="footer">
-                            <!--span class="text-success mr-2">접속코드 </span>
-                            <span class="text-nowrap">{{teacherSubject.inviteCode}} </span-->
+                            <span
+                                v-for="cate in categoryList"
+                                v-bind:key="cate.id" >
+                                <p v-if="cate.categoryGroup == teacherSubject.categoryGroup">
+                                  {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, teacherSubject.category)}}
+                                </p>
+                            </span>
+                            <br/>
+
+                            <span class="text-info mr-2" v-if="teacherSubject.classType == 'KINDERGARTEN'">유아 </span>
+                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
+                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
+                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'HIGH_SCHOOL'">고등 </span>
+                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'UNIVERSITY'">대학 </span>
+                            <span class="text-info mr-2" v-else >일반인 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -41,8 +53,21 @@
                                 class="mb-4 mb-xl-0">
 
                         <template slot="footer">
-                            <!--span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span-->
-                            <span class="text-nowrap">{{studentSubject.inviteCode}}</span>
+                            <span
+                                    v-for="cate in categoryList"
+                                    v-bind:key="cate.id" >
+                                <p v-if="cate.categoryGroup == studentSubject.categoryGroup">
+                                  {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, studentSubject.category)}}
+                                </p>
+                            </span>
+                            <br/>
+
+                            <span class="text-info mr-2" v-if="studentSubject.classType == 'KINDERGARTEN'">유아 </span>
+                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
+                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
+                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'HIGH_SCHOOL'">고등 </span>
+                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'UNIVERSITY'">대학 </span>
+                            <span class="text-info mr-2" v-else >일반인 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(studentSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -75,7 +100,48 @@
                     <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
                 </template>
                 <div>
+                    <h4>과제명</h4>
                     <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+
+                    <h4>카테고리 설정</h4>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{categoryGroupPivotName}}
+                        </base-button>
+                        <a class="dropdown-item"
+                           href="#"
+                           v-for="item in categoryList" v-bind:key="item.id"
+                           @click="selectCategoryGroupPivot(item.categoryGroup, item.categoryGroupName)"
+                        >{{item.categoryGroupName}}</a>
+                    </base-dropdown>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{categoryPivotName}}
+                        </base-button>
+                        <a class="dropdown-item"
+                           href="#"
+                           v-for="item in targetCategoryList" v-bind:key="item.id"
+                           @click="selectCategoryPivot(item.category, item.categoryName)"
+                        >{{item.categoryName}}</a>
+                    </base-dropdown>
+                    <br/>
+                    <br/>
+
+                    <h4>클래스 타입</h4>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{classTypeName}}
+                        </base-button>
+                        <a class="dropdown-item" href="#" @click="selectClassType('유아', 'KINDERGARTEN')">유아</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('초등', 'ELEMENTARY_SCHOOL')">초등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('중등', 'MIDDLE_SCHOOL')">중등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('고등', 'HIGH_SCHOOL')">고등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('대학', 'UNIVERSITY')">대학</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('일반인', 'ORDINARY_PERSON')">일반인</a>
+                    </base-dropdown>
+
+
+
                 </div>
                 <template slot="footer">
                     <base-button type="primary" @click="createSubject()">과제방 생성</base-button>
@@ -267,12 +333,20 @@
               notiEditType: '',
               notiEditUserId: '',
 
-              recommenedsEdu: []
-
+              recommenedsEdu: [],
+              categoryList: [],
+              categoryGroupPivot: '',
+              categoryGroupPivotName: '',
+              targetCategoryList: [],
+              categoryPivot: '',
+              categoryPivotName: '',
+              classType: 'KINDERGARTEN',
+              classTypeName: '유아',
           }
       },
       created() {
           this.subjectMasterId = localStorage.getItem('userId');
+          this.getCategoryList();
           this.getSubjects();
           this.getNotices();
           this.getRecommends();
@@ -306,6 +380,45 @@
           this.modals = false;
       },
       methods: {
+          selectClassType(n, i){
+              this.classType = i;
+              this.classTypeName = n;
+          },
+          selectCategoryPivot(cateId, cateName){
+              this.categoryPivot = cateId;
+              this.categoryPivotName = cateName;
+          },
+        selectTargetCateList(grId){
+            let res = [];
+            for(let i = 0; this.categoryList.length; i++){
+                if(this.categoryList[i].categoryGroup == grId) {
+                    res = this.categoryList[i].categoryList;
+                    this.targetCategoryList = this.categoryList[i].categoryList;
+                    break;
+                }
+            }
+            return res;
+        },
+        selectCategoryGroupPivot(categoryGroupId, categoryGroupName){
+              this.categoryGroupPivot = categoryGroupId;
+              this.categoryGroupPivotName = categoryGroupName;
+              this.selectTargetCateList(categoryGroupId);
+        },
+        getCategoryNameFromCategoryGroupId(categoryGroupId, targetCategoryId){
+            let res = '';
+            for(let i = 0; this.categoryList.length; i++){
+                if(this.categoryList[i].categoryGroup == categoryGroupId) {
+                    for (let j = 0; this.categoryList[i].categoryList.length; j++) {
+                        if(this.categoryList[i].categoryList[j].category == targetCategoryId){
+                          res =   this.categoryList[i].categoryList[j].categoryName;
+                          break;
+                        }
+                    }
+                    break;
+                }
+            }
+            return res;
+        },
         stringResizer(str, len, lastTxt){
             if (len == "" || len == null) { // 기본값
                 len = 20;
@@ -385,7 +498,10 @@
                                   inviteCode : response.data.data[0].subjectDtoList[i].inviteCode,
                                   inviteCodeURL : "http://" + location.hostname + ":" + location.port + "/#/subjectJoin/" + response.data.data[0].subjectDtoList[i].inviteCode,
                                   icon : '',
-                                  idx : i
+                                  idx : i,
+                                  categoryGroup : response.data.data[0].subjectDtoList[i].categoryGroup,
+                                  category : response.data.data[0].subjectDtoList[i].category,
+                                  classType : response.data.data[0].subjectDtoList[i].classType
                               });
                           }
                           vm.studentSubjects = [];
@@ -398,7 +514,10 @@
                                   inviteCode : response.data.data[0].joinSubjectDtoList[i].inviteCode,
                                   inviteCodeURL : "http://" + location.hostname + ":" + location.port + "/#/subjectJoin/" + response.data.data[0].joinSubjectDtoList[i].inviteCode,
                                   icon : '',
-                                  idx : i
+                                  idx : i,
+                                  categoryGroup : response.data.data[0].joinSubjectDtoList[i].categoryGroup,
+                                  category : response.data.data[0].joinSubjectDtoList[i].category,
+                                  classType : response.data.data[0].joinSubjectDtoList[i].classType
                               });
                           }
 
@@ -406,6 +525,24 @@
                       else{
                           vm.modals = true;
                           vm.responseMsg = response.data.message;
+                      }
+                  });
+          },
+          getCategoryList(){
+              let vm = this;
+
+              axios.get('/api/subjects/categories')
+                  .then(function(response){
+                      if(response.data.statusCode == 'OK'){
+                          vm.categoryList = [];
+                          vm.categoryList = response.data.data;
+
+                          vm.categoryGroupPivot = response.data.data[0].categoryGroup;
+                          vm.categoryGroupPivotName = response.data.data[0].categortGroupName;
+                          vm.categoryPivot = response.data.data[0].categoryList[0].category;
+                          vm.categoryPivotName = response.data.data[0].categoryList[0].categoryName;
+
+                          vm.selectCategoryGroupPivot(vm.categoryGroupPivot,vm.categoryGroupPivotName );
                       }
                   });
           },
