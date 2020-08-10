@@ -339,8 +339,7 @@
                   "","","","","","","","","",""],
               createAssignmentFileLen: 1,
 
-
-
+              responseMsg: '데이터를 기다리는 중입니다.',
               modals: true,
               modals2: false,
               modals4: false,
@@ -364,7 +363,6 @@
           });
       },
       mounted() {
-          this.modals = false;
           this.nowUser = localStorage.getItem('userId');
           this.initBigChart(0);
 
@@ -496,6 +494,7 @@
                               vm.redBarChart.chartData.labels.push(response.data.data[0].statisticsDtoList[i].userName);
                               vm.redBarChart.chartData.datasets[0].data.push(response.data.data[0].statisticsDtoList[i].totalScore);
                           }
+                          vm.modals = false;
                       }
                       else{
                           vm.modals = true;
