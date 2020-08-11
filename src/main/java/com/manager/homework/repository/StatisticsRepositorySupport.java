@@ -3,6 +3,7 @@ package com.manager.homework.repository;
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.Assignment;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
+import com.manager.homework.vo.StatisticsCategoryAvgDto;
 import com.manager.homework.vo.StatisticsDto;
 import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
 import com.querydsl.core.BooleanBuilder;
@@ -72,21 +73,21 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                         .select(Projections.fields(StatisticsDto.class,
                                 subject.id.as("subjectId"),
                                 subject.name.as("subjectName"),
+                                notice.id.as("noticeId"),
                                 notice.title.as("title"),
-                                assignment.id.as("assignmentId"),
                                 assignment.score.avg().as("averageScore")))
                         .from(assignment)
                         .join(subject).on(subject.id.eq(assignment.subject.id))
                         .join(notice).on(notice.id.eq(assignment.notice.id))
                         .where(getBooleanBuilderBySubjectId(subjectId).and(assignment.feedback.isNotNull()))
-                        .groupBy(subject.id, subject.name, assignment.id, notice.title)
+                        .groupBy(subject.id, subject.name, notice.id, notice.title)
                         .orderBy(assignment.score.avg().desc())
                         .fetch();
 
-        return getStatisticsAvgByAssignmentDtoDto(resultList);
+        return getStatisticsAvgByAssignmentDtoList(resultList);
     }
 
-    private List<StatisticsAvgByAssignmentDto> getStatisticsAvgByAssignmentDtoDto(
+    private List<StatisticsAvgByAssignmentDto> getStatisticsAvgByAssignmentDtoList(
             List<StatisticsDto> resultList) {
 
         List<StatisticsAvgByAssignmentDto> dtoList = Lists.newArrayList();
@@ -130,11 +131,55 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
 
     private List<StatisticsDto> getAvgByStatisticsDtoList(List<StatisticsDto> value) {
         return value.stream()
-                .map(v -> StatisticsDto.builder()
-                        .assignmentId(v.getAssignmentId())
-                        .title(v.getTitle())
-                        .averageScore(v.getAverageScore())
+                .map(it -> StatisticsDto.builder()
+                        .noticeId(it.getNoticeId())
+                        .title(it.getTitle())
+                        .averageScore(it.getAverageScore())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public List<StatisticsCategoryAvgDto> findByCategoryAvg(Long userId) {
+        System.out.println("cdy userId = " + userId);
+
+        List<StatisticsDto> resultList = queryFactory
+                .select(Projections.fields(StatisticsDto.class,
+                        user.id.as("userId"),
+                        user.name.as("userName"),
+                        subject.categoryGroup,
+                        subject.category,
+                        assignment.score.avg().as("averageScore")))
+                .from(assignment)
+                .join(user).on(user.id.eq(assignment.user.id))
+                .join(subject).on(subject.id.eq(assignment.subject.id))
+                .where(getBooleanBuilderByUserId(userId).and(assignment.feedback.isNotNull()))
+                .groupBy(user.id, user.name, subject.categoryGroup, subject.category)
+                .orderBy(assignment.score.avg().desc(), subject.categoryGroup.desc(), subject.category.desc())
+                .fetch();
+
+        return getStatisticsCategoryAvgDtoList(resultList);
+    }
+
+    private List<StatisticsCategoryAvgDto> getStatisticsCategoryAvgDtoList(List<StatisticsDto> resultList) {
+        List<StatisticsCategoryAvgDto> dtoList = Lists.newArrayList();
+
+        resultList.stream()
+                .collect(Collectors.groupingBy(StatisticsDto::getUserId))
+                .forEach((key, value) ->
+                        dtoList.add(StatisticsCategoryAvgDto.builder()
+                                .userId(value.get(0).getUserId())
+                                .userName(value.get(0).getUserName())
+                                .categoryList(value.stream().map(it -> it.getCategoryGroup() + ">" + it.getCategory()).collect(Collectors.toList()))
+                                .averageList(value.stream().map(StatisticsDto::getAverageScore).collect(Collectors.toList()))
+                                .build()));
+        return dtoList;
+    }
+
+    private BooleanBuilder getBooleanBuilderByUserId(Long userId) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if (userId != null) {
+            builder.and(user.id.eq(userId));
+        }
+        return builder;
     }
 }

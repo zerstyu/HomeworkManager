@@ -2,6 +2,7 @@ package com.manager.homework.service;
 
 import com.manager.homework.repository.StatisticsRepositorySupport;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
+import com.manager.homework.vo.StatisticsCategoryAvgDto;
 import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,5 +22,9 @@ public class StatisticsService {
 
     public List<StatisticsAvgByAssignmentDto> getAvgScoreByAssignment(Long subjectId) {
         return statisticsRepositorySupport.findByAvg(subjectId);
+    }
+
+    public List<StatisticsCategoryAvgDto> getCategoryAverage(Long userId) {
+        return statisticsRepositorySupport.findByCategoryAvg(userId);
     }
 }

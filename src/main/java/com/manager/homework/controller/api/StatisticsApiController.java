@@ -3,6 +3,7 @@ package com.manager.homework.controller.api;
 import com.manager.homework.common.Response;
 import com.manager.homework.service.StatisticsService;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
+import com.manager.homework.vo.StatisticsCategoryAvgDto;
 import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,11 +29,17 @@ public class StatisticsApiController {
         return Response.ok(statisticsService.getTotalScoreRank(subjectId));
     }
 
-    @ApiOperation(value = "과제별 평균 순위 조회", notes = "특정 과목의 과제별 평균 순 조회")
+    @ApiOperation(value = "과제별 평균 순위 조회", notes = "특정 과목의 과제별 평균 순위 조회")
     @GetMapping("/subjects/averages")
     public Response<List<StatisticsAvgByAssignmentDto>> getAvgScoreByAssignment(
             @RequestParam(value = "id", required = false) Long subjectId) {
         return Response.ok(statisticsService.getAvgScoreByAssignment(subjectId));
     }
 
+    @ApiOperation(value = "유저의 카테고리별 평균 순위 조회", notes = "특정 유저의 카테고리별 평균 순위 조회")
+    @GetMapping("/subjects/category_averages")
+    public Response<List<StatisticsCategoryAvgDto>> getCategoryAverage(
+            @RequestParam(value = "userId", required = false) Long userId) {
+        return Response.ok(statisticsService.getCategoryAverage(userId));
+    }
 }
