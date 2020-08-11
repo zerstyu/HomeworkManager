@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <router-link to="/">
-                                <img src="img/brand/green.png">
+                                모두의숙제<!--img src="img/brand/green.png"-->
                             </router-link>
                         </div>
                         <div class="col-6 collapse-close">
@@ -89,7 +89,11 @@
                     <div class="col-xl-6">
                         <div class="copyright text-center text-xl-left text-muted">
                             &copy; {{year}} <a href="#" class="font-weight-bold ml-1"
-                                               target="_blank">안재홍, 추대윤, 이태호</a>
+                                               target="_blank">안재홍, 추대윤, 이태호</a><br/>
+                            <img src="/img/brand/logo_footer1.png" style="margin-right: 20px">
+                            <img src="/img/brand/logo_footer2.png" style="margin-right: 20px">
+                            <img src="/img/brand/logo_footer3.png" style="margin-right: 20px">
+
                         </div>
                     </div>
                     <div class="col-xl-6">

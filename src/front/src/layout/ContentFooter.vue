@@ -3,7 +3,10 @@
     <div class="row align-items-center justify-content-lg-between">
       <div class="col-lg-6">
         <div class="copyright text-center text-lg-left text-muted">
-          © {{year}} <a href="#" class="font-weight-bold ml-1" target="_blank">안재홍, 추대윤, 이태호</a>
+          © {{year}} <a href="#" class="font-weight-bold ml-1" target="_blank">안재홍, 추대윤, 이태호</a><br/>
+          <img src="/img/brand/logo_footer1.png" style="margin-right: 20px">
+          <img src="/img/brand/logo_footer2.png" style="margin-right: 20px">
+          <img src="/img/brand/logo_footer3.png" style="margin-right: 20px">
         </div>
       </div>
       <div class="col-lg-6">

@@ -180,10 +180,10 @@
 
                 <h4>과제 유형</h4>
                 <base-radio name="OPEN" class="mb-5" v-model="createAssignIsOpen">
-                    오픈과제
+                    공개 과제
                 </base-radio>
                 <base-radio name="PRIVATE" class="mb-5" v-model="createAssignIsOpen">
-                    프라이빗과제
+                    비공개 과제
                 </base-radio>
 
             </div>
