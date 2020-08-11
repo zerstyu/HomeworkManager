@@ -1,6 +1,8 @@
 package com.manager.homework.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.manager.homework.type.CategoryGroupType;
+import com.manager.homework.type.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +18,10 @@ public class StatisticsDto {
     private String userName;
     private Long subjectId;
     private String subjectName;
-    private Long assignmentId;
+    private Long noticeId;
     private String title;
     private Integer totalScore;
     private Double averageScore;
+    private CategoryGroupType categoryGroup;
+    private CategoryType category;
 }
