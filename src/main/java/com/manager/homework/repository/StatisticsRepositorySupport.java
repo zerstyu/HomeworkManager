@@ -169,7 +169,8 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                         dtoList.add(StatisticsCategoryAvgDto.builder()
                                 .userId(value.get(0).getUserId())
                                 .userName(value.get(0).getUserName())
-                                .categoryList(value.stream().map(it -> it.getCategoryGroup() + ">" + it.getCategory()).collect(Collectors.toList()))
+                                .categoryList(value.stream().map(it -> it.getCategoryGroup().getCategoryGroup()
+                                        + ">" + it.getCategory().getCategory()).collect(Collectors.toList()))
                                 .averageList(value.stream().map(StatisticsDto::getAverageScore).collect(Collectors.toList()))
                                 .build()));
         return dtoList;
