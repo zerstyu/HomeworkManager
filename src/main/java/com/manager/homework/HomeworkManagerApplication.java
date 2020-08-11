@@ -59,8 +59,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         userList.add(user);
 
         userList.add(User.builder()
-                .email("chu@naver.com")
-                .password("chu")
+                .email("chu")
+                .password(password)
                 .name("chu")
                 .groupName("HomeworkManager")
                 .birthday(LocalDate.of(1989, 11, 10))
@@ -68,8 +68,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .build());
 
         userList.add(User.builder()
-                .email("lee@naver.com")
-                .password("lee")
+                .email("lee")
+                .password(password)
                 .name("lee")
                 .groupName("HomeworkManager")
                 .birthday(LocalDate.of(2000, 11, 10))
