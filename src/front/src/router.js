@@ -40,6 +40,11 @@ export default new Router({
           component: () => import('./views/HomeworkDetail.vue')
         },
         {
+          path: '/statistics',
+          name: '통계자료',
+          component: () => import('./views/Statistics.vue')
+        },
+        {
           path: '/homeworkManage',
           name: '과제 리스트',
           component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')

@@ -18,17 +18,17 @@
                                 v-for="cate in categoryList"
                                 v-bind:key="cate.id" >
                                 <p v-if="cate.categoryGroup == teacherSubject.categoryGroup">
-                                  {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, teacherSubject.category)}}
+                                    <i class="ni ni-folder-17"></i> {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, teacherSubject.category)}}
                                 </p>
                             </span>
                             <br/>
 
-                            <span class="text-info mr-2" v-if="teacherSubject.classType == 'KINDERGARTEN'">유아 </span>
-                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
-                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
-                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'HIGH_SCHOOL'">고등 </span>
-                            <span class="text-info mr-2" v-else-if="teacherSubject.classType == 'UNIVERSITY'">대학 </span>
-                            <span class="text-info mr-2" v-else >일반인 </span>
+                            <span class="text-warning mr-2" v-if="teacherSubject.classType == 'KINDERGARTEN'">유아 </span>
+                            <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
+                            <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
+                            <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'HIGH_SCHOOL'">고등 </span>
+                            <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'UNIVERSITY'">대학 </span>
+                            <span class="text-warning mr-2" v-else >일반인 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -57,17 +57,17 @@
                                     v-for="cate in categoryList"
                                     v-bind:key="cate.id" >
                                 <p v-if="cate.categoryGroup == studentSubject.categoryGroup">
-                                  {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, studentSubject.category)}}
+                                  <i class="ni ni-folder-17"></i> {{cate.categoryGroupName + " > " + getCategoryNameFromCategoryGroupId(cate.categoryGroup, studentSubject.category)}}
                                 </p>
                             </span>
                             <br/>
 
-                            <span class="text-info mr-2" v-if="studentSubject.classType == 'KINDERGARTEN'">유아 </span>
-                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
-                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
-                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'HIGH_SCHOOL'">고등 </span>
-                            <span class="text-info mr-2" v-else-if="studentSubject.classType == 'UNIVERSITY'">대학 </span>
-                            <span class="text-info mr-2" v-else >일반인 </span>
+                            <span class="text-warning mr-2" v-if="studentSubject.classType == 'KINDERGARTEN'">유아 </span>
+                            <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'ELEMENTARY_SCHOOL'">초등 </span>
+                            <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
+                            <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'HIGH_SCHOOL'">고등 </span>
+                            <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'UNIVERSITY'">대학 </span>
+                            <span class="text-warning mr-2" v-else >일반인 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(studentSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -154,7 +154,45 @@
                     <h5 class="modal-title" id="exampleModalLabel3">과목 정보수정</h5>
                 </template>
                 <div>
+                    <h4>과목명</h4>
                     <base-input placeholder="과목" v-model="subjectPivotNameEdit"></base-input>
+
+                    <h4>카테고리 설정</h4>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{categoryGroupPivotNameEdit}}
+                        </base-button>
+                        <a class="dropdown-item"
+                           href="#"
+                           v-for="item in categoryList" v-bind:key="item.id"
+                           @click="selectCategoryGroupPivotEdit(item.categoryGroup, item.categoryGroupName)"
+                        >{{item.categoryGroupName}}</a>
+                    </base-dropdown>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{categoryPivotNameEdit}}
+                        </base-button>
+                        <a class="dropdown-item"
+                           href="#"
+                           v-for="item in targetCategoryListEdit" v-bind:key="item.id"
+                           @click="selectCategoryPivotEdit(item.category, item.categoryName)"
+                        >{{item.categoryName}}</a>
+                    </base-dropdown>
+                    <br/>
+                    <br/>
+
+                    <h4>클래스 타입</h4>
+                    <base-dropdown>
+                        <base-button slot="title" type="secondary" class="dropdown-toggle">
+                            {{classTypeNameEdit}}
+                        </base-button>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('유아', 'KINDERGARTEN')">유아</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('초등', 'ELEMENTARY_SCHOOL')">초등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('중등', 'MIDDLE_SCHOOL')">중등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('고등', 'HIGH_SCHOOL')">고등</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('대학', 'UNIVERSITY')">대학</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('일반인', 'ORDINARY_PERSON')">일반인</a>
+                    </base-dropdown>
                 </div>
                 <template slot="footer">
                     <base-button type="primary" @click="updateSubjectReq()">과목명 변경</base-button>
@@ -206,10 +244,10 @@
 
                     <h4>과제 유형</h4>
                     <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
-                        오픈과제
+                        공개 과제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
-                        프라이빗과제
+                        비공개 과제
                     </base-radio>
 
                 </div>
@@ -264,7 +302,7 @@
                                 v-bind:sub-title="recommend.productName"
                                 class="mb-4 mb-xl-0">
                         <h4>{{stringResizer(recommend.productName, 15, null)}}</h4>
-                        {{recommend.productPrice}}원<br/>
+                        <i class="ni ni-cart"></i> {{recommend.productPrice}}원<br/>
                         <img v-bind:src="recommend.productImageUrl" style="height:150px;"/>
                         <template slot="footer">
                         </template>
@@ -334,6 +372,7 @@
               notiEditUserId: '',
 
               recommenedsEdu: [],
+
               categoryList: [],
               categoryGroupPivot: '',
               categoryGroupPivotName: '',
@@ -342,6 +381,16 @@
               categoryPivotName: '',
               classType: 'KINDERGARTEN',
               classTypeName: '유아',
+
+
+              categoryGroupPivotEdit: '',
+              categoryGroupPivotNameEdit: '',
+              targetCategoryListEdit: [],
+              categoryPivotEdit: '',
+              categoryPivotNameEdit: '',
+              classTypeEdit: 'KINDERGARTEN',
+              classTypeNameEdit: '유아'
+
           }
       },
       created() {
@@ -380,13 +429,28 @@
           this.modals = false;
       },
       methods: {
+        getCategoryGroupName(id){
+            for(let i = 0; i < this.categoryList.length; i++){
+                if(this.categoryList[i].categoryGroup == id){
+                    return this.categoryList[i].categoryGroupName;
+                }
+            }
+        },
           selectClassType(n, i){
               this.classType = i;
               this.classTypeName = n;
           },
+          selectClassTypeEdit(n, i){
+              this.classTypeEdit = i;
+              this.classTypeNameEdit = n;
+          },
           selectCategoryPivot(cateId, cateName){
               this.categoryPivot = cateId;
               this.categoryPivotName = cateName;
+          },
+          selectCategoryPivotEdit(cateId, cateName){
+              this.categoryPivotEdit = cateId;
+              this.categoryPivotNameEdit = cateName;
           },
         selectTargetCateList(grId){
             let res = [];
@@ -403,7 +467,37 @@
               this.categoryGroupPivot = categoryGroupId;
               this.categoryGroupPivotName = categoryGroupName;
               this.selectTargetCateList(categoryGroupId);
+
+              this.categoryPivot = this.targetCategoryList[0].category;
+              this.categoryPivotName = this.targetCategoryList[0].categoryName;
         },
+
+
+
+
+
+          selectTargetCateListEdit(grId){
+              let res = [];
+              for(let i = 0; this.categoryList.length; i++){
+                  if(this.categoryList[i].categoryGroup == grId) {
+                      res = this.categoryList[i].categoryList;
+                      this.targetCategoryListEdit = this.categoryList[i].categoryList;
+                      break;
+                  }
+              }
+              return res;
+          },
+          selectCategoryGroupPivotEdit(categoryGroupId, categoryGroupName){
+              this.categoryGroupPivotEdit = categoryGroupId;
+              this.categoryGroupPivotNameEdit = categoryGroupName;
+              this.selectTargetCateListEdit(categoryGroupId);
+
+              this.categoryPivotEdit = this.targetCategoryListEdit[0].category;
+              this.categoryPivotNameEdit = this.targetCategoryListEdit[0].categoryName;
+          },
+
+
+
         getCategoryNameFromCategoryGroupId(categoryGroupId, targetCategoryId){
             let res = '';
             for(let i = 0; this.categoryList.length; i++){
@@ -462,6 +556,9 @@
               axios.post('/api/subjects',
                   '{' +
                   '"subjectName": "' + vm.createSubjectName + '",' +
+                  '"category": "' + vm.categoryPivot + '",' +
+                  '"categoryGroup": "' + vm.categoryGroupPivot + '",' +
+                  '"classType": "' + vm.classType + '",' +
                   '"userId": "' + localStorage.getItem('userId') + '"' +
                   //'"userName": "' + localStorage.getItem('userName') + '"' +
                   '}'
@@ -538,7 +635,7 @@
                           vm.categoryList = response.data.data;
 
                           vm.categoryGroupPivot = response.data.data[0].categoryGroup;
-                          vm.categoryGroupPivotName = response.data.data[0].categortGroupName;
+                          vm.categoryGroupPivotName = response.data.data[0].categoryGroupName;
                           vm.categoryPivot = response.data.data[0].categoryList[0].category;
                           vm.categoryPivotName = response.data.data[0].categoryList[0].categoryName;
 
@@ -558,6 +655,33 @@
                       this.subjectPivotNameEdit = this.teacherSubjects[i].subjectName;
                       this.subjectMasterId = this.teacherSubjects[i].userId;
                       this.nowUser = localStorage.getItem('userId');
+
+                      this.categoryGroupPivotEdit = this.teacherSubjects[i].categoryGroup;
+                      this.categoryGroupPivotNameEdit = this.getCategoryGroupName(this.teacherSubjects[i].categoryGroup);
+                      this.targetCategoryListEdit = this.selectTargetCateList(this.teacherSubjects[i].categoryGroup);
+                      this.categoryPivotEdit = this.teacherSubjects[i].category;
+                      this.categoryPivotNameEdit = this.getCategoryNameFromCategoryGroupId(this.teacherSubjects[i].categoryGroup, this.teacherSubjects[i].category);
+                      this.classTypeEdit = this.teacherSubjects[i].classType;
+                      if(this.classTypeEdit == 'KINDERGARTEN'){
+                          this.classTypeNameEdit = '유아'
+                      }
+                      else if(this.classTypeEdit == 'ELEMENTARY_SCHOOL'){
+                          this.classTypeNameEdit = '초등'
+                      }
+                      else if(this.classTypeEdit == 'MIDDLE_SCHOOL'){
+                          this.classTypeNameEdit = '중등'
+                      }
+                      else if(this.classTypeEdit == 'HIGH_SCHOOL'){
+                          this.classTypeNameEdit = '고등'
+                      }
+                      else if(this.classTypeEdit == 'UNIVERSITY'){
+                          this.classTypeNameEdit = '대학'
+                      }
+                      else{
+                          this.classTypeNameEdit = '일반인'
+                      }
+
+
                       this.getNotices();
                   }
                   else{
@@ -600,7 +724,10 @@
 
               axios.put('/api/subjects/' + vm.subjectPivot,
                   '{' +
-                  '"subjectName": "' + vm.subjectPivotNameEdit + '"' +
+                  '"subjectName": "' + vm.subjectPivotNameEdit + '",' +
+                  '"category": "' + vm.categoryPivotEdit + '",' +
+                  '"categoryGroup": "' + vm.categoryGroupPivotEdit + '",' +
+                  '"classType": "' + vm.classTypeEdit + '"' +
 //                  '"subjectId": "' + vm.subjectPivot + '"' +
                   '}'
                   //vm.createSubjectName

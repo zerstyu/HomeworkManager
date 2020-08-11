@@ -130,10 +130,10 @@
 
                     <h4>과제 유형</h4>
                     <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
-                        오픈과제
+                        공개 과제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
-                        프라이빗과제
+                        비공개 과제
                     </base-radio>
 
                 </div>
@@ -167,10 +167,10 @@
 
                     <h4>과제 유형</h4>
                     <base-radio name="OPEN" class="mb-5" v-model="createAssignIsOpen">
-                        오픈과제
+                        공개 과제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-5" v-model="createAssignIsOpen">
-                        프라이빗과제
+                        비공개 과제
                     </base-radio>
 
                 </div>
@@ -283,10 +283,10 @@
               },
               redBarChart: {
                   chartData: {
-                      labels: ['안재홍', '추대윤'],
+                      labels: [],
                       datasets: [{
                           label: '총점',
-                          data: [80, 85]
+                          data: []
                       }]
                   }
               },
@@ -340,7 +340,7 @@
               createAssignmentFileLen: 1,
 
               responseMsg: '데이터를 기다리는 중입니다.',
-              modals: true,
+              modals: false,
               modals2: false,
               modals4: false,
               modals5: false
@@ -368,6 +368,18 @@
 
       },
       methods: {
+          changeRedChart(nameArr, scoreArr){
+              let tmp = {
+                  chartData: {
+                      labels: nameArr,
+                          datasets: [{
+                          label: '총점',
+                          data: scoreArr
+                      }]
+                  }
+              }
+              this.redBarChart = tmp;
+          },
           initBigChart(index) {
               let chartData = {
                   datasets: [
@@ -490,10 +502,16 @@
                           vm.redBarChart.chartData.labels = [];
                           vm.redBarChart.chartData.datasets[0].data = [];
 
+                          let nameAr = [];
+                          let scoreAr = [];
+
                           for(let i = 0; i < response.data.data[0].statisticsDtoList.length; i++){
-                              vm.redBarChart.chartData.labels.push(response.data.data[0].statisticsDtoList[i].userName);
-                              vm.redBarChart.chartData.datasets[0].data.push(response.data.data[0].statisticsDtoList[i].totalScore);
+                              nameAr.push(response.data.data[0].statisticsDtoList[i].userName);
+                              scoreAr.push(response.data.data[0].statisticsDtoList[i].totalScore);
+                              //vm.redBarChart.chartData.labels.push(response.data.data[0].statisticsDtoList[i].userName);
+                              //vm.redBarChart.chartData.datasets[0].data.push(response.data.data[0].statisticsDtoList[i].totalScore);
                           }
+                          vm.changeRedChart(nameAr, scoreAr);
                           vm.modals = false;
                       }
                       else{
