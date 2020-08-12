@@ -13,10 +13,10 @@
                             <span class="text-info mr-2">제출자 정보 </span>
                             <span class="text-nowrap">{{userName.toString()}}</span>
                             <badge class="badge-dot mr-4" type="info" v-if="isOpen==true">
-                                <span class="status">오픈과제</span>
+                                <span class="status">공개과제</span>
                             </badge>
                             <badge class="badge-dot mr-4" type="warning" v-else>
-                                <span class="status">개별과제</span>
+                                <span class="status">비공개과제</span>
                             </badge>
                         </template>
                     </stats-card>

@@ -134,7 +134,8 @@
                 modals2: false
             }
         },
-        mounted() {
+        created() {
+            this.getStaticsTotalScore();
         },
         methods: {
             changeRedChart(nameArr, scoreArr){
@@ -161,8 +162,8 @@
                             let nameAr = [];
                             let scoreAr = [];
 
-                            nameAr = response.data.data.category;
-                            scoreAr = response.data.data.average;
+                            nameAr = response.data.data[0].categoryList;
+                            scoreAr = response.data.data[0].averageList;
 
 /*
                             for(let i = 0; i < response.data.data[0].statisticsDtoList.length; i++){
@@ -173,6 +174,8 @@
                             }
 
  */
+                            console.log("통계데이터 수신완료");
+                            console.log(nameAr);
                             vm.changeRedChart(nameAr, scoreAr);
                         }
                         else{
