@@ -5,7 +5,7 @@ import com.manager.homework.domain.Assignment;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
 import com.manager.homework.vo.StatisticsCategoryAvgDto;
 import com.manager.homework.vo.StatisticsDto;
-import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
+import com.manager.homework.vo.StatisticsSubjectTotalAvgDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,7 +29,7 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
         this.queryFactory = queryFactory;
     }
 
-    public List<StatisticsSubjectTotalScoreDto> findByTotalScore(Long subjectId) {
+    public List<StatisticsSubjectTotalAvgDto> findByTotalAvg(Long subjectId) {
         List<StatisticsDto> resultList =
                 queryFactory
                         .select(Projections.fields(StatisticsDto.class,
@@ -37,31 +37,28 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                                 user.name.as("userName"),
                                 subject.id.as("subjectId"),
                                 subject.name.as("subjectName"),
-                                assignment.score.sum().as("totalScore")))
+                                assignment.score.avg().as("averageScore")))
                         .from(assignment)
                         .join(user).on(user.id.eq(assignment.user.id))
                         .join(subject).on(subject.id.eq(assignment.subject.id))
                         .where(getBooleanBuilderBySubjectId(subjectId).and(assignment.feedback.isNotNull()))
                         .groupBy(user.id, user.name, subject.id, subject.name)
-                        .orderBy(assignment.score.sum().desc())
+                        .orderBy(assignment.score.avg().desc())
                         .fetch();
 
-        return getStatisticsSubjectTotalScoreDto(resultList);
+        return getStatisticsSubjectTotalAvgDto(resultList);
     }
 
-    private List<StatisticsSubjectTotalScoreDto> getStatisticsSubjectTotalScoreDto(
-            List<StatisticsDto> resultList) {
-
-        List<StatisticsSubjectTotalScoreDto> dtoList = Lists.newArrayList();
+    private List<StatisticsSubjectTotalAvgDto> getStatisticsSubjectTotalAvgDto(List<StatisticsDto> resultList) {
+        List<StatisticsSubjectTotalAvgDto> dtoList = Lists.newArrayList();
 
         resultList.stream()
                 .collect(Collectors.groupingBy(StatisticsDto::getSubjectId))
                 .forEach((key, value) -> dtoList.add(
-                        StatisticsSubjectTotalScoreDto.builder()
+                        StatisticsSubjectTotalAvgDto.builder()
                                 .subjectId(value.get(0).getSubjectId())
                                 .subjectName(value.get(0).getSubjectName())
-                                .average(getAverage(value))
-                                .statisticsDtoList(getTotalScoreStatisticsDtoList(value))
+                                .statisticsDtoList(getTotalAvgStatisticsDtoList(value))
                                 .build()));
 
         return dtoList;
@@ -112,19 +109,19 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
         return builder;
     }
 
-    private double getAverage(List<StatisticsDto> resultList) {
-        return resultList.stream()
-                .mapToLong(StatisticsDto::getTotalScore)
-                .average()
-                .orElse(0);
-    }
+//    private double getAverage(List<StatisticsDto> resultList) {
+//        return resultList.stream()
+//                .mapToLong(StatisticsDto::getTotalScore)
+//                .average()
+//                .orElse(0);
+//    }
 
-    private List<StatisticsDto> getTotalScoreStatisticsDtoList(List<StatisticsDto> value) {
+    private List<StatisticsDto> getTotalAvgStatisticsDtoList(List<StatisticsDto> value) {
         return value.stream()
                 .map(v -> StatisticsDto.builder()
                         .userId(v.getUserId())
                         .userName(v.getUserName())
-                        .totalScore(v.getTotalScore())
+                        .averageScore(v.getAverageScore())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -165,8 +162,8 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
 
         resultList.stream()
                 .collect(Collectors.groupingBy(StatisticsDto::getUserId))
-                .forEach((key, value) ->
-                        dtoList.add(StatisticsCategoryAvgDto.builder()
+                .forEach((key, value) -> dtoList.add(
+                        StatisticsCategoryAvgDto.builder()
                                 .userId(value.get(0).getUserId())
                                 .userName(value.get(0).getUserName())
                                 .categoryList(value.stream().map(it -> it.getCategoryGroup().getCategoryGroup()

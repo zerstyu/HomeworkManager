@@ -20,7 +20,6 @@ public class StatisticsDto {
     private String subjectName;
     private Long noticeId;
     private String title;
-    private Integer totalScore;
     private Double averageScore;
     private CategoryGroupType categoryGroup;
     private CategoryType category;

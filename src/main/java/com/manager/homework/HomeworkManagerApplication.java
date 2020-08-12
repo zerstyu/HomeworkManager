@@ -75,7 +75,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         userList.add(User.builder()
                 .email("ahn")
                 .password(password)
-                .name("안재")
+                .name("안재홍")
                 .groupName("HomeworkManager")
                 .birthday(LocalDate.of(2002, 7, 7))
                 .gender(Gender.WOMAN)
