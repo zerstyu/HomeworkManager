@@ -344,7 +344,7 @@
               createAssignmentFileLen: 1,
 
               responseMsg: '데이터를 기다리는 중입니다.',
-              modals: false,
+              modals: true,
               modals2: false,
               modals4: false,
               modals5: false
@@ -367,6 +367,7 @@
           });
       },
       mounted() {
+          this.modals = false;
           this.nowUser = localStorage.getItem('userId');
           this.initBigChart(0);
 
@@ -736,6 +737,7 @@
               axios.get('/api/assignments?noticeId=' + this.$route.params.notiId + userIdParam)
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
+                          vm.assignments = [];
                           for(let i = 0; i < response.data.data.length; i++){
                               vm.assignments.push({
                                   id : response.data.data[i].id,

@@ -54,7 +54,7 @@
                                 <div class="col-md-12">
                                     <h4><i class="ni ni-ruler-pencil"></i> 채점 내용</h4>
                                     <div v-for="index in paginationTotal" :key="index">
-                                        <iframe id="homeworkCanvasIframe" name="homeworkCanvasIframe" style="display: none;width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas.html" v-on:load="canvasOnLoad()">
+                                        <iframe id="homeworkCanvasIframe" name="homeworkCanvasIframe" style="display: none;width:100%;height:870px;margin-top:-50px;" scrolling="no" src="canvas_resource/canvas_non_editor.html" v-on:load="canvasOnLoad()">
                                         </iframe>
                                     </div>
                                 </div>
