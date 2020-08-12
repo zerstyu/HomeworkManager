@@ -12,7 +12,7 @@ public enum ClassType {
     MIDDLE_SCHOOL("중등"),
     HIGH_SCHOOL("고등"),
     UNIVERSITY("대학"),
-    ORDINARY_PERSON("일반인"),
+    ORDINARY_PERSON("일반"),
     ;
 
     private final String classType;
