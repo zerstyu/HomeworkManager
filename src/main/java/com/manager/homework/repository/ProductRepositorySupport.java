@@ -1,7 +1,6 @@
 package com.manager.homework.repository;
 
-import com.manager.homework.domain.Order;
-import com.manager.homework.type.Gender;
+import com.manager.homework.domain.Product;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -9,22 +8,24 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.manager.homework.domain.QOrder.order;
+import static com.manager.homework.domain.QProduct.product;
 
 @Repository
-public class OrderRepositorySupport extends QuerydslRepositorySupport {
+public class ProductRepositorySupport extends QuerydslRepositorySupport {
     private final JPAQueryFactory queryFactory;
 
-    public OrderRepositorySupport(JPAQueryFactory queryFactory) {
-        super(Order.class);
+    public ProductRepositorySupport(JPAQueryFactory queryFactory) {
+        super(Product.class);
         this.queryFactory = queryFactory;
     }
 
-    public List<Order> findByCondition(Gender gender) {
+    public List<Product> findByCondition(String name) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(order.user.gender.eq(gender));
+        if (name != null) {
+            builder.and(product.name.contains(name));
+        }
 
-        return queryFactory.selectFrom(order)
+        return queryFactory.selectFrom(product)
                 .where(builder)
                 .fetch();
     }

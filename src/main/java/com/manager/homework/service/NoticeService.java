@@ -147,7 +147,7 @@ public class NoticeService {
         } else if (dday > 0) {
             return "D-" + dday;
         } else {
-            return "D+" + -dday;
+            return "-";
         }
     }
 }
