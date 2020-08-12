@@ -132,13 +132,13 @@
 
         <modal :show.sync="modals2">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">과목 만들기</h5>
             </template>
             <div>
-                <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+                <base-input placeholder="과목명을 입력해주세요" v-model="createSubjectName"></base-input>
             </div>
             <template slot="footer">
-                <base-button type="primary">과제방 생성</base-button>
+                <base-button type="primary">과목 생성</base-button>
                 <base-button type="default" @click="modals2 = false">취소</base-button>
             </template>
         </modal>

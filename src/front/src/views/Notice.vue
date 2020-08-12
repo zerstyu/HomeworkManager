@@ -39,7 +39,7 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">공지글 수정</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">과제 출제 수정</base-button>
                     <base-button type="primary" icon="ni ni-bag-17" @click="modals5 = true">과제 제출하기</base-button>
                     <!--base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">과제 제출하기</base-button-->
                     <!--base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">과제 제출하기</base-button-->
