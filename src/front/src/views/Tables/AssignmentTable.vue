@@ -41,12 +41,12 @@
 
           <td v-if="row.isOpen==true">
             <badge class="badge-dot mr-4" type="info">
-              <span class="status">OPEN</span>
+              <span class="status">공개</span>
             </badge>
           </td>
           <td v-else>
             <badge class="badge-dot mr-4" type="danger">
-              <span class="status">PRIVATE</span>
+              <span class="status">비공개</span>
             </badge>
           </td>
 

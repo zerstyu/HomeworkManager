@@ -28,7 +28,7 @@
                             <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
                             <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'HIGH_SCHOOL'">고등 </span>
                             <span class="text-warning mr-2" v-else-if="teacherSubject.classType == 'UNIVERSITY'">대학 </span>
-                            <span class="text-warning mr-2" v-else >일반인 </span>
+                            <span class="text-warning mr-2" v-else >일반 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(teacherSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -67,7 +67,7 @@
                             <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'MIDDLE_SCHOOL'">중등 </span>
                             <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'HIGH_SCHOOL'">고등 </span>
                             <span class="text-warning mr-2" v-else-if="studentSubject.classType == 'UNIVERSITY'">대학 </span>
-                            <span class="text-warning mr-2" v-else >일반인 </span>
+                            <span class="text-warning mr-2" v-else >일반 </span>
                             <base-button type="info" size="sm" href="#" @click="copyToClipboard(studentSubject.inviteCodeURL)">URL 복사</base-button>
                         </template>
                     </stats-card>
@@ -75,7 +75,7 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">오픈 과제물 찾기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">공개과제 찾기</base-button>
                 </div>
 
                 <div id="tableTop"></div>
@@ -97,7 +97,7 @@
 
             <modal :show.sync="modals2">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">과목 만들기</h5>
                 </template>
                 <div>
                     <h4>과제명</h4>
@@ -137,9 +137,18 @@
                         <a class="dropdown-item" href="#" @click="selectClassType('중등', 'MIDDLE_SCHOOL')">중등</a>
                         <a class="dropdown-item" href="#" @click="selectClassType('고등', 'HIGH_SCHOOL')">고등</a>
                         <a class="dropdown-item" href="#" @click="selectClassType('대학', 'UNIVERSITY')">대학</a>
-                        <a class="dropdown-item" href="#" @click="selectClassType('일반인', 'ORDINARY_PERSON')">일반인</a>
+                        <a class="dropdown-item" href="#" @click="selectClassType('일반', 'ORDINARY_PERSON')">일반</a>
                     </base-dropdown>
-
+                    <br/>
+                    <br/>
+                    <h4>과목 타입</h4>
+                    <base-radio name="OPEN" class="mb-3" v-model="subjectType">
+                        열린과목
+                    </base-radio>
+                    <base-radio name="PRIVATE" class="mb-3" v-model="subjectType">
+                        초대과목
+                    </base-radio>
+                    <br/>
 
 
                 </div>
@@ -191,7 +200,7 @@
                         <a class="dropdown-item" href="#" @click="selectClassTypeEdit('중등', 'MIDDLE_SCHOOL')">중등</a>
                         <a class="dropdown-item" href="#" @click="selectClassTypeEdit('고등', 'HIGH_SCHOOL')">고등</a>
                         <a class="dropdown-item" href="#" @click="selectClassTypeEdit('대학', 'UNIVERSITY')">대학</a>
-                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('일반인', 'ORDINARY_PERSON')">일반인</a>
+                        <a class="dropdown-item" href="#" @click="selectClassTypeEdit('일반', 'ORDINARY_PERSON')">일반</a>
                     </base-dropdown>
                 </div>
                 <template slot="footer">
@@ -294,7 +303,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <br/><br/>
-                    <h3>빅데이터 분석 나의 교육 추천 서비스</h3>
+                    <h3>나에게 맞는 상품 추천 서비스</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6"
                      v-for="recommend in recommenedsEdu" v-bind:key="recommend.id">
@@ -373,6 +382,7 @@
 
               recommenedsEdu: [],
 
+              subjectType: 'OPEN',
               categoryList: [],
               categoryGroupPivot: '',
               categoryGroupPivotName: '',
@@ -678,7 +688,7 @@
                           this.classTypeNameEdit = '대학'
                       }
                       else{
-                          this.classTypeNameEdit = '일반인'
+                          this.classTypeNameEdit = '일반'
                       }
 
 
