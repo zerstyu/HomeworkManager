@@ -4,7 +4,7 @@ import com.manager.homework.common.Response;
 import com.manager.homework.service.StatisticsService;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
 import com.manager.homework.vo.StatisticsCategoryAvgDto;
-import com.manager.homework.vo.StatisticsSubjectTotalScoreDto;
+import com.manager.homework.vo.StatisticsSubjectTotalAvgDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -22,11 +22,11 @@ import java.util.List;
 public class StatisticsApiController {
     private StatisticsService statisticsService;
 
-    @ApiOperation(value = "과목 총합점수 순위 조회", notes = "특정 과목 총합점수 순위 조회")
-    @GetMapping("/subjects/total-scores")
-    public Response<List<StatisticsSubjectTotalScoreDto>> getTotalScoreRank(
+    @ApiOperation(value = "과목 총합 평균 순위 조회", notes = "특정 과목 총합 평균 순위 조회")
+    @GetMapping("/subjects/total-averages")
+    public Response<List<StatisticsSubjectTotalAvgDto>> getTotalScoreRank(
             @RequestParam(value = "id", required = false) Long subjectId) {
-        return Response.ok(statisticsService.getTotalScoreRank(subjectId));
+        return Response.ok(statisticsService.getTotalAvgRank(subjectId));
     }
 
     @ApiOperation(value = "과제별 평균 순위 조회", notes = "특정 과목의 과제별 평균 순위 조회")

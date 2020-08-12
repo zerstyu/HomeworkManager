@@ -13,9 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Data
 @AllArgsConstructor
-public class StatisticsSubjectTotalScoreDto {
+public class StatisticsSubjectTotalAvgDto {
     Long subjectId;
     String subjectName;
-    Double average;
     List<StatisticsDto> statisticsDtoList;
 }
