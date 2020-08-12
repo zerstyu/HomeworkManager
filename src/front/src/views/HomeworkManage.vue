@@ -225,7 +225,7 @@
                 </template>
                 <div>
                     <h4>과제 타이틀</h4>
-                    <base-input placeholder="과목 타이틀" v-model="notiEditTitle"></base-input>
+                    <base-input placeholder="과제 타이틀" v-model="notiEditTitle"></base-input>
 
                     <h4>과제 설명</h4>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
