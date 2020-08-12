@@ -51,7 +51,7 @@ export default new Router({
         },
         {
           path: '/notice/:notiId',
-          name: '과목 공지사항',
+          name: '출제 과제',
           component: () => import(/* webpackChunkName: "demo" */ './views/Notice.vue')
         },
         {

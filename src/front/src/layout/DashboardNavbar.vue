@@ -5,7 +5,7 @@
               expand>
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div class="form-group mb-0">
-                <base-input placeholder="오픈자료를 검색해보세요"
+                <base-input placeholder="공개과제를 검색해보세요"
                             class="input-group-alternative"
                             addon-right-icon="fas fa-search"
                             v-model="searchQuery"

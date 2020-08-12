@@ -4,7 +4,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
-                    <h3>{{notiUserName}} 선생님의 {{notiSubjectName}} 과제공지 입니다.</h3>
+                    <h3>{{notiUserName}} 선생님이 출제한 {{notiSubjectName}} 과제 입니다.</h3>
                 </div>
                 <div class="col-xl-12 col-lg-12">
                     <stats-card v-bind:title="notiSubjectName"
@@ -14,11 +14,12 @@
                         <badge pill type="info">{{notiDday}}</badge>
                         <badge pill type="info">{{notiUserName}} 선생님</badge>
 
-                        <badge pill type="info" v-if="notiType == 'OPEN'">오픈과제</badge>
-                        <badge pill type="info" v-else>프라이빗과제</badge>
+                        <badge pill type="info" v-if="notiType == 'OPEN'">공개과제</badge>
+                        <badge pill type="info" v-else>비공개과제</badge>
 
                         <badge pill type="warning" v-if="notiStatus == 'PENDING'">대기</badge>
                         <badge pill type="info" v-else-if="notiStatus == 'PROGRESS'">진행중</badge>
+                        <badge pill type="info" v-else-if="notiStatus == 'GRADING'">채점중</badge>
                         <badge pill type="success" v-else-if="notiStatus == 'COMPLETED'">완료</badge>
                         <badge pill type="danger" v-else>취소됨</badge>
                         <br/>
@@ -89,11 +90,11 @@
 
             <modal :show.sync="modals4">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel4">과제 공지사항 추가</h5>
+                    <h5 class="modal-title" id="exampleModalLabel4">과제 출제</h5>
                 </template>
                 <div>
-                    <h4>과제 공지 타이틀</h4>
-                    <base-input placeholder="과목 공지 타이틀" v-model="notiEditTitle"></base-input>
+                    <h4>과제 타이틀</h4>
+                    <base-input placeholder="과제 타이틀" v-model="notiEditTitle"></base-input>
 
                     <h4>과제 설명</h4>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
@@ -120,6 +121,9 @@
                     <base-radio name="PROGRESS" class="mb-3" v-model="notiEditStatus">
                         진행
                     </base-radio>
+                    <base-radio name="GRADING" class="mb-3" v-model="notiEditStatus">
+                        채점중
+                    </base-radio>
                     <base-radio name="COMPLETED" class="mb-3" v-model="notiEditStatus">
                         완료
                     </base-radio>
@@ -128,17 +132,17 @@
                     </base-radio>
                     <br/>
 
-                    <h4>과제 유형</h4>
+                    <!--h4>과제 유형</h4>
                     <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
                         공개 과제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
                         비공개 과제
-                    </base-radio>
+                    </base-radio-->
 
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="updateNoti()">과제공지 수정</base-button>
+                    <base-button type="primary" @click="updateNoti()">과제 출제 수정</base-button>
                     <base-button type="default" @click="modals4 = false">취소</base-button>
                 </template>
             </modal>
@@ -319,7 +323,7 @@
               notiEditStatus: '', //
               notiEditSubjectId: '',
               notiEditTitle: '',
-              notiEditType: '',
+              notiEditType: 'OPEN',
               notiEditUserId: '',
 
               assignments: [],

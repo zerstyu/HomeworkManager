@@ -46,7 +46,7 @@
           </td>
           <td v-if="row.type=='OPEN'">
             <badge class="badge-dot mr-4" type="info">
-              <span class="status">OPEN</span>
+              <span class="status">공개</span>
             </badge>
             <!--badge class="badge-dot mr-4" :type="row.statusType">
               <i :class="`bg-${row.statusType}`"></i>
@@ -55,7 +55,7 @@
           </td>
           <td v-else>
             <badge class="badge-dot mr-4" type="warning">
-              <span class="status">PRIVATE</span>
+              <span class="status">비공개</span>
             </badge>
           </td>
 
