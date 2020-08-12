@@ -103,7 +103,7 @@
                     <h4>과제명</h4>
                     <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
 
-                    <h4>카테고리 설정</h4>
+                    <h4>카테고리</h4>
                     <base-dropdown>
                         <base-button slot="title" type="secondary" class="dropdown-toggle">
                             {{categoryGroupPivotName}}
@@ -153,7 +153,7 @@
 
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="createSubject()">과제방 생성</base-button>
+                    <base-button type="primary" @click="createSubject()">과목 생성</base-button>
                     <base-button type="default" @click="modals2 = false">취소</base-button>
                 </template>
             </modal>
@@ -166,7 +166,7 @@
                     <h4>과목명</h4>
                     <base-input placeholder="과목" v-model="subjectPivotNameEdit"></base-input>
 
-                    <h4>카테고리 설정</h4>
+                    <h4>카테고리</h4>
                     <base-dropdown>
                         <base-button slot="title" type="secondary" class="dropdown-toggle">
                             {{categoryGroupPivotNameEdit}}
@@ -202,6 +202,15 @@
                         <a class="dropdown-item" href="#" @click="selectClassTypeEdit('대학', 'UNIVERSITY')">대학</a>
                         <a class="dropdown-item" href="#" @click="selectClassTypeEdit('일반', 'ORDINARY_PERSON')">일반</a>
                     </base-dropdown>
+
+                    <h4>과목 타입</h4>
+                    <base-radio name="OPEN" class="mb-3" v-model="subjectType">
+                        열린과목
+                    </base-radio>
+                    <base-radio name="PRIVATE" class="mb-3" v-model="subjectType">
+                        초대과목
+                    </base-radio>
+                    <br/>
                 </div>
                 <template slot="footer">
                     <base-button type="primary" @click="updateSubjectReq()">과목명 변경</base-button>
@@ -212,11 +221,11 @@
 
             <modal :show.sync="modals4">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel4">과제 공지사항 추가</h5>
+                    <h5 class="modal-title" id="exampleModalLabel4">과제 출제</h5>
                 </template>
                 <div>
-                    <h4>과제 공지 타이틀</h4>
-                    <base-input placeholder="과목 공지 타이틀" v-model="notiEditTitle"></base-input>
+                    <h4>과제 타이틀</h4>
+                    <base-input placeholder="과제 타이틀" v-model="notiEditTitle"></base-input>
 
                     <h4>과제 설명</h4>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
@@ -243,6 +252,9 @@
                     <base-radio name="PROGRESS" class="mb-3" v-model="notiEditStatus">
                         진행
                     </base-radio>
+                    <base-radio name="GRADING" class="mb-3" v-model="notiEditStatus">
+                        채점중
+                    </base-radio>
                     <base-radio name="COMPLETED" class="mb-3" v-model="notiEditStatus">
                         완료
                     </base-radio>
@@ -251,13 +263,13 @@
                     </base-radio>
                     <br/>
 
-                    <h4>과제 유형</h4>
+                    <!--h4>과제 유형</h4>
                     <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
                         공개 과제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
                         비공개 과제
-                    </base-radio>
+                    </base-radio-->
 
                 </div>
                 <template slot="footer">

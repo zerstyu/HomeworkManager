@@ -58,7 +58,7 @@
           </td>
 
           <td class="budget">
-            {{row.createdAt}}
+            {{row.createdAt.replace('T', ' ')}}
           </td>
 
           <td class="budget">

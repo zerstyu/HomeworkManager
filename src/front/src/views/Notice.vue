@@ -39,7 +39,7 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">공지글 수정</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">과제 출제 수정</base-button>
                     <base-button type="primary" icon="ni ni-bag-17" @click="modals5 = true">과제 제출하기</base-button>
                     <!--base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">과제 제출하기</base-button-->
                     <!--base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">과제 제출하기</base-button-->
@@ -233,7 +233,7 @@
                         <div slot="header" class="row align-items-center">
                             <div class="col">
                                 <h6 class="text-uppercase text-muted ls-1 mb-1">학생 통계</h6>
-                                <h5 class="h3 mb-0">학생별 점수총합</h5>
+                                <h5 class="h3 mb-0">학생별 평균 순위</h5>
                             </div>
                         </div>
 
@@ -500,7 +500,7 @@
           },
           getStaticsTotalScore(){
               let vm = this;
-              axios.get('/api/statistics/subjects/total-scores?id=' + this.$route.params.notiId)
+              axios.get('/api/statistics/subjects/total-averages?id=' + this.$route.params.notiId)
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
                           vm.redBarChart.chartData.labels = [];
@@ -511,7 +511,7 @@
 
                           for(let i = 0; i < response.data.data[0].statisticsDtoList.length; i++){
                               nameAr.push(response.data.data[0].statisticsDtoList[i].userName);
-                              scoreAr.push(response.data.data[0].statisticsDtoList[i].totalScore);
+                              scoreAr.push(response.data.data[0].statisticsDtoList[i].averageScore);
                               //vm.redBarChart.chartData.labels.push(response.data.data[0].statisticsDtoList[i].userName);
                               //vm.redBarChart.chartData.datasets[0].data.push(response.data.data[0].statisticsDtoList[i].totalScore);
                           }
