@@ -1,0 +1,89 @@
+  <!doctype html>
+
+<!--[if lte IE 8]><SCRIPT src='source/excanvas.js'></script><![endif]--><SCRIPT src='ChartNew.js'></script>
+
+
+<SCRIPT>
+
+function setColor(area,data,config,i,j,animPct,value)
+{
+  if(value > 35)return("rgba(220,0,0,"+animPct);
+  else return("rgba(0,220,0,"+animPct);
+  
+}
+
+var charJSPersonnalDefaultOptions = { decimalSeparator : "," , thousandSeparator : ".", roundNumber : "none", graphTitleFontSize: 2 };
+
+defCanvasWidth=600;
+defCanvasHeight=300;
+
+
+var mydata1 = {
+	labels : ["0~10","11~20","21~30","31~40","41~50","51~60","61~70","71~80","81~90","91~100"],
+	datasets : [
+		{
+			type: "Line",
+			fillColor : "rgba(0,200,0,1)",
+			strokeColor : "rgba(0,200,0,1)",
+//			pointColor : "rgba(0,200,200,1)",
+			pointColor : "rgba(200,0,0,1)",
+			pointstrokeColor : "red",
+      axis : 1,
+			data : [,,,,,,,4,,],
+
+      title : "나의 점수 구간"
+		},
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			pointColor : "green",
+			pointstrokeColor : "yellow",
+			data : [1, 2, 3, 2, 4, 5, 7, 4, 2, 3],
+      axis : 1,
+      title : "전체학생 구간별 개수"
+		}
+
+	]
+}               
+
+var startWithDataset =1;
+var startWithData =1;
+
+var opt1 = {
+      animation: false,
+      canvasBorders : true,
+      canvasBordersWidth : 0,
+      canvasBordersColor : "black",
+      graphTitle : "",
+      legend : true,
+      inGraphDataShow : false,
+      graphTitleFontSize: 18,
+      yAxisRight : true
+
+}
+
+</SCRIPT>
+
+
+<html>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<head>
+		<title>Demo ChartNew.js</title>
+	</head>
+	<body>
+   
+    <FONT SIZE=6><B></B></FONT>    <BR>
+
+    <script>
+
+    document.write("<canvas id=\"canvas_Line1\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
+
+window.onload = function() {
+
+
+    var myLine = new Chart(document.getElementById("canvas_Line1").getContext("2d")).Bar(mydata1,opt1);
+
+}
+    </script>
+  </body>
+</html>

@@ -312,6 +312,24 @@
                 </div>
             </div>
 
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <br/><br/>
+                    <h3>이 과목에 대한 나의 평균점수구간</h3>
+                </div>
+                <div class="col-xl-7 col-lg-7">
+                    <stats-card>
+                        <iframe style="width:100%;height:400px;" scrolling="no" src="canvas_resource/canvas_my_average_range.html">
+                        </iframe>
+                        <template slot="footer">
+                        </template>
+                    </stats-card>
+
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <br/><br/>
@@ -330,6 +348,8 @@
                     </stats-card>
                 </div>
             </div>
+
+
 
             <!--div class="row mt-5">
                 <div class="col">

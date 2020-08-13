@@ -4,6 +4,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/2.png"
   },
   {
+    "revision": "a94c7cff0242b094602742452b010b02",
+    "url": "/canvas_resource/ChartNew.js"
+  },
+  {
     "revision": "1ea622363cffbaa4f3f2ac65f1097058",
     "url": "/canvas_resource/canvas.html"
   },
@@ -18,6 +22,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "4bb7f822265f8280b57ae37fed991393",
     "url": "/canvas_resource/canvas_m.html"
+  },
+  {
+    "revision": "8a5955f9d5f2db5889139ba8b7337e34",
+    "url": "/canvas_resource/canvas_my_average_range.html"
   },
   {
     "revision": "e31d7eeb92d79dec4300f221e2223c3a",
@@ -148,7 +156,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "76bf562661dc5aa1c6d0",
+    "revision": "b6b48004f4385dfdb8e0",
     "url": "/css/app.f928a4fa.css"
   },
   {
@@ -236,12 +244,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "403632609f364102c626d2dafd6561e3",
+    "revision": "04dc6893a3b1ed04110cf9d062f2b227",
     "url": "/index.html"
   },
   {
-    "revision": "76bf562661dc5aa1c6d0",
-    "url": "/js/app.d7a2dc4c.js"
+    "revision": "b6b48004f4385dfdb8e0",
+    "url": "/js/app.18180be1.js"
   },
   {
     "revision": "a29fd85932ec08ce9082",
@@ -260,8 +268,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-vendors.b76e5953.js"
   },
   {
-    "revision": "28240f713b6e0afafa9b",
-    "url": "/js/demo.f9ca99c0.js"
+    "revision": "72d1637d5cb1bdde5a19",
+    "url": "/js/demo.759c9664.js"
   },
   {
     "revision": "2c6190eb814d2dd4d454ae170c43c7c2",
