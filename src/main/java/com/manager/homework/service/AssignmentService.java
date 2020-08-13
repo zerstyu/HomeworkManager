@@ -58,14 +58,17 @@ public class AssignmentService {
             assignment.setNotice(noticeEntityWrapper.get());
         }
 
-        assignment.setFeedback(assignmentDto.getFeedback());
-        assignment.setIsOpen(assignmentDto.getIsOpen());
-        assignment.setNote(assignmentDto.getNote());
+        if (assignmentDto.getIsOpen() != null) {
+            assignment.setIsOpen(assignmentDto.getIsOpen());
+        }
 
         if (assignmentDto.getScore() != null) {
             assignment.setScore(assignmentDto.getScore());
 //            blockService.addBlock(assignmentDto.getScore().toString());
         }
+
+        assignment.setFeedback(assignmentDto.getFeedback());
+        assignment.setNote(assignmentDto.getNote());
 
         assignmentRepository.save(assignment);
         return assignment;
