@@ -219,8 +219,8 @@ public class HomeworkManagerApplication implements CommandLineRunner {
 
         assignmentList.add(Assignment.builder()
                 .user(userList.get(2))
-                .subject(noticeList.get(0).getSubject())
-                .notice(noticeList.get(0))
+                .subject(noticeList.get(1).getSubject())
+                .notice(noticeList.get(1))
                 .feedback("망했어요. ")
                 .score(25)
                 .isOpen(true)
@@ -295,19 +295,30 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private List<AssignmentFile> getAssignmentFileList(List<Assignment> assignmentList) {
         List<AssignmentFile> fileList = Lists.newArrayList();
 
-        AssignmentFile originalAssignmentFile = AssignmentFile.builder()
+        fileList.add(AssignmentFile.builder()
                 .type(FileType.ORIGINAL)
                 .user(assignmentList.get(0).getUser())
                 .assignment(assignmentList.get(0))
-                .build();
-        fileList.add(originalAssignmentFile);
+                .build());
 
-        AssignmentFile modifiedAssignmentFile = AssignmentFile.builder()
+        fileList.add(AssignmentFile.builder()
                 .type(FileType.MODIFIED)
                 .user(assignmentList.get(0).getUser())
                 .assignment(assignmentList.get(0))
-                .build();
-        fileList.add(modifiedAssignmentFile);
+                .build());
+
+        fileList.add(AssignmentFile.builder()
+                .type(FileType.ORIGINAL)
+                .user(assignmentList.get(0).getUser())
+                .assignment(assignmentList.get(1))
+                .build());
+
+        fileList.add(AssignmentFile.builder()
+                .type(FileType.MODIFIED)
+                .user(assignmentList.get(0).getUser())
+                .assignment(assignmentList.get(1))
+                .build());
+
         return fileList;
     }
 
@@ -399,12 +410,12 @@ public class HomeworkManagerApplication implements CommandLineRunner {
 
         wrongAnswerNoteList.add(WrongAnswerNote.builder()
                 .user(userList.get(0))
-                .assignmentFile(assignmentFileList.get(0))
+                .assignmentFile(assignmentFileList.get(1))
                 .build());
 
         wrongAnswerNoteList.add(WrongAnswerNote.builder()
                 .user(userList.get(0))
-                .assignmentFile(assignmentFileList.get(1))
+                .assignmentFile(assignmentFileList.get(3))
                 .build());
 
         return wrongAnswerNoteList;
