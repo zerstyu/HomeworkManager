@@ -24,6 +24,7 @@ public class HomeworkManagerApplication implements CommandLineRunner {
     private final AssignmentRepository assignmentRepository;
     private final AssignmentFileRepository assignmentFileRepository;
     private final ProductRepository productRepository;
+    private final WrongAnswerNoteRepository wrongAnswerNoteRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(HomeworkManagerApplication.class, args);
@@ -37,8 +38,9 @@ public class HomeworkManagerApplication implements CommandLineRunner {
         List<Notice> noticeList = noticeRepository.saveAll(getNoticeList(subjectList));
         noticeFileRepository.saveAll(getNoticeFileList(noticeList));
         List<Assignment> assignmentList = assignmentRepository.saveAll(getAssignmentList(userList, noticeList));
-        assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
+        List<AssignmentFile> assignmentFileList = assignmentFileRepository.saveAll(getAssignmentFileList(assignmentList));
         List<Product> productList = productRepository.saveAll(getProductList());
+        wrongAnswerNoteRepository.saveAll(getWrongAnswerNoteList(userList, assignmentFileList));
     }
 
     private List<User> getUserList() {
@@ -390,5 +392,21 @@ public class HomeworkManagerApplication implements CommandLineRunner {
                 .build());
 
         return productList;
+    }
+
+    private List<WrongAnswerNote> getWrongAnswerNoteList(List<User> userList, List<AssignmentFile> assignmentFileList) {
+        List<WrongAnswerNote> wrongAnswerNoteList = Lists.newArrayList();
+
+        wrongAnswerNoteList.add(WrongAnswerNote.builder()
+                .user(userList.get(0))
+                .assignmentFile(assignmentFileList.get(0))
+                .build());
+
+        wrongAnswerNoteList.add(WrongAnswerNote.builder()
+                .user(userList.get(0))
+                .assignmentFile(assignmentFileList.get(1))
+                .build());
+
+        return wrongAnswerNoteList;
     }
 }
