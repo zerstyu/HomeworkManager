@@ -29,7 +29,7 @@ public class StatisticsService {
         return statisticsRepositorySupport.findByCategoryAvg(userId);
     }
 
-    public List<StatisticsSubjectRangeAvgDto> getRangeAvg(Long subjectId) {
-        return statisticsRepositorySupport.findByRangeAvg(subjectId);
+    public StatisticsSubjectRangeAvgDto getRangeAvg(Long subjectId, Long userId) {
+        return statisticsRepositorySupport.findByRangeAvg(subjectId, userId);
     }
 }

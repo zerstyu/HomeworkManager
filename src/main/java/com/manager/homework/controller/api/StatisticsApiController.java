@@ -46,8 +46,9 @@ public class StatisticsApiController {
 
     @ApiOperation(value = "과목 총합 평균 점수분포도 조회", notes = "특정 과목 총합 평균 점수분포도 조회")
     @GetMapping("/subjects/range-averages")
-    public Response<List<StatisticsSubjectRangeAvgDto>> getRangeAvg(
-            @RequestParam(value = "id", required = false) Long subjectId) {
-        return Response.ok(statisticsService.getRangeAvg(subjectId));
+    public Response<StatisticsSubjectRangeAvgDto> getRangeAvg(
+            @RequestParam(value = "subjectId") Long subjectId,
+            @RequestParam(value = "userId") Long userId) {
+        return Response.ok(statisticsService.getRangeAvg(subjectId, userId));
     }
 }
