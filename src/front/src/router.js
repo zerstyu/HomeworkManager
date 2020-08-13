@@ -45,6 +45,11 @@ export default new Router({
           component: () => import('./views/Statistics.vue')
         },
         {
+          path: '/wrongAnswerNotes',
+          name: '오답노트',
+          component: () => import('./views/WrongAnswerNotes.vue')
+        },
+        {
           path: '/homeworkManage',
           name: '과제 리스트',
           component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')
