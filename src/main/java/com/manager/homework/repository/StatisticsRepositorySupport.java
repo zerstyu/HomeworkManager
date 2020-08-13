@@ -181,25 +181,30 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
         return builder;
     }
 
-    public List<StatisticsSubjectRangeAvgDto> findByRangeAvg(Long subjectId) {
-        List<StatisticsSubjectTotalAvgDto> totalAvgDtoList = findByTotalAvg(subjectId);
+    public StatisticsSubjectRangeAvgDto findByRangeAvg(Long subjectId, Long userId) {
+        System.out.println("size = " + findByTotalAvg(subjectId).size());
+        System.out.println("list = " + findByTotalAvg(subjectId));
 
-        List<StatisticsSubjectRangeAvgDto> rangeAvgDtoList = Lists.newArrayList();
+        StatisticsSubjectTotalAvgDto dto = findByTotalAvg(subjectId).get(0);
 
-        totalAvgDtoList.forEach(
-                it -> {
+        System.out.println("StatisticsSubjectTotalAvgDto = " + dto);
+        StatisticsDto statisticsDto =
+                dto.getStatisticsDtoList().stream()
+                        .filter(it -> it.getUserId().equals(userId))
+                        .findFirst()
+                        .orElse(new StatisticsDto());
 
-                    rangeAvgDtoList.add(StatisticsSubjectRangeAvgDto.builder()
-                            .subjectId(it.getSubjectId())
-                            .subjectName(it.getSubjectName())
-                            .userRangeIndex(1)
-                            .rangeList(new ArrayList<>(makeRangeMap().keySet()))
-                            .countList(getCountList(it.getStatisticsDtoList(), makeRangeMap()))
-                            .build());
-                }
-        );
+        System.out.println("statisticsDto = " + statisticsDto);
 
-        return rangeAvgDtoList;
+        return StatisticsSubjectRangeAvgDto.builder()
+                .subjectId(statisticsDto.getSubjectId())
+                .subjectName(statisticsDto.getSubjectName())
+                .userId(statisticsDto.getUserId())
+                .userName(statisticsDto.getUserName())
+                .userRangeIndex(getRangeIndex(statisticsDto.getAverageScore()))
+                .rangeList(new ArrayList<>(makeRangeMap().keySet()))
+                .countList(getCountList(dto.getStatisticsDtoList(), makeRangeMap()))
+                .build();
     }
 
     public Map<String, Integer> makeRangeMap() {
@@ -234,5 +239,15 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
             }
         }
         return "";
+    }
+
+    private int getRangeIndex(Double avg) {
+        for (int i = 0; i < 10; i++) {
+            if (i * 10 <= avg && avg < i * 10 + 10) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 }

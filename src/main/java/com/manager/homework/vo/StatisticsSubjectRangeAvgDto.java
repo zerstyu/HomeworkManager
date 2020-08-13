@@ -16,6 +16,8 @@ import java.util.List;
 public class StatisticsSubjectRangeAvgDto {
     Long subjectId;
     String subjectName;
+    Long userId;
+    String userName;
     Integer userRangeIndex;
     List<String> rangeList;
     List<Integer> countList;
