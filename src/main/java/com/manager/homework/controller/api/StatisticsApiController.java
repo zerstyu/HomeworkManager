@@ -4,6 +4,7 @@ import com.manager.homework.common.Response;
 import com.manager.homework.service.StatisticsService;
 import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
 import com.manager.homework.vo.StatisticsCategoryAvgDto;
+import com.manager.homework.vo.StatisticsSubjectRangeAvgDto;
 import com.manager.homework.vo.StatisticsSubjectTotalAvgDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,7 @@ public class StatisticsApiController {
 
     @ApiOperation(value = "과목 총합 평균 순위 조회", notes = "특정 과목 총합 평균 순위 조회")
     @GetMapping("/subjects/total-averages")
-    public Response<List<StatisticsSubjectTotalAvgDto>> getTotalScoreRank(
+    public Response<List<StatisticsSubjectTotalAvgDto>> getTotalAvgRank(
             @RequestParam(value = "id", required = false) Long subjectId) {
         return Response.ok(statisticsService.getTotalAvgRank(subjectId));
     }
@@ -41,5 +42,12 @@ public class StatisticsApiController {
     public Response<List<StatisticsCategoryAvgDto>> getCategoryAverage(
             @RequestParam(value = "userId", required = false) Long userId) {
         return Response.ok(statisticsService.getCategoryAverage(userId));
+    }
+
+    @ApiOperation(value = "과목 총합 평균 점수분포도 조회", notes = "특정 과목 총합 평균 점수분포도 조회")
+    @GetMapping("/subjects/range-averages")
+    public Response<List<StatisticsSubjectRangeAvgDto>> getRangeAvg(
+            @RequestParam(value = "id", required = false) Long subjectId) {
+        return Response.ok(statisticsService.getRangeAvg(subjectId));
     }
 }

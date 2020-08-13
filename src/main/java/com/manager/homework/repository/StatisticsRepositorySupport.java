@@ -1,18 +1,18 @@
 package com.manager.homework.repository;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.manager.homework.domain.Assignment;
-import com.manager.homework.vo.StatisticsAvgByAssignmentDto;
-import com.manager.homework.vo.StatisticsCategoryAvgDto;
-import com.manager.homework.vo.StatisticsDto;
-import com.manager.homework.vo.StatisticsSubjectTotalAvgDto;
+import com.manager.homework.vo.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.manager.homework.domain.QAssignment.assignment;
@@ -81,10 +81,10 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                         .orderBy(assignment.score.avg().desc())
                         .fetch();
 
-        return getStatisticsAvgByAssignmentDtoList(resultList);
+        return getAvgByAssignmentDtoList(resultList);
     }
 
-    private List<StatisticsAvgByAssignmentDto> getStatisticsAvgByAssignmentDtoList(
+    private List<StatisticsAvgByAssignmentDto> getAvgByAssignmentDtoList(
             List<StatisticsDto> resultList) {
 
         List<StatisticsAvgByAssignmentDto> dtoList = Lists.newArrayList();
@@ -154,10 +154,10 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(assignment.score.avg().desc(), subject.categoryGroup.desc(), subject.category.desc())
                 .fetch();
 
-        return getStatisticsCategoryAvgDtoList(resultList);
+        return getCategoryAvgDtoList(resultList);
     }
 
-    private List<StatisticsCategoryAvgDto> getStatisticsCategoryAvgDtoList(List<StatisticsDto> resultList) {
+    private List<StatisticsCategoryAvgDto> getCategoryAvgDtoList(List<StatisticsDto> resultList) {
         List<StatisticsCategoryAvgDto> dtoList = Lists.newArrayList();
 
         resultList.stream()
@@ -179,5 +179,60 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
             builder.and(user.id.eq(userId));
         }
         return builder;
+    }
+
+    public List<StatisticsSubjectRangeAvgDto> findByRangeAvg(Long subjectId) {
+        List<StatisticsSubjectTotalAvgDto> totalAvgDtoList = findByTotalAvg(subjectId);
+
+        List<StatisticsSubjectRangeAvgDto> rangeAvgDtoList = Lists.newArrayList();
+
+        totalAvgDtoList.forEach(
+                it -> {
+
+                    rangeAvgDtoList.add(StatisticsSubjectRangeAvgDto.builder()
+                            .subjectId(it.getSubjectId())
+                            .subjectName(it.getSubjectName())
+                            .userRangeIndex(1)
+                            .rangeList(new ArrayList<>(makeRangeMap().keySet()))
+                            .countList(getCountList(it.getStatisticsDtoList(), makeRangeMap()))
+                            .build());
+                }
+        );
+
+        return rangeAvgDtoList;
+    }
+
+    public Map<String, Integer> makeRangeMap() {
+        Map<String, Integer> map = Maps.newLinkedHashMap();
+
+        for (int i = 0; i < 10; i++) {
+            map.put((i * 10) + "-" + (i * 10 + 10), 0);
+        }
+
+        return map;
+    }
+
+    private List<Integer> getCountList(List<StatisticsDto> statisticsDtoList, Map<String, Integer> map) {
+        statisticsDtoList.forEach(it -> {
+                    String range = getRange(it.getAverageScore());
+                    System.out.println("range = " + range);
+                    map.put(range, map.get(range) + 1);
+                }
+        );
+
+        List<Integer> countList = Lists.newArrayList();
+        map.forEach((key, value) -> countList.add(value));
+
+        return countList;
+    }
+
+    private String getRange(Double avg) {
+        System.out.println("avg = " + avg);
+        for (int i = 0; i < 10; i++) {
+            if (i * 10 <= avg && avg < i * 10 + 10) {
+                return (i * 10) + "-" + (i * 10 + 10);
+            }
+        }
+        return "";
     }
 }
