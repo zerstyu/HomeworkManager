@@ -316,7 +316,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <br/><br/>
-                    <h3>이 과목에 대한 나의 평균점수구간</h3>
+                    <h3>이 과목에 대한 나의 평균점수 구간</h3>
                 </div>
                 <div class="col-xl-7 col-lg-7">
                     <stats-card>
@@ -733,7 +733,8 @@
                   console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].subjectId);
               }
 
-              location.href="#tableTop";
+              //location.href="#tableTop";
+              document.getElementById('tableTop').scrollIntoView();
               //console.log("res2 : " + this.teacherSubjects[idx].icon);
           },
           studentSubjectsDetail(idx){
@@ -757,8 +758,7 @@
                   console.log("for문 도는 중.. : " + this.studentSubjects[i].icon + ", " + this.studentSubjects[i].subjectId);
               }
 
-              location.href="#tableTop";
-              //console.log("res2 : " + this.teacherSubjects[idx].icon);
+            document.getElementById('tableTop').scrollIntoView();
           },
           updateSubjectReq(){
               let vm = this;
