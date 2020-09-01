@@ -316,16 +316,18 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <br/><br/>
-                    <h3>이 과목에 대한 나의 평균점수구간</h3>
+                    <h3>이 과목에 대한 나의 평균점수 구간</h3>
                 </div>
                 <div class="col-xl-7 col-lg-7">
                     <stats-card>
-                        <iframe style="width:100%;height:400px;" scrolling="no" src="canvas_resource/canvas_my_average_range.html">
+                        <h5 v-if="!averageRangeUiOn">
+                          채점을 1개 이상 받은 과목을 선택해 주세요
+                        </h5>
+                        <iframe id="rangeAveragesCanvas" name="rangeAveragesCanvas" style="display:none;width:100%;height:400px;" scrolling="no" src="canvas_resource/canvas_my_average_range.html">
                         </iframe>
                         <template slot="footer">
                         </template>
                     </stats-card>
-
                 </div>
             </div>
 
@@ -431,8 +433,9 @@
               categoryPivotEdit: '',
               categoryPivotNameEdit: '',
               classTypeEdit: 'KINDERGARTEN',
-              classTypeNameEdit: '유아'
+              classTypeNameEdit: '유아',
 
+              averageRangeUiOn: false
           }
       },
       created() {
@@ -725,6 +728,7 @@
 
 
                       this.getNotices();
+                      this.reqRrangeAverages();
                   }
                   else{
                       //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = '';
@@ -733,7 +737,8 @@
                   console.log("for문 도는 중.. : " + this.teacherSubjects[i].icon + ", " + this.teacherSubjects[i].subjectId);
               }
 
-              location.href="#tableTop";
+              //location.href="#tableTop";
+              document.getElementById('tableTop').scrollIntoView();
               //console.log("res2 : " + this.teacherSubjects[idx].icon);
           },
           studentSubjectsDetail(idx){
@@ -749,6 +754,7 @@
                       this.subjectMasterId = this.studentSubjects[i].userId;
                       this.nowUser = localStorage.getItem('userId');
                       this.getNotices();
+                      this.reqRrangeAverages();
                   }
                   else{
                       //this.teacherSubjectsIcons[this.teacherSubjects[i].name] = '';
@@ -757,8 +763,32 @@
                   console.log("for문 도는 중.. : " + this.studentSubjects[i].icon + ", " + this.studentSubjects[i].subjectId);
               }
 
-              location.href="#tableTop";
-              //console.log("res2 : " + this.teacherSubjects[idx].icon);
+            document.getElementById('tableTop').scrollIntoView();
+          },
+          reqRrangeAverages(){
+            //let canvasIframe = document.getElementById("rangeAveragesCanvas");
+            //let responData = canvasIframe.contentWindow.loadData(canvasData);//
+            let vm = this;
+
+            axios.get('/api/statistics/subjects/range-averages?subjectId=' + this.subjectPivot + '&userId=' + this.nowUser)
+                .then(function(response){
+                  if(response.data.statusCode == 'OK'){
+                    vm.sendCanvas(response.data.data.countList, response.data.data.userRangeIndex);
+                    //canvasIframe.contentWindow.loadData(response.data.data.countList, response.data.data.userRangeIndex);
+                    vm.averageRangeUiOn = true;
+                  }
+                  else{
+                    vm.averageRangeUiOn = false;
+                    let canvasIframe = document.getElementById("rangeAveragesCanvas");
+                    canvasIframe.style.display = "none";
+                  }
+                });
+          },
+          sendCanvas(list, ind){
+            let canvasIframe = document.getElementById("rangeAveragesCanvas");
+            //let canvasIframe = document.getElementsByName("rangeAveragesCanvas")[0];
+            canvasIframe.contentWindow.loadData(list, ind);
+            canvasIframe.style.display = "block";
           },
           updateSubjectReq(){
               let vm = this;

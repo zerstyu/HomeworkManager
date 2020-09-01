@@ -25,6 +25,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "8a5955f9d5f2db5889139ba8b7337e34",
+    "url": "/canvas_resource/canvas_my_average_range - 복사본.html"
+  },
+  {
+    "revision": "52ca42dc4e40d74484bc50c43183c8e9",
     "url": "/canvas_resource/canvas_my_average_range.html"
   },
   {
@@ -156,7 +160,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "b6b48004f4385dfdb8e0",
+    "revision": "c408ae87e25258fd1925",
     "url": "/css/app.f928a4fa.css"
   },
   {
@@ -244,32 +248,32 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "04dc6893a3b1ed04110cf9d062f2b227",
+    "revision": "6fb652b232014a8da603b5eaabb53038",
     "url": "/index.html"
   },
   {
-    "revision": "b6b48004f4385dfdb8e0",
-    "url": "/js/app.18180be1.js"
+    "revision": "c408ae87e25258fd1925",
+    "url": "/js/app.1bf3bd62.js"
   },
   {
-    "revision": "a29fd85932ec08ce9082",
-    "url": "/js/chunk-2d21f499.b592f5d7.js"
-  },
-  {
-    "revision": "7ace64b97ae672c18cc7",
-    "url": "/js/chunk-2d237ec0.b8761ed0.js"
+    "revision": "cf7a056896c95d181cf0",
+    "url": "/js/chunk-34b47b7c.4b40be6c.js"
   },
   {
     "revision": "13210134479312babd69",
     "url": "/js/chunk-431b8a3b.87e4c2f3.js"
   },
   {
-    "revision": "de287ca80bd654f212a8",
-    "url": "/js/chunk-vendors.b76e5953.js"
+    "revision": "8c54da721b674a34a153",
+    "url": "/js/chunk-53dac5bc.847d6fb8.js"
   },
   {
-    "revision": "72d1637d5cb1bdde5a19",
-    "url": "/js/demo.759c9664.js"
+    "revision": "1f6e8bb04756c4474a16",
+    "url": "/js/chunk-vendors.e687fd9c.js"
+  },
+  {
+    "revision": "15dfc7d9c5e4748b734b",
+    "url": "/js/demo.8687cff0.js"
   },
   {
     "revision": "2c6190eb814d2dd4d454ae170c43c7c2",

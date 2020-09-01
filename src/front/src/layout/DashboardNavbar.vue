@@ -9,6 +9,7 @@
                             class="input-group-alternative"
                             addon-right-icon="fas fa-search"
                             v-model="searchQuery"
+                            v-on:click="chengeURLForSearching()"
                             v-on:keydown.enter="searchOpenHomework()"
                 >
                 </base-input>
@@ -96,6 +97,16 @@
       },
       toggleMenu() {
         this.showMenu = !this.showMenu;
+      },
+      chengeURLForSearching(){
+        //현재 주소를 가져온다.
+        let renewURL = location.href;
+        //Search를 위해서는 URL이 /#/이 아닌 /?#/의 형태가 되어야한다.
+        renewURL = renewURL.replace(/\?#/ig,'#');
+        renewURL = renewURL.replace(/#/ig,'?#');
+        console.log("renewURL : " + renewURL);
+        //페이지 갱신 실행!
+        history.pushState(null, null, renewURL);
       }
     }
   };
