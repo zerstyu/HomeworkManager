@@ -3,7 +3,7 @@
 <!--[if lte IE 8]><SCRIPT src='source/excanvas.js'></script><![endif]--><SCRIPT src='ChartNew.js'></script>
 
 
-<SCRIPT>
+  <script type="text/javascript">
 
 function setColor(area,data,config,i,j,animPct,value)
 {
@@ -18,7 +18,7 @@ defCanvasWidth=600;
 defCanvasHeight=300;
 
 
-var mydata1 = {
+let mydata1 = {
 	labels : ["0~10","11~20","21~30","31~40","41~50","51~60","61~70","71~80","81~90","91~100"],
 	datasets : [
 		{
@@ -62,7 +62,70 @@ var opt1 = {
 
 }
 
-</SCRIPT>
+var canCount = 1;
+function loadData(serverData, index){
+
+    let tmp_data;
+    if(index == 0)
+        tmp_data = [serverData[index],,,,,,,,,];
+    else if(index == 1)
+        tmp_data = [,serverData[index],,,,,,,,];
+    else if(index == 2)
+        tmp_data = [,,serverData[index],,,,,,,];
+    else if(index == 3)
+        tmp_data = [,,,serverData[index],,,,,,];
+    else if(index == 4)
+        tmp_data = [,,,,serverData[index],,,,,];
+    else if(index == 5)
+        tmp_data = [,,,,,serverData[index],,,,];
+    else if(index == 6)
+        tmp_data = [,,,,,,serverData[index],,,];
+    else if(index == 7)
+        tmp_data = [,,,,,,,serverData[index],,];
+    else if(index == 8)
+        tmp_data = [,,,,,,,,serverData[index],];
+    else
+        tmp_data = [,,,,,,,,,serverData[index]];
+
+
+    let mydata2 = {
+        labels : ["0~10","11~20","21~30","31~40","41~50","51~60","61~70","71~80","81~90","91~100"],
+        datasets : [
+            {
+                type: "Line",
+                fillColor : "rgba(0,200,0,1)",
+                strokeColor : "rgba(0,200,0,1)",
+//			pointColor : "rgba(0,200,200,1)",
+                pointColor : "rgba(200,0,0,1)",
+                pointstrokeColor : "red",
+                axis : 1,
+                data : tmp_data,
+
+                title : "나의 점수 구간"
+            },
+            {
+                fillColor : "rgba(151,187,205,0.5)",
+                strokeColor : "rgba(151,187,205,1)",
+                pointColor : "green",
+                pointstrokeColor : "yellow",
+                data : serverData,
+                axis : 1,
+                title : "전체학생 구간별 개수"
+            }
+
+        ]
+    };
+
+    mydata1 = mydata2;
+
+    document.getElementById("canvas_Line" + canCount).style.display = "none";
+    canCount++;
+    document.write("<canvas id=\"canvas_Line" + canCount + "\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
+    var myLine2 = new Chart(document.getElementById("canvas_Line" + canCount).getContext("2d")).Bar(mydata1,opt1);
+
+}
+
+</script>
 
 
 <html>
@@ -74,16 +137,44 @@ var opt1 = {
    
     <FONT SIZE=6><B></B></FONT>    <BR>
 
-    <script>
+    <script type="text/javascript">
 
     document.write("<canvas id=\"canvas_Line1\" height=\""+defCanvasHeight+"\" width=\""+defCanvasWidth+"\"></canvas>");
 
 window.onload = function() {
 
-
     var myLine = new Chart(document.getElementById("canvas_Line1").getContext("2d")).Bar(mydata1,opt1);
+    loadData([
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+    ], 8);
+
+    loadData([
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0
+    ], 8);
+    //var myLine2 = new Chart(document.getElementById("canvas_Line1").getContext("2d")).Bar(mydata1,opt1);
 
 }
+
+
+
     </script>
   </body>
 </html>

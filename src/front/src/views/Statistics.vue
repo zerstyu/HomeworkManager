@@ -9,8 +9,8 @@
                                 class="mb-4 mb-xl-0"
                     >
                         <template slot="footer">
-                            <span class="text-info mr-2">{{localStorage.getItem('userName')}}</span>
-                            <span class="text-nowrap">님의 통계입니다.</span>
+                            <!--span class="text-info mr-2">{{userName}}</span-->
+                            <span class="text-nowrap">{{userName}}님의 통계입니다.</span>
                         </template>
                     </stats-card>
                 </div>
