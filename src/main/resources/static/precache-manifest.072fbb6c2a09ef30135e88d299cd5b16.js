@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/ChartNew.js"
   },
   {
-    "revision": "1ea622363cffbaa4f3f2ac65f1097058",
+    "revision": "29978e00063fea5288df3ca518eea4a8",
     "url": "/canvas_resource/canvas.html"
   },
   {
@@ -160,7 +160,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "c408ae87e25258fd1925",
+    "revision": "8b1369d3789578115f70",
     "url": "/css/app.f928a4fa.css"
   },
   {
@@ -248,16 +248,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "6fb652b232014a8da603b5eaabb53038",
+    "revision": "544c9b053a9f3b03ac44da16540fcac5",
     "url": "/index.html"
   },
   {
-    "revision": "c408ae87e25258fd1925",
-    "url": "/js/app.1bf3bd62.js"
+    "revision": "8b1369d3789578115f70",
+    "url": "/js/app.9d402ce1.js"
   },
   {
-    "revision": "cf7a056896c95d181cf0",
-    "url": "/js/chunk-34b47b7c.4b40be6c.js"
+    "revision": "27ab156ed36bcabd5c6f",
+    "url": "/js/chunk-34b47b7c.5b64d2ab.js"
   },
   {
     "revision": "13210134479312babd69",

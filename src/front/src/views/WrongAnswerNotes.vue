@@ -56,13 +56,13 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body">
-                                                    <span class="name mb-0 text-sm">{{row.subjectName}}</span>
+                                                  <a v-bind:href="'/#/homeworkDetail/' + row.assignmentId"><span class="name mb-0 text-sm">{{row.subjectName}}</span></a>
                                                 </div>
-                                            </div>
+                                            </div>d
                                         </th>
 
                                         <td class="budget">
-                                            {{row.noticeTitle}}
+                                          <a v-bind:href="'/#/homeworkDetail/' + row.assignmentId">{{row.noticeTitle}}</a>
                                         </td>
 
                                         <td class="budget">
