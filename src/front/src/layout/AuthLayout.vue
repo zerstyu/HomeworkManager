@@ -14,7 +14,7 @@
                 <div class="navbar-collapse-header d-md-none">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <router-link to="/">
+                            <router-link to="/#/homeworkManage">
                                 모두의숙제<!--img src="img/brand/green.png"-->
                             </router-link>
                         </div>
