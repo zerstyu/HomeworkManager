@@ -1,7 +1,6 @@
 package com.manager.homework.service
 
 
-import com.manager.homework.repository.SubjectRepository
 import com.manager.homework.type.CategoryGroupType
 import com.manager.homework.type.CategoryType
 import com.manager.homework.vo.CategoryGroupDto
@@ -33,7 +32,7 @@ class categoryTest extends Specification {
 
     def "카테고리 리스트 가져오기"() {
         given:
-        SubjectService subjectService = new SubjectService(_ as SubjectRepository, _ as CommonService)
+        SubjectService subjectService = new SubjectService(null, null)
 
         when:
         List<CategoryGroupDto> categoryGroupDtoList = subjectService.getCategoryList()
