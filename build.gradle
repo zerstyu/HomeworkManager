@@ -35,6 +35,13 @@ configurations {
 }
 
 dependencies {
+    bootJar{ enabled = true }
+    jar {enabled = false }
+
+    bootJar {
+        bootJar.archiveName('homework.jar')
+    }
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -48,6 +55,7 @@ dependencies {
 
     compile 'com.querydsl:querydsl-jpa'
     compile 'com.querydsl:querydsl-apt'
+    compile 'mysql:mysql-connector-java'
 
     compile 'org.modelmapper:modelmapper:2.3.0'
 

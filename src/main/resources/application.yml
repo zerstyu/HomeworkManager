@@ -44,3 +44,19 @@ logging:
 
 spring:
   profiles: prd
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
+        format_sql: true # SQL을 보기 좋게 바꿔줌
+        use_sql_comments: true # 어떤 Entity를 사용하는지 코멘트로 출력
+
+  datasource:
+    url: jdbc:mysql://10.138.0.2:3306/homework?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
