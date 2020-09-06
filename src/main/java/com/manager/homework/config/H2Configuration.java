@@ -1,6 +1,5 @@
 package com.manager.homework.config;
 
-
 import com.google.common.collect.Lists;
 import com.manager.homework.domain.*;
 import com.manager.homework.repository.*;
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
-@Profile("local")
+@Profile("prd")
 @RequiredArgsConstructor
 public class H2Configuration {
     private final UserRepository userRepository;
@@ -37,10 +36,7 @@ public class H2Configuration {
 
     @Bean
     public void setTestData() {
-        defaultService();
-    }
 
-    private void defaultService() {
         List<User> userList = userRepository.saveAll(getUserList());
         List<Subject> subjectList = subjectRepository.saveAll(getSubjectList(userList));
         joinSubjectRepository.saveAll(getJoinSubjectList(userList, subjectList));
