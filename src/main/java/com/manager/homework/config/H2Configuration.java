@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
-@Profile("prd")
+@Profile("local")
 @RequiredArgsConstructor
 public class H2Configuration {
     private final UserRepository userRepository;
