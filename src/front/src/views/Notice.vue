@@ -655,6 +655,7 @@
                   '"subjectId": "' + vm.notiEditSubjectId + '",' +
                   '"title": "' + vm.notiEditTitle + '",' +
                   '"type": "' + vm.notiEditType + '",' +
+//                  '"type": "OPEN",' +
                   '"userId": "' + localStorage.getItem('userId') + '"' +
                   '}'
                   , axiosConfig)

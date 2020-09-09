@@ -101,6 +101,7 @@
                                     <div class="col-md-12">
                                         <base-button type="default" icon="ni ni-bag-17" @click="modals3 = true">학생제출원본 확인</base-button>
                                         <base-button type="warning" icon="ni ni-bag-17" @click="modals5 = true">제출과제 수정</base-button>
+                                        <base-button type="warning" icon="ni ni-bag-17" @click="registWrongNote()">오답노트 등록</base-button>
                                     </div>
                                     <br/>
                                     <br/>
@@ -277,6 +278,29 @@
             //this.sendCanvas(this.homeworkCanvasData[0]);
         },
         methods: {
+          registWrongNote(){
+            let vm = this;
+            let usrId = localStorage.getItem('userId');
+
+            const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+            axios.post('/api/wrong_answer_notes',
+                '{"assignmentFileId" : "' + vm.assignmentFileList[0].assignmentFileId + '",' +
+                '"userId" : "' + usrId + '"' +
+                '}'
+                , axiosConfig)
+                .then(function(response){
+                  if(response.data.statusCode == 'OK'){
+                    vm.modals = true;
+                    vm.responseMsg = '성공하였습니다.';
+                    vm.getAssignments();
+                  }
+                  else{
+                    vm.modals = true;
+                    vm.responseMsg = response.data.message;
+                  }
+                });
+          },
             homeworkSubmit(){
                 this.modals5 = false;
                 let vm = this;

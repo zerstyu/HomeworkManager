@@ -920,7 +920,8 @@
                   '"status": "' + vm.notiEditStatus + '",' +
                   '"subjectId": "' + vm.subjectPivot + '",' +
                   '"title": "' + vm.notiEditTitle + '",' +
-                  '"type": "' + vm.notiEditType + '",' +
+//                  '"type": "' + vm.notiEditType + '",' +
+                  '"type": "OPEN",' +
                   '"userId": "' + localStorage.getItem('userId') + '"' +
                   //'"userName": "' + localStorage.getItem('userName') + '"' +
                   '}'
