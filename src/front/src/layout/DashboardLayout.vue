@@ -24,6 +24,7 @@
         <sidebar-item :link="{name: '내가 참여한 과목', icon: 'ni ni-briefcase-24 text-blue', path: '/'}"/>
         -->
         <sidebar-item :link="{name: '통계', icon: 'ni ni-chart-bar-32 text-blue', path: '/statistics'}"/>
+        <sidebar-item :link="{name: '공개과제', icon: 'ni ni-world text-blue', path: '/openNotice'}"/>
         <sidebar-item :link="{name: '오답노트', icon: 'ni ni-book-bookmark text-blue', path: '/wrongAnswerNotes'}"/>
         <sidebar-item :link="{name: '로그아웃', icon: 'ni ni-key-25 text-info', path: '/login'}"/>
         <!--sidebar-item :link="{name: '회원가입', icon: 'ni ni-circle-08 text-pink', path: '/register'}"/-->

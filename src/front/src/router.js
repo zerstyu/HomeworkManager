@@ -45,6 +45,11 @@ export default new Router({
           component: () => import('./views/Statistics.vue')
         },
         {
+          path: '/openNotice',
+          name: '공개과제',
+          component: () => import('./views/OpenNotice.vue')
+        },
+        {
           path: '/wrongAnswerNotes',
           name: '오답노트',
           component: () => import('./views/WrongAnswerNotes.vue')
