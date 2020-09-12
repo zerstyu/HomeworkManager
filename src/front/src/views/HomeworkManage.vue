@@ -75,7 +75,7 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton">공개과제 찾기</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton" @click="location.href='/#/openNotice'">공개과제 찾기</base-button>
                 </div>
 
                 <div id="tableTop"></div>
