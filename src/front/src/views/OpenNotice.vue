@@ -57,7 +57,7 @@
                                                 <div class="media-body">
                                                   <a v-bind:href="'/#/notice/' + row.id"><span class="name mb-0 text-sm">{{row.subjectName}}</span></a>
                                                 </div>
-                                            </div>d
+                                            </div>
                                         </th>
 
                                         <td class="budget">
