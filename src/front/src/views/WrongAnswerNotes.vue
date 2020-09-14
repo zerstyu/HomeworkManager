@@ -58,7 +58,7 @@
                                                 <div class="media-body">
                                                   <a v-bind:href="'/#/homeworkDetail/' + row.assignmentId"><span class="name mb-0 text-sm">{{row.subjectName}}</span></a>
                                                 </div>
-                                            </div>d
+                                            </div>
                                         </th>
 
                                         <td class="budget">
