@@ -353,8 +353,6 @@
       created() {
           let vm = this;
           this.getNotices();
-          this.getStaticsAverages();
-          this.getStaticsTotalScore();
 
           BUS.$on('assignmentDetail',function(data) {
               //vm.goNotiDetail(data);
@@ -563,6 +561,8 @@
                           }
 
                           vm.getAssignments();
+                          vm.getStaticsAverages();
+                          vm.getStaticsTotalScore();
                       }
                       else{
                           vm.modals = true;
