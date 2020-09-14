@@ -27,7 +27,7 @@
                         <p v-html="notiContent"></p>
                         <hr/>
                         <div v-for="item in noticeFileResponseList" v-bind:key="item.id">
-                            <img style="width:auto;" v-bind:src="item.fileString"/>
+                            <img style="max-width:100%;" v-bind:src="item.fileString"/>
                             <br/>
                         </div>
                         <template slot="footer">
@@ -472,7 +472,7 @@
           getStaticsAverages(){
               let vm = this;
 
-              axios.get('/api/statistics/subjects/averages?id=' + this.$route.params.notiId)
+              axios.get('/api/statistics/subjects/averages?id=' + this.notiSubjectId)//this.$route.params.notiId
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
                           vm.bigLineChart.allData[0] = [];
@@ -501,7 +501,7 @@
           },
           getStaticsTotalScore(){
               let vm = this;
-              axios.get('/api/statistics/subjects/total-averages?id=' + this.$route.params.notiId)
+              axios.get('/api/statistics/subjects/total-averages?id=' + this.notiSubjectId)//this.$route.params.notiId
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
                           vm.redBarChart.chartData.labels = [];
