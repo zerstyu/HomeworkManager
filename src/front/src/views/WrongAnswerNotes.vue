@@ -1,3 +1,4 @@
+<script src="../../public/canvas_resource/literallycanvas.js"></script>
 <template>
     <div>
         <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
