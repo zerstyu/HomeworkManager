@@ -444,7 +444,7 @@
             sendCanvas(canvasData, idx) {
                 //alert(canvasData);
                 let canvasIframe = document.getElementsByName("homeworkCanvasIframe")[idx];
-                let responData = canvasIframe.contentWindow.loadData(canvasData);//
+                let responData = canvasIframe.contentWindow.loadData(canvasData, localStorage.getItem('userName'));//
                 //let responData = canvasIframe.contentWindow.loadData(this.assignmentFileList[0]);
                 console.log("응답입니다 " + responData);
             },

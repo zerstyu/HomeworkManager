@@ -76,3 +76,40 @@ html {
 body {
   font-family: "NanumSquare";
 }
+
+/* 텍스트 워터마크 */
+.imageblock {
+  position: relative;
+}
+
+.textWatermark .imageblock::after {
+  content: "텍스트로 만든 워터마크.\a bssow.tistory.com";
+  color: white;
+  font-size: 32px;
+  white-space: pre;
+  position: absolute;
+  width: 80%;
+  height: 100px;
+  margin: auto;
+  top: 0; left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.9;
+}
+
+.jb-wrap {
+  width: 40%;
+  margin: 10px auto;
+  border: 1px solid #000000;
+  position: relative;
+}
+.jb-wrap img {
+  width: 100%;
+  vertical-align: middle;
+}
+.jb-text {
+  text-align: left;
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}

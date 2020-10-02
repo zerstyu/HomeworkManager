@@ -525,6 +525,27 @@ module.exports = LiterallyCanvas = (function() {
     }
   };
 
+  LiterallyCanvas.prototype.setWatermark = function(str){
+    lc.ctx.save();
+    lc.ctx.globalAlpha = 0.5;
+    lc.ctx.font = "24px malgun gothic"; //폰트의 크기, 글꼴체 지정
+    lc.ctx.fillStyle = "#616161"; //색상지정
+    lc.ctx.fillText(str,5,30);
+
+
+    //strokeText(text, x, y, maxWidth);
+    //strokeText(출력할 텍스트, 시작 x좌표, 시작 Y좌표, maxWidth);
+
+    lc.ctx.font = "30px verdana";
+    lc.ctx.strokeStyle = "blue"; //테두리 색상
+    lc.ctx.strokeText("모두의 숙제",5,130);
+    lc.ctx.restore();
+    console.log("restore 되었음");
+    lc.saveShape(this.currentShape);
+    return lc.repaintLayer('main');
+
+  };
+
   LiterallyCanvas.prototype.repaintAllLayers = function() {
     var i, key, len, ref1;
     ref1 = ['background', 'main'];
@@ -961,6 +982,7 @@ module.exports = LiterallyCanvas = (function() {
     }
     this.repaintAllLayers();
     this.trigger('snapshotLoad');
+
     return this.trigger('drawingChange', {});
   };
 
@@ -1149,8 +1171,26 @@ TextRenderer = (function() {
       ctx.fillText(line, x, y + i * this.metrics.leading);
       results.push(i += 1);
     }
+
+    //ctx.globalAlpha = 0.5;
+    //ctx.font = "24px malgun gothic"; //폰트의 크기, 글꼴체 지정
+    //ctx.fillStyle = "#616161"; //색상지정
+    //ctx.fillText("테스트 입니다 ! ",5,30);
+    //console.log("테스트 입니다 ");
     return results;
   };
+
+  TextRenderer.prototype.drawWatermark = function(ctx, x, y) {
+    results = [];
+    ctx.globalAlpha = 0.5;
+    ctx.font = "24px malgun gothic"; //폰트의 크기, 글꼴체 지정
+    ctx.fillStyle = "#616161"; //색상지정
+    ctx.fillText("테스트 입니다22 ! ",5,30);
+    console.log("테스트 입니다22 ");
+    results.push(1);
+    return results;
+  };
+
 
   TextRenderer.prototype.getWidth = function(isEditing) {
     if (isEditing == null) {

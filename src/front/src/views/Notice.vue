@@ -27,7 +27,20 @@
                         <p v-html="notiContent"></p>
                         <hr/>
                         <div v-for="item in noticeFileResponseList" v-bind:key="item.id">
-                            <img style="max-width:100%;" v-bind:src="item.fileString"/>
+                          <div class="jb-wrap">
+                            <div class="jb-image">
+                              <img style="max-width:100%; min-height: 150px" v-bind:src="item.fileString"/>
+                            </div>
+                            <div class="jb-text">
+                              <p>[{{nowUserName}}] 모두의숙제의 모든 콘텐츠는<br/>
+                                저작권법의 보호를 받으며 무단 복사, 배포 등을 금합니다.</p>
+                            </div>
+                          </div>
+                          <br/>
+                          <center><a v-on:click="downloadImg(item.fileString)">[다운로드]</a></center>
+
+
+
                             <br/>
                         </div>
                         <template slot="footer">
@@ -297,6 +310,7 @@
 
               isNotiMaster: false,
               nowUser: '',
+              nowUserName: localStorage.getItem('userName'),
 
               notiTitle: '',
               notiContent: '',
@@ -371,6 +385,25 @@
 
       },
       methods: {
+          downloadImg(link){
+            //console.log("다운로드 링크 : " + link);
+            //window.open(link, '_blank');
+
+            /*
+            let w = window.open('about:blank');
+
+            setTimeout(function(){ //FireFox seems to require a setTimeout for this to work.
+              w.document.body.appendChild(w.document.createElement('iframe'))
+                  .src = link;
+            }, 0);
+             */
+
+            var a = document.createElement("a"); //Create <a>
+            a.href = link; //Image Base64 Goes here
+            a.download = "homework.png"; //File name Here
+            a.click(); //Downloaded file
+
+          },
           changeRedChart(nameArr, scoreArr){
               let tmp = {
                   chartData: {
@@ -764,5 +797,14 @@
           }
       }
   };
+
+  function click()
+  {
+    if ((event.button==2) || (event.button==2)) {
+      alert('마우스 우클릭은 사용할 수 없습니다.');
+    }
+  }
+  document.onmousedown=click;
+
 </script>
 <style></style>

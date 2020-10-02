@@ -125,22 +125,47 @@
 
 
 
-  function loadData(data){
+  function loadData(data, nowUserId){
     var backgroundImage = new Image()
     //배경 지정
     backgroundImage.src = data.fileString;
+    var watermarkImage = new Image();
+    watermarkImage.src = 'modoo.png';
     var lc = LC.init(
             document.getElementsByClassName('literally localstorage')[0],
             {
+                backgroundShapes: [
+                    LC.createShape(
+                        'Image', {x: 0, y: 0, image: backgroundImage, scale: 0.7}),
+                    LC.createShape(
+                        'Text', {
+                            x: 20, y: 60, text: "[" + nowUserId + "] 모두의숙제의 모든 콘텐츠는\n저작권법의 보호를 받으며 무단 복사, 배포 등을 금합니다.",
+                            font: "normal 16px Helvetica",
+                            color: "#616161",
+                            fontColor: "#616161",
+                        })
+                ],
+                /*
               backgroundShapes: [
+                  LC.createShape(
+                      'Text', {
+                          x: 20, y: 20, text: "[" + nowUserId + "] 모두의숙제의 모든 콘텐츠는 저작권법의 보호를 받으며 무단 복사, 배포 등을 금합니다.",
+                          font: "bold 12px Helvetica"
+                      }),
                 LC.createShape(
                         'Image', {x: 0, y: 0, image: backgroundImage, scale: 0.7})
+
               ],
+
+                 */
 
               imageURLPrefix: 'lc-images',
               toolbarPosition: 'bottom',
               defaultStrokeWidth: 2,
-              strokeWidths: [1, 2, 3, 5, 30]
+              strokeWidths: [1, 2, 3, 5, 30],
+              //watermarkImage: watermarkImage,
+              //watermarkScale: 0.5  // you can scale it
+
             }
     );
 
@@ -154,6 +179,8 @@
       //localStorage.setItem(localStorageKey, JSON.stringify(lc.getSnapshot()));
       chaneData = JSON.stringify(lc.getSnapshot());
     });
+
+    lc.setColor('primary', 'hsla(0, 100%, 50%, 1)'); //빨간펜 세팅
 
     return 'OK';
   }
