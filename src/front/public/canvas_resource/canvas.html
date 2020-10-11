@@ -25,6 +25,17 @@
 <!--div id="lc"></div-->
 <br/>
 <br/>
+<br/>
+<br/>※ 칭찬 도장을 활용해보세요
+<br/>
+<img src="good1.png" style="width:70px;" onclick="setStamp(1);" />
+<img src="good2.png" style="width:70px;" onclick="setStamp(2);" />
+<img src="good3.png" style="width:70px;" onclick="setStamp(3);" />
+<img src="good4.png" style="width:70px;" onclick="setStamp(4);" />
+<img src="good5.png" style="width:70px;" onclick="setStamp(5);" />
+<img src="good6.png" style="width:70px;" onclick="setStamp(6);" />
+<img src="good7.png" style="width:70px;" onclick="setStamp(7);" />
+<br/>
 
 <div class="literally localstorage" id="lc"></div>
 
@@ -46,6 +57,7 @@
 <script type="text/javascript">
   var chaneData = '';
   var backgroundImage = new Image()
+  var backgroundImage2 = new Image();
 
 
   var addEvent = function(object, type, callback) {
@@ -129,6 +141,7 @@
     var backgroundImage = new Image()
     //배경 지정
     backgroundImage.src = data.fileString;
+    backgroundImage2.src = data.fileString;
     var watermarkImage = new Image();
     watermarkImage.src = 'modoo.png';
     var lc = LC.init(
@@ -145,19 +158,6 @@
                             fontColor: "#616161",
                         })
                 ],
-                /*
-              backgroundShapes: [
-                  LC.createShape(
-                      'Text', {
-                          x: 20, y: 20, text: "[" + nowUserId + "] 모두의숙제의 모든 콘텐츠는 저작권법의 보호를 받으며 무단 복사, 배포 등을 금합니다.",
-                          font: "bold 12px Helvetica"
-                      }),
-                LC.createShape(
-                        'Image', {x: 0, y: 0, image: backgroundImage, scale: 0.7})
-
-              ],
-
-                 */
 
               imageURLPrefix: 'lc-images',
               toolbarPosition: 'bottom',
@@ -190,6 +190,53 @@
     return (chaneData.replace(/\"/g,"&quot;")).replace(/\\/g,"\\\\");
 
   }
+
+  function setStamp2(num){
+      console.log("테스트 입니다2");
+      let newImage = new Image()
+      newImage.src = 'good' + num + '.png';
+      lc.saveShape(LC.createShape('Image', {x: 10, y: 50, image: newImage, scale: 0.5}));
+  }
+
+  function setStamp(num){
+    var tmp = JSON.parse((getHistoryData().replace(/\\\\/g, '\\')).replace(/&quot;/g, '"'));
+    var backgroundImage = new Image()
+    //배경 지정
+    var lc = LC.init(
+            document.getElementsByClassName('literally localstorage')[0],
+            {
+              backgroundShapes: [
+                LC.createShape(
+                        'Image', {x: 0, y: 0, image: backgroundImage2, scale: 0.7})
+              ],
+
+              imageURLPrefix: 'lc-images',
+              toolbarPosition: 'bottom',
+              defaultStrokeWidth: 2,
+              strokeWidths: [1, 2, 3, 5, 30],
+              //watermarkImage: watermarkImage,
+              //watermarkScale: 0.5  // you can scale it
+
+            }
+    );
+
+    //히스토리 데이터가 비어있으면 원본상태이므로 히스토리를 그리지 않는다
+    if(tmp != null && tmp != '') {
+      lc.loadSnapshot(tmp);
+    }
+    lc.on('drawingChange', function() {
+      //localStorage.setItem(localStorageKey, JSON.stringify(lc.getSnapshot()));
+      chaneData = JSON.stringify(lc.getSnapshot());
+    });
+
+    lc.setColor('primary', 'hsla(0, 100%, 50%, 1)'); //빨간펜 세팅
+
+    let newImage = new Image();
+    newImage.src = 'good' + num + '.png';
+    lc.saveShape(LC.createShape('Image', {x: 10, y: 50, image: newImage, scale: 0.5}));
+
+  }
+
 </script>
 </body>
 </html>
