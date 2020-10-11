@@ -70,6 +70,16 @@
                                 <br/>
                                 <br/>
                                 <br/>
+                              <!-- div class="col-md-12">
+                                <h2><i class="ni ni-ruler-pencil"></i> 칭찬도장</h2>
+                                <img src="/canvas_resource/good1.png" style="width:100px;" @click="setStamp(1)"/>
+                                <img src="/canvas_resource/good2.png" style="width:100px;" @click="setStamp(2)"/>
+                                <img src="/canvas_resource/good3.png" style="width:100px;" @click="setStamp(3)"/>
+                                <img src="/canvas_resource/good4.png" style="width:100px;" @click="setStamp(4)"/>
+                                <img src="/canvas_resource/good5.png" style="width:100px;" @click="setStamp(5)"/>
+                                <img src="/canvas_resource/good6.png" style="width:100px;" @click="setStamp(6)"/>
+                                <img src="/canvas_resource/good7.png" style="width:100px;" @click="setStamp(7)"/>
+                              </div -->
 
                                 <!-- 폼 -->
                                 <form style="width:100%;">
@@ -211,6 +221,11 @@
             //this.sendCanvas(this.homeworkCanvasData[0]);
         },
         methods: {
+          setStamp(n){
+            let canvasIframe = document.getElementsByName("homeworkCanvasIframe")[this.paginationDefault - 1];
+            canvasIframe.contentWindow.setStamp(n);//
+            console.log(this.paginationDefault + " 페이지에 " + n + " 스탬프를 그렸습니다. ");
+          },
             goNoti(){
                 this.modals2 = false;
                 location.href = "/#/notice/" + this.noticeId;
