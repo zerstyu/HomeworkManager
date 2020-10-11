@@ -25,8 +25,8 @@
 <!--div id="lc"></div-->
 <br/>
 <br/>
-<br/>
 <br/>※ 칭찬 도장을 활용해보세요
+<br/>
 <br/>
 <img src="good1.png" style="width:70px;" onclick="setStamp(1);" />
 <img src="good2.png" style="width:70px;" onclick="setStamp(2);" />
@@ -56,6 +56,7 @@
 
 <script type="text/javascript">
   var chaneData = '';
+  var waterMsg = '';
   var backgroundImage = new Image()
   var backgroundImage2 = new Image();
 
@@ -144,6 +145,7 @@
     backgroundImage2.src = data.fileString;
     var watermarkImage = new Image();
     watermarkImage.src = 'modoo.png';
+    waterMsg = "[" + nowUserId + "] 모두의숙제의 모든 콘텐츠는\n저작권법의 보호를 받으며 무단 복사, 배포 등을 금합니다.";
     var lc = LC.init(
             document.getElementsByClassName('literally localstorage')[0],
             {
@@ -199,7 +201,15 @@
   }
 
   function setStamp(num){
-    var tmp = JSON.parse((getHistoryData().replace(/\\\\/g, '\\')).replace(/&quot;/g, '"'));
+    var tmp = '';
+    try{
+        tmp = JSON.parse((getHistoryData().replace(/\\\\/g, '\\')).replace(/&quot;/g, '"'));
+    } catch(e){
+        tmp = '';
+    }   
+
+
+
     var backgroundImage = new Image()
     //배경 지정
     var lc = LC.init(
@@ -207,7 +217,14 @@
             {
               backgroundShapes: [
                 LC.createShape(
-                        'Image', {x: 0, y: 0, image: backgroundImage2, scale: 0.7})
+                        'Image', {x: 0, y: 0, image: backgroundImage2, scale: 0.7}),
+                    LC.createShape(
+                        'Text', {
+                            x: 20, y: 60, text: waterMsg,
+                            font: "normal 16px Helvetica",
+                            color: "#616161",
+                            fontColor: "#616161",
+                        })
               ],
 
               imageURLPrefix: 'lc-images',
