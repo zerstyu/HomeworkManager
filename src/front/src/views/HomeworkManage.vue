@@ -100,8 +100,8 @@
                     <h5 class="modal-title" id="exampleModalLabel2">과목 만들기</h5>
                 </template>
                 <div>
-                    <h4>과제명</h4>
-                    <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+                    <h4>과목명</h4>
+                    <base-input placeholder="과목명을 입력해주세요" v-model="createSubjectName"></base-input>
 
                     <h4>카테고리</h4>
                     <base-dropdown>
