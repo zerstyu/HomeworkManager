@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,7 +141,7 @@ public class NoticeService {
         LocalDate endDate = date;
 
         Period period = Period.between(startDate, endDate);
-        int dday = period.getDays();
+        long dday = ChronoUnit.DAYS.between(startDate, endDate);
 
         if (dday == 0) {
             return "D-DAY";
