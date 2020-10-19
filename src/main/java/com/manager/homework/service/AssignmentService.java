@@ -23,14 +23,12 @@ public class AssignmentService {
     private final SubjectRepository subjectRepository;
     private final NoticeRepository noticeRepository;
     private final AssignmentFileRepository assignmentFileRepository;
-//    private final BlockService blockService;
 
     public List<Assignment> getAssignmentList(AssignmentDto assignmentDto) {
         return assignmentRepositorySupport.findByCondition(assignmentDto);
     }
 
     public Assignment createAssignment(AssignmentDto assignmentDto) {
-//        blockService.addBlock(assignmentDto.getScore().toString());
         return assignmentRepository.save(convertToEntity(assignmentDto));
     }
 
@@ -64,7 +62,6 @@ public class AssignmentService {
 
         if (assignmentDto.getScore() != null) {
             assignment.setScore(assignmentDto.getScore());
-//            blockService.addBlock(assignmentDto.getScore().toString());
         }
 
         assignment.setFeedback(assignmentDto.getFeedback());
