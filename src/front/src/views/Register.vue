@@ -36,14 +36,14 @@
                         </base-input>
 
                         <base-input class="input-group-alternative mb-3"
-                                    placeholder="Email"
+                                    placeholder="ID"
                                     addon-left-icon="ni ni-email-83"
                                     v-model="model.email">
                         </base-input>
 
                         <base-input class="input-group-alternative"
                                     placeholder="Password"
-                                    type="패스워드"
+                                    type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
                                     v-model="model.password">
                         </base-input>

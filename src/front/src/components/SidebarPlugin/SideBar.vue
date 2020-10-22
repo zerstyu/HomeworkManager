@@ -6,7 +6,7 @@
             <navbar-toggle-button @click.native="showSidebar">
                 <span class="navbar-toggler-icon"></span>
             </navbar-toggle-button>
-            <router-link class="navbar-brand" to="/">
+            <router-link class="navbar-brand" to="#">
                 <!--img :src="logo" class="navbar-brand-img" alt="..."-->
                 모두의숙제
             </router-link>
@@ -83,13 +83,13 @@
                 <h6 class="navbar-heading text-muted">Documentation</h6>
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
-                    <!--li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation">
-                            <i class="ni ni-spaceship"></i> Getting started
+                           href="/img/start.mp4">
+                            <i class="ni ni-spaceship"></i> 시작하기
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!--li class="nav-item">
                         <a class="nav-link"
                            href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/foundation/colors.html">
                             <i class="ni ni-palette"></i> Foundation

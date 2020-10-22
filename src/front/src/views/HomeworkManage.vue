@@ -7,6 +7,7 @@
                     <h3>내가 만든 과목</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6"
+                     style="padding-bottom: 12px;"
                      v-for="teacherSubject in teacherSubjects" v-bind:key="teacherSubject.id"
                      @click="teacherSubjectsDetail(teacherSubject.idx)">
                     <stats-card v-bind:title="stringResizer(teacherSubject.userName + '', 20, null) + ' 선생님'"
@@ -45,6 +46,7 @@
                     <h3>내가 참여한 과목</h3>
                 </div>
                 <div class="col-xl-3 col-lg-6"
+                     style="padding-bottom: 12px;"
                      v-for="studentSubject in studentSubjects" v-bind:key="studentSubject.id"
                      @click="studentSubjectsDetail(studentSubject.idx)">
                     <stats-card v-bind:title="studentSubject.userName + ' 선생님'"
@@ -73,11 +75,10 @@
                     </stats-card>
                 </div>
 
-                <div class="col-xl-12 col-lg-12">
+                <!--div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton" @click="location.href='/#/openNotice'">공개과제 찾기</base-button>
-                </div>
-
+                    <base-button type="primary" icon="ni ni-bag-17" id="subjectRoomJoinButton" @click="this.$router.push({ path: 'openNotice' });">공개숙제 찾기</base-button>
+                </div-->
                 <div id="tableTop"></div>
 
             </div>
@@ -221,19 +222,19 @@
 
             <modal :show.sync="modals4">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel4">과제 출제</h5>
+                    <h5 class="modal-title" id="exampleModalLabel4">숙제 출제</h5>
                 </template>
                 <div>
-                    <h4>과제 타이틀</h4>
-                    <base-input placeholder="과제 타이틀" v-model="notiEditTitle"></base-input>
+                    <h4>숙제 타이틀</h4>
+                    <base-input placeholder="숙제 타이틀" v-model="notiEditTitle"></base-input>
 
-                    <h4>과제 설명</h4>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
+                    <h4>숙제 설명</h4>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 숙제에 대해 설명해주세요"
                     v-model="notiEditContent"></textarea>
                     <br/>
 
                     <h4>마감일</h4>
-                    <base-input placeholder="과제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
+                    <base-input placeholder="숙제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
 
                     <h4>파일 첨부</h4>
                     <base-button size="sm" @click="createNotiFileMinus" type="primary">-</base-button>
@@ -245,7 +246,7 @@
                     </div>
                     <br/>
 
-                    <h4>과제 진행상태 설정</h4>
+                    <h4>숙제 진행상태 설정</h4>
                     <base-radio name="PENDING" class="mb-3" v-model="notiEditStatus">
                         대기
                     </base-radio>
@@ -263,17 +264,9 @@
                     </base-radio>
                     <br/>
 
-                    <!--h4>과제 유형</h4>
-                    <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
-                        공개 과제
-                    </base-radio>
-                    <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
-                        비공개 과제
-                    </base-radio-->
-
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="createNoti()">과제 추가</base-button>
+                    <base-button type="primary" @click="createNoti()">숙제 추가</base-button>
                     <base-button type="default" @click="modals4 = false">취소</base-button>
                 </template>
             </modal>
@@ -291,7 +284,7 @@
                     </p>
                     <p v-if="search.feedback != null">평가결과 : {{search.score}}
                     </p>
-                    <base-button type="danger" size="sm">과제마감일 : {{search.notice.expiredAt}}</base-button>
+                    <base-button type="danger" size="sm">숙제마감일 : {{search.notice.expiredAt}}</base-button>
                     <base-button type="info" size="sm" @click="goHomeworkDetail(search.id)">상세조회</base-button>
                     <hr>
                 </div>
@@ -395,7 +388,7 @@
               subjectMasterId : '-',
 
               subjectPivot: '',
-              subjectPivotName: '전체 과제리스트',
+              subjectPivotName: '전체 숙제리스트',
               subjectPivotNameEdit: '',
               nowUser: '',
 
@@ -838,7 +831,7 @@
           /*
           *
           *
-          * 과제공지의 메소드 영역
+          * 숙제공지의 메소드 영역
           *
           *
            */
@@ -884,7 +877,7 @@
               location.href="/#/notice/" + id;
           },
           goHomeworkDetail(id){
-              console.log("과제 이동 " + id);
+              console.log("숙제 이동 " + id);
               location.href="/#/homeworkDetail/" + id;
           },
           createNoti(){

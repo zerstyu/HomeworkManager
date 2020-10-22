@@ -6,7 +6,7 @@
                 <div class="col-xl-12 col-lg-12">
                     <stats-card title="오답노트"
                                 type="gradient-red"
-                                sub-title="어려웠던 과제를 효율적으로 관리하며 공부해보세요!"
+                                sub-title="어려웠던 숙제를 효율적으로 관리하며 공부해보세요!"
                                 class="mb-4 mb-xl-0"
                     >
                         <template slot="footer">
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col text-right">
                                         <!--base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
-                                        <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button-->
+                                        <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">숙제 추가</base-button-->
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                             :data="tableData">
                                     <template slot="columns">
                                         <th>과목</th>
-                                        <th>과제</th>
+                                        <th>숙제</th>
                                         <th>선생님 피드백</th>
                                         <th>점수</th>
                                     </template>
@@ -122,13 +122,13 @@
 
         <modal :show.sync="modals2">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">숙제방 만들기</h5>
             </template>
             <div>
-                <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+                <base-input placeholder="숙제명을 입력해주세요" v-model="createSubjectName"></base-input>
             </div>
             <template slot="footer">
-                <base-button type="primary">과제방 생성</base-button>
+                <base-button type="primary">숙제방 생성</base-button>
                 <base-button type="default" @click="modals2 = false">취소</base-button>
             </template>
         </modal>

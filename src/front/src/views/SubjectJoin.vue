@@ -3,7 +3,7 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-5">
-                        <h2>과제에 참여하세요 !</h2>
+                        <h2>숙제에 참여하세요 !</h2>
                         <h3>{{masterName}}님의 {{subjectName}} 과목 입니다.</h3>
                         <div class="text-center">
                             <base-button v-on:click="joinReq()" type="primary" class="my-4">참여하기</base-button>
@@ -29,10 +29,10 @@
                     <h5 class="modal-title" id="exampleModalLabel2">알림</h5>
                 </template>
                 <div>
-                    과목 가입에 성공하였습니다!
+                    숙제방 가입에 성공하였습니다!
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="goMainPage()">과제 확인하기</base-button>
+                    <base-button type="primary" @click="goMainPage()">숙제 확인하기</base-button>
                     <!--base-button type="primary">Save changes</base-button-->
                 </template>
             </modal>

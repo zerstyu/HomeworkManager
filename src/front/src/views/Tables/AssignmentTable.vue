@@ -11,7 +11,7 @@
         </div>
         <div class="col text-right">
           <!--base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
-          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">과제 추가</base-button-->
+          <base-button type="primary" size="sm" v-if="subjectMasterId==nowUser">숙제 추가</base-button-->
         </div>
       </div>
     </div>
@@ -50,8 +50,8 @@
             </badge>
           </td>
 
-          <td class="budget" v-if="row.score == null">
-            채점중
+          <td class="budget" v-if="row.score == null || row.score == '0'">
+            -
           </td>
           <td class="budget" v-else>
             {{row.score}}

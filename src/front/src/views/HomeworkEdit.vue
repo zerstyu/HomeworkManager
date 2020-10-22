@@ -4,37 +4,18 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
-                    <stats-card title="과제 제목"
+                    <stats-card title="숙제 제목"
                                 type="gradient-red"
                                 v-bind:sub-title="subjectName + ' > ' + noticeTitle"
                                 icon="ni ni-air-baloon"
                                 class="mb-4 mb-xl-0"
                     >
-
                         <template slot="footer">
-                            <!--span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 제출자</span>
-                            <span class="text-nowrap">2020.01.11~2020.01.17</span-->
                         </template>
                     </stats-card>
                 </div>
             </div>
             <br/>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12">
-                    <stats-card title="제출자"
-                                type="gradient-red"
-                                v-bind:sub-title="userName + ''"
-                                icon="ni ni-circle-08"
-                                class="mb-4 mb-xl-0"
-                    >
-
-                        <template slot="footer">
-                            <!-- span class="text-success mr-2"><i class="fa fa-arrow-up"></i> </span-->
-                            <!--span class="text-nowrap">1학년 7반</span-->
-                        </template>
-                    </stats-card>
-                </div>
-            </div>
         </base-header>
 
 
@@ -94,7 +75,7 @@
 
                                     <div class="col-md-3">
                                         <h2><i class="ni ni-paper-diploma"></i> 평가</h2>
-                                        <span class="text-nowrap">※ 이 과제의 최대 점수는 100점 입니다.</span>
+                                        <span class="text-nowrap">※ 이 숙제의 최대 점수는 100점 입니다.</span>
                                         <br/>
                                         <br/>
 
@@ -181,8 +162,8 @@
                 isOpen: false,
                 note: '',
                 score: '',
-                userName: '',//과제 제출학생의 네임값
-                userId: '',//과제 제출학생의 아이디값
+                userName: '',//숙제 제출학생의 네임값
+                userId: '',//숙제 제출학생의 아이디값
                 subjectId: '',
                 subjectName: '',
                 noticeId: '',
