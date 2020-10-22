@@ -5,7 +5,7 @@
                 <div class="col-xl-12 col-lg-12">
                     <stats-card title="통계자료"
                                 type="gradient-red"
-                                sub-title="나의 과제 이력을 기반으로 분석된 결과입니다."
+                                sub-title="나의 숙제 이력을 기반으로 분석된 결과입니다."
                                 class="mb-4 mb-xl-0"
                     >
                         <template slot="footer">
@@ -69,13 +69,13 @@
 
         <modal :show.sync="modals2">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">숙제방 만들기</h5>
             </template>
             <div>
-                <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+                <base-input placeholder="숙제명을 입력해주세요" v-model="createSubjectName"></base-input>
             </div>
             <template slot="footer">
-                <base-button type="primary">과제방 생성</base-button>
+                <base-button type="primary">숙제방 생성</base-button>
                 <base-button type="default" @click="modals2 = false">취소</base-button>
             </template>
         </modal>

@@ -4,7 +4,7 @@
         <base-nav class="navbar-top navbar-horizontal navbar-dark"
                   containerClasses="px-4 container"
                   expand>
-            <router-link slot="brand" class="navbar-brand" to="/">
+            <router-link slot="brand" class="navbar-brand" to="#">
                 <!--img src="img/brand/white.png"/-->
                 모두의숙제
             </router-link>
@@ -14,7 +14,7 @@
                 <div class="navbar-collapse-header d-md-none">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <router-link to="/#/homeworkManage">
+                            <router-link to="#">
                                 모두의숙제<!--img src="img/brand/green.png"-->
                             </router-link>
                         </div>

@@ -4,7 +4,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
-                    <h3>{{notiUserName}} 선생님이 출제한 {{notiSubjectName}} 과제 입니다.</h3>
+                    <h3>{{notiUserName}} 선생님이 출제한 {{notiSubjectName}} 숙제 입니다.</h3>
                 </div>
                 <div class="col-xl-12 col-lg-12">
                     <stats-card v-bind:title="notiSubjectName"
@@ -14,8 +14,8 @@
                         <badge pill type="info">{{notiDday}}</badge>
                         <badge pill type="info">{{notiUserName}} 선생님</badge>
 
-                        <badge pill type="info" v-if="notiType == 'OPEN'">공개과제</badge>
-                        <badge pill type="info" v-else>비공개과제</badge>
+                        <badge pill type="info" v-if="notiType == 'OPEN'">공개숙제</badge>
+                        <badge pill type="info" v-else>비공개숙제</badge>
 
                         <badge pill type="warning" v-if="notiStatus == 'PENDING'">대기</badge>
                         <badge pill type="info" v-else-if="notiStatus == 'PROGRESS'">진행중</badge>
@@ -52,10 +52,10 @@
 
                 <div class="col-xl-12 col-lg-12">
                     <br/>
-                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">과제 출제 수정</base-button>
-                    <base-button type="primary" icon="ni ni-bag-17" @click="modals5 = true">과제 제출하기</base-button>
-                    <!--base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">과제 제출하기</base-button-->
-                    <!--base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">과제 제출하기</base-button-->
+                    <base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == true" @click="openUpdateModal()">숙제 출제 수정</base-button>
+                    <base-button type="primary" icon="ni ni-bag-17" @click="modals5 = true">숙제 제출하기</base-button>
+                    <!--base-button type="primary" icon="ni ni-bag-17" v-if="isNotiMaster == false && createAssignIsNew == true" @click="modals5 = true">숙제 제출하기</base-button-->
+                    <!--base-button type="primary" icon="ni ni-bag-17"  @click="modals5 = true">숙제 제출하기</base-button-->
 
                 </div>
 
@@ -76,13 +76,13 @@
 
             <modal :show.sync="modals2">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel2">과제방 만들기</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">숙제방 만들기</h5>
                 </template>
                 <div>
-                    <base-input placeholder="과제명을 입력해주세요" v-model="createSubjectName"></base-input>
+                    <base-input placeholder="숙제명을 입력해주세요" v-model="createSubjectName"></base-input>
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="createSubject()">과제방 생성</base-button>
+                    <base-button type="primary" @click="createSubject()">숙제방 생성</base-button>
                     <base-button type="default" @click="modals2 = false">취소</base-button>
                 </template>
             </modal>
@@ -103,19 +103,19 @@
 
             <modal :show.sync="modals4">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel4">과제 출제</h5>
+                    <h5 class="modal-title" id="exampleModalLabel4">숙제 출제</h5>
                 </template>
                 <div>
-                    <h4>과제 타이틀</h4>
-                    <base-input placeholder="과제 타이틀" v-model="notiEditTitle"></base-input>
+                    <h4>숙제 타이틀</h4>
+                    <base-input placeholder="숙제 타이틀" v-model="notiEditTitle"></base-input>
 
-                    <h4>과제 설명</h4>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 과제에 대해 설명해주세요"
+                    <h4>숙제 설명</h4>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="이번 숙제에 대해 설명해주세요"
                               v-model="notiEditContent"></textarea>
                     <br/>
 
                     <h4>마감일</h4>
-                    <base-input placeholder="과제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
+                    <base-input placeholder="숙제 마감일 (ex. 2020-01-01)" v-model="notiEditExpiredAt"></base-input>
 
                     <h4>파일 첨부</h4>
                     <base-button size="sm" @click="createNotiFileMinus" type="primary">-</base-button>
@@ -127,7 +127,7 @@
                     </div>
                     <br/>
 
-                    <h4>과제 진행상태 설정</h4>
+                    <h4>숙제 진행상태 설정</h4>
                     <base-radio name="PENDING" class="mb-3" v-model="notiEditStatus">
                         대기
                     </base-radio>
@@ -145,17 +145,9 @@
                     </base-radio>
                     <br/>
 
-                    <!--h4>과제 유형</h4>
-                    <base-radio name="OPEN" class="mb-4" v-model="notiEditType">
-                        공개 과제
-                    </base-radio>
-                    <base-radio name="PRIVATE" class="mb-4" v-model="notiEditType">
-                        비공개 과제
-                    </base-radio-->
-
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="updateNoti()">과제 출제 수정</base-button>
+                    <base-button type="primary" @click="updateNoti()">숙제 출제 수정</base-button>
                     <base-button type="default" @click="modals4 = false">취소</base-button>
                 </template>
             </modal>
@@ -163,16 +155,16 @@
 
             <modal :show.sync="modals5">
                 <template slot="header">
-                    <h5 class="modal-title" id="exampleModalLabel5">과제 제출</h5>
+                    <h5 class="modal-title" id="exampleModalLabel5">숙제 제출</h5>
                 </template>
                 <div>
 
-                    <h4>과제 노트</h4>
-                    <textarea class="form-control" id="exampleFormControlTextarea111" rows="3" placeholder="완료한 과제에 대해 설명하세요"
+                    <h4>숙제 노트</h4>
+                    <textarea class="form-control" id="exampleFormControlTextarea111" rows="3" placeholder="완료한 숙제에 대해 설명하세요"
                               v-model="createAssignNote"></textarea>
                     <br/>
 
-                    <h4>과제자료 첨부</h4>
+                    <h4>숙제자료 첨부</h4>
                     <base-button size="sm" @click="createAssignFileMinus()" type="primary">-</base-button>
                     {{createAssignmentFileLen}}
                     <base-button size="sm" @click="createAssignFilePlus()" type="primary">+</base-button>
@@ -182,20 +174,50 @@
                     </div>
                     <br/>
 
-                    <h4>과제 유형</h4>
+                    <h4>숙제 유형</h4>
                     <base-radio name="OPEN" class="mb-5" v-model="createAssignIsOpen">
-                        공개 과제
+                        공개 숙제
                     </base-radio>
                     <base-radio name="PRIVATE" class="mb-5" v-model="createAssignIsOpen">
-                        비공개 과제
+                        비공개 숙제
                     </base-radio>
 
                 </div>
                 <template slot="footer">
-                    <base-button type="primary" @click="homeworkSubmit()">과제 제출</base-button>
+                    <base-button type="primary" @click="homeworkSubmit()">숙제 제출</base-button>
                     <base-button type="default" @click="modals5 = false">취소</base-button>
                 </template>
             </modal>
+
+          <modal :show.sync="modals6">
+            <template slot="header">
+              <h5 class="modal-title" id="exampleModalLabel6">알림</h5>
+            </template>
+            <div>
+              숙제를 제출하였습니다 !<br/>
+              <br/>
+              <hr>
+              <br/>
+              열심히 숙제하고 멋진 선물도 받아보세요!<br/>
+              <br/>
+              <table>
+                <tr>
+                  <td width="150px"><center><b>숙제 10번</b></center></td>
+                  <td width="150px"><center><b>숙제 50번</b></center></td>
+                  <td width="150px"><center><b>숙제 100번 제출!</b></center></td>
+                </tr>
+                <tr>
+                  <td><center><img src="/img/reward1.jpg" style="max-width:120px"/><br>우리나라 스티커</center></td>
+                  <td><center><img src="/img/reward2.jpg" style="max-width:120px"/><br>필기도구 세트</center></td>
+                  <td><center><img src="/img/reward3.jpg" style="max-width:120px"/><br>미니드론</center></td>
+                </tr>
+              </table>
+            </div>
+            <template slot="footer">
+              <base-button type="secondary" @click="modals6 = false">확인</base-button>
+              <!--base-button type="primary">Save changes</base-button-->
+            </template>
+          </modal>
 
 
         </base-header>
@@ -227,7 +249,7 @@
                         <div slot="header" class="row align-items-center">
                             <div class="col">
                                 <h6 class="text-light text-uppercase ls-1 mb-1">통계자료</h6>
-                                <h5 class="h3 text-white mb-0">과제별 평균점수</h5>
+                                <h5 class="h3 text-white mb-0">숙제별 평균점수</h5>
                             </div>
                         </div>
                         <line-chart
@@ -361,7 +383,8 @@
               modals: true,
               modals2: false,
               modals4: false,
-              modals5: false
+              modals5: false,
+              modals6 : false
           }
       },
       created() {
@@ -420,7 +443,7 @@
               let chartData = {
                   datasets: [
                       {
-                          label: '과제평균',
+                          label: '숙제평균',
                           data: this.bigLineChart.allData[index]
                       }
                   ],
@@ -483,8 +506,8 @@
                   , axiosConfig)
                   .then(function(response){
                       if(response.data.statusCode == 'OK'){
-                          vm.modals = true;
-                          vm.responseMsg = '성공하였습니다.';
+                          vm.modals6 = true;
+                          //vm.responseMsg = '성공하였습니다.';
                           vm.getAssignments();
                       }
                       else{
@@ -559,7 +582,7 @@
           /*
           *
           *
-          * 과제공지의 메소드 영역
+          * 숙제공지의 메소드 영역
           *
           *
            */

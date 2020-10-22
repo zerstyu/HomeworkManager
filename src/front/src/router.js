@@ -17,7 +17,7 @@ export default new Router({
           //path: '/dashboard',
           //name: 'dashboard',
           path: '/homeworkManage',
-          name: '과제관리',
+          name: '숙제관리',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
@@ -36,7 +36,7 @@ export default new Router({
         },
         {
           path: '/homeworkDetail/:assignId',
-          name: '제출과제 상세보기',
+          name: '제출숙제 상세보기',
           component: () => import('./views/HomeworkDetail.vue')
         },
         {
@@ -46,7 +46,7 @@ export default new Router({
         },
         {
           path: '/openNotice',
-          name: '공개과제',
+          name: '공개숙제',
           component: () => import('./views/OpenNotice.vue')
         },
         {
@@ -56,12 +56,12 @@ export default new Router({
         },
         {
           path: '/homeworkManage',
-          name: '과제 리스트',
+          name: '숙제 리스트',
           component: () => import(/* webpackChunkName: "demo" */ './views/HomeworkManage.vue')
         },
         {
           path: '/notice/:notiId',
-          name: '출제 과제',
+          name: '출제 숙제',
           component: () => import(/* webpackChunkName: "demo" */ './views/Notice.vue')
         },
         {

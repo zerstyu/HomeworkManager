@@ -10,13 +10,12 @@
                                 class="mb-4 mb-xl-0"
                     >
                         <template slot="footer">
-                            <span class="text-info mr-2">제출자 정보 </span>
-                            <span class="text-nowrap">{{userName.toString()}}</span>
+
                             <badge class="badge-dot mr-4" type="info" v-if="isOpen==true">
-                                <span class="status">공개과제</span>
+                                <span class="status">공개숙제</span>
                             </badge>
                             <badge class="badge-dot mr-4" type="warning" v-else>
-                                <span class="status">비공개과제</span>
+                                <span class="status">비공개숙제</span>
                             </badge>
                         </template>
                     </stats-card>
@@ -83,7 +82,7 @@
 
                                     <div class="col-md-3">
                                         <h4><i class="ni ni-paper-diploma"></i> 점수</h4>
-                                        <!--span class="text-nowrap">※ 이 과제의 최대 점수는 100점 입니다.</span-->
+                                        <!--span class="text-nowrap">※ 이 숙제의 최대 점수는 100점 입니다.</span-->
                                         <span class="text-nowrap">{{score}}점</span>
                                     </div>
 
@@ -100,7 +99,7 @@
                                     <br/>
                                     <div class="col-md-12">
                                         <base-button type="default" icon="ni ni-bag-17" @click="modals3 = true">학생제출원본 확인</base-button>
-                                        <base-button type="warning" icon="ni ni-bag-17" @click="modals5 = true">제출과제 수정</base-button>
+                                        <base-button type="warning" icon="ni ni-bag-17" @click="modals5 = true">제출숙제 수정</base-button>
                                         <base-button type="warning" icon="ni ni-bag-17" @click="registWrongNote()">오답노트 등록</base-button>
                                     </div>
                                     <br/>
@@ -146,7 +145,7 @@
 
         <modal :show.sync="modals3">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel3">과제 원본</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">숙제 원본</h5>
             </template>
             <div v-for="item in assignmentFileList" v-bind:key="item.id">
                 <img v-bind:src="item.fileString" style="max-width:400px;"/>
@@ -160,16 +159,16 @@
 
         <modal :show.sync="modals5">
             <template slot="header">
-                <h5 class="modal-title" id="exampleModalLabel5">과제 제출 수정</h5>
+                <h5 class="modal-title" id="exampleModalLabel5">숙제 제출 수정</h5>
             </template>
             <div>
 
-                <h4>과제 노트</h4>
-                <textarea class="form-control" id="exampleFormControlTextarea111" rows="3" placeholder="완료한 과제에 대해 설명하세요"
+                <h4>숙제 노트</h4>
+                <textarea class="form-control" id="exampleFormControlTextarea111" rows="3" placeholder="완료한 숙제에 대해 설명하세요"
                           v-model="createAssignNote"></textarea>
                 <br/>
 
-                <h4>과제자료 첨부</h4>
+                <h4>숙제자료 첨부</h4>
                 <base-button size="sm" @click="createAssignFileMinus()" type="primary">-</base-button>
                 {{createAssignmentFileLen}}
                 <base-button size="sm" @click="createAssignFilePlus()" type="primary">+</base-button>
@@ -179,17 +178,17 @@
                 </div>
                 <br/>
 
-                <h4>과제 유형</h4>
+                <h4>숙제 유형</h4>
                 <base-radio name="OPEN" class="mb-5" v-model="createAssignIsOpen">
-                    공개 과제
+                    공개 숙제
                 </base-radio>
                 <base-radio name="PRIVATE" class="mb-5" v-model="createAssignIsOpen">
-                    비공개 과제
+                    비공개 숙제
                 </base-radio>
 
             </div>
             <template slot="footer">
-                <base-button type="primary" @click="homeworkSubmit()">과제 제출</base-button>
+                <base-button type="primary" @click="homeworkSubmit()">숙제 제출</base-button>
                 <base-button type="default" @click="modals5 = false">취소</base-button>
             </template>
         </modal>
@@ -229,8 +228,8 @@
                 isOpen: true,
                 note: '',
                 score: '',
-                userName: '',//과제 제출학생의 네임값
-                userId: '',//과제 제출학생의 아이디값
+                userName: '',//숙제 제출학생의 네임값
+                userId: '',//숙제 제출학생의 아이디값
                 subjectId: '',
                 subjectName: '',
                 noticeId: '',

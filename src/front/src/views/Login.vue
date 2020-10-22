@@ -17,11 +17,11 @@
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>이메일로 로그인</small>
+                            <small>아이디로 로그인</small>
                         </div>
                         <form role="form">
                             <base-input class="input-group-alternative mb-3"
-                                        placeholder="Email"
+                                        placeholder="ID"
                                         addon-left-icon="ni ni-email-83"
                                         v-model="model.email">
                             </base-input>

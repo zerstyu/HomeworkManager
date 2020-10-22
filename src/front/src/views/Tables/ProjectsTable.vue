@@ -11,7 +11,7 @@
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm" @click="clickChangeSunjectInfoButton()" v-if="subjectMasterId==nowUser">과목 정보수정</base-button>
-          <base-button type="primary" size="sm" @click="clickAddNotiButton()" v-if="subjectMasterId==nowUser">과제 추가</base-button>
+          <base-button type="primary" size="sm" @click="clickAddNotiButton()" v-if="subjectMasterId==nowUser">숙제 추가</base-button>
         </div>
       </div>
     </div>
@@ -23,9 +23,9 @@
                   tbody-classes="list"
                   :data="noticeData">
         <template slot="columns">
-          <th>과제명</th>
+          <th>숙제명</th>
           <th>D-Day</th>
-          <th>과제유형</th>
+          <th>숙제유형</th>
           <th>상태</th>
           <th>마감일</th>
         </template>
