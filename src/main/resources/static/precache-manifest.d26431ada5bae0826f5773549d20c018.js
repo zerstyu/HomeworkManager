@@ -192,7 +192,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/canvas_resource/test.jpg"
   },
   {
-    "revision": "24dfe66a4cd3117c6be6",
+    "revision": "53be2363c955cbaf9b52",
     "url": "/css/app.2addd6d5.css"
   },
   {
@@ -296,16 +296,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "13fe791973c9121a75bad069b6026615",
+    "revision": "205aefbddbe9972505ae0820bbd41d00",
     "url": "/index.html"
   },
   {
-    "revision": "24dfe66a4cd3117c6be6",
-    "url": "/js/app.6ebd3082.js"
+    "revision": "53be2363c955cbaf9b52",
+    "url": "/js/app.24e825f2.js"
   },
   {
-    "revision": "c4e68176200c7e526543",
-    "url": "/js/chunk-105be586.844d12cd.js"
+    "revision": "4a2e89c5376f3dd2e8df",
+    "url": "/js/chunk-105be586.7e5b1657.js"
   },
   {
     "revision": "adcef243c3df3c7a469d",
