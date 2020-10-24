@@ -50,7 +50,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         temp.use_jdbc_metadata_defaults: false
