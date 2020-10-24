@@ -234,6 +234,13 @@
                     return;
                 }
 
+                //피드백 체크
+                if(this.feedback == ''){
+                  this.responseMsg = "피드백을 입력해주세요 !";
+                  this.modals = true;
+                  return;
+                }
+
                 axios.get('/api/assignments/' + this.$route.params.assignId)
                     .then(function(response){
                         if(response.data.statusCode == 'OK'){
