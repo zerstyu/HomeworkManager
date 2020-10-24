@@ -128,7 +128,7 @@
                     <br/>
                     <br/>
 
-                    <h4>클래스 타입</h4>
+                    <h4>수업유형</h4>
                     <base-dropdown>
                         <base-button slot="title" type="secondary" class="dropdown-toggle">
                             {{classTypeName}}
@@ -191,7 +191,7 @@
                     <br/>
                     <br/>
 
-                    <h4>클래스 타입</h4>
+                    <h4>수업유형</h4>
                     <base-dropdown>
                         <base-button slot="title" type="secondary" class="dropdown-toggle">
                             {{classTypeNameEdit}}
