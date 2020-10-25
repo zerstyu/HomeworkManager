@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
-@Profile("local")
+//@Profile("local")
 @RequiredArgsConstructor
 public class H2Configuration {
     private final UserRepository userRepository;
@@ -157,6 +156,11 @@ public class H2Configuration {
 
         joinSubjectList.add(JoinSubject.builder()
                 .subject(subjectList.get(2))
+                .user(userList.get(2))
+                .build());
+
+        joinSubjectList.add(JoinSubject.builder()
+                .subject(subjectList.get(2))
                 .user(userList.get(3))
                 .build());
 
@@ -170,10 +174,20 @@ public class H2Configuration {
                 .type(NoticeType.OPEN)
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(0))
-                .status(NoticeStatus.PROGRESS)
+                .status(NoticeStatus.COMPLETED)
                 .title("독후감 1번 어린왕자 숙제")
-                .content("어리왕자를 읽고 독후감을 제출해주세요.")
+                .content("어린왕자를 읽고 독후감을 제출해주세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
+                .build());
+
+        noticeList.add(Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(0))
+                .status(NoticeStatus.PROGRESS)
+                .title("독후감 2번 백설공주 숙제")
+                .content("백설공주를 읽고 독후감을 제출해주세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).plusDays(20))
                 .build());
 
         noticeList.add(Notice.builder()
@@ -206,6 +220,16 @@ public class H2Configuration {
                 .expiredAt(LocalDate.from(LocalDate.now()).minusDays(10))
                 .build());
 
+        noticeList.add(Notice.builder()
+                .type(NoticeType.OPEN)
+                .user(subjectList.get(0).getUser())
+                .subject(subjectList.get(2))
+                .status(NoticeStatus.PROGRESS)
+                .title("미술 2번 숙제")
+                .content("가장 친한 친구를 그려주세요.")
+                .expiredAt(LocalDate.from(LocalDate.now()).minusDays(15))
+                .build());
+
         return noticeList;
     }
 
@@ -223,9 +247,9 @@ public class H2Configuration {
 
         assignmentList.add(Assignment.builder()
                 .user(userList.get(2))
-                .subject(noticeList.get(1).getSubject())
-                .notice(noticeList.get(1))
-                .feedback("띄어쓰기에 신경써주세요.")
+                .subject(noticeList.get(0).getSubject())
+                .notice(noticeList.get(0))
+                .feedback("잘 적었어요~")
                 .score(90)
                 .isOpen(true)
                 .build());
@@ -234,26 +258,17 @@ public class H2Configuration {
                 .user(userList.get(1))
                 .subject(noticeList.get(1).getSubject())
                 .notice(noticeList.get(1))
-                .feedback("참 잘 썼어요. ")
-                .score(100)
+                .feedback("좀 더 길게 적어주세요.")
+                .score(70)
                 .isOpen(true)
                 .build());
 
         assignmentList.add(Assignment.builder()
-                .user(userList.get(3))
+                .user(userList.get(2))
                 .subject(noticeList.get(1).getSubject())
                 .notice(noticeList.get(1))
-                .feedback("엄마 아빠가 좋아 하시겠어요. ")
+                .feedback("읽기 좋네요")
                 .score(95)
-                .isOpen(true)
-                .build());
-
-        assignmentList.add(Assignment.builder()
-                .user(userList.get(1))
-                .subject(noticeList.get(2).getSubject())
-                .notice(noticeList.get(2))
-                .feedback("좀 더 세밀함이 필요해요. ")
-                .score(70)
                 .isOpen(true)
                 .build());
 
@@ -261,17 +276,17 @@ public class H2Configuration {
                 .user(userList.get(2))
                 .subject(noticeList.get(2).getSubject())
                 .notice(noticeList.get(2))
-                .feedback("미래의 미술가가 되겠어요.! ")
-                .score(100)
+                .feedback("띄어쓰기에 신경써주세요.")
+                .score(90)
                 .isOpen(true)
                 .build());
 
         assignmentList.add(Assignment.builder()
-                .user(userList.get(3))
+                .user(userList.get(1))
                 .subject(noticeList.get(2).getSubject())
                 .notice(noticeList.get(2))
-                .feedback("색칠을 좀 더 잘 해주세요. ")
-                .score(80)
+                .feedback("참 잘 썼어요. ")
+                .score(100)
                 .isOpen(true)
                 .build());
 
@@ -279,6 +294,51 @@ public class H2Configuration {
                 .user(userList.get(3))
                 .subject(noticeList.get(3).getSubject())
                 .notice(noticeList.get(3))
+                .feedback("엄마 아빠가 좋아 하시겠어요. ")
+                .score(95)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(1))
+                .subject(noticeList.get(3).getSubject())
+                .notice(noticeList.get(3))
+                .feedback("좀 더 세밀함이 필요해요. ")
+                .score(70)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(2))
+                .subject(noticeList.get(4).getSubject())
+                .notice(noticeList.get(4))
+                .feedback("미래의 미술가가 되겠어요.! ")
+                .score(100)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(3))
+                .subject(noticeList.get(4).getSubject())
+                .notice(noticeList.get(5))
+                .feedback("색칠을 좀 더 잘 해주세요. ")
+                .score(80)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(2))
+                .subject(noticeList.get(4).getSubject())
+                .notice(noticeList.get(5))
+                .feedback("좀 더 깨끗하게 그어주세요. ")
+                .score(60)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(3))
+                .subject(noticeList.get(5).getSubject())
+                .notice(noticeList.get(5))
                 .feedback("좀 더 열심히 해봐요. ")
                 .score(40)
                 .isOpen(true)
