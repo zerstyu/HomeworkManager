@@ -94,29 +94,29 @@ public class H2Configuration {
 
         subjectList.add(Subject.builder()
                 .user(userList.get(0))
-                .name("수학")
+                .name("독후감")
                 .inviteCode("aaaaabbbbb")
                 .categoryGroup(CategoryGroupType.STUDY)
-                .category(CategoryType.MATH)
+                .category(CategoryType.KOREAN)
                 .classType(ClassType.ELEMENTARY_SCHOOL)
                 .build());
 
         subjectList.add(Subject.builder()
                 .user(userList.get(0))
-                .name("국어")
+                .name("그림일기")
                 .inviteCode("cccccddddd")
                 .categoryGroup(CategoryGroupType.STUDY)
                 .category(CategoryType.KOREAN)
-                .classType(ClassType.MIDDLE_SCHOOL)
+                .classType(ClassType.ELEMENTARY_SCHOOL)
                 .build());
 
         subjectList.add(Subject.builder()
                 .user(userList.get(0))
-                .name("코딩")
+                .name("미술")
                 .inviteCode("cccccddddd")
-                .categoryGroup(CategoryGroupType.PROGRAMMING)
-                .category(CategoryType.JAVA)
-                .classType(ClassType.MIDDLE_SCHOOL)
+                .categoryGroup(CategoryGroupType.ART)
+                .category(CategoryType.ART)
+                .classType(ClassType.ELEMENTARY_SCHOOL)
                 .build());
 
         return subjectList;
@@ -125,10 +125,10 @@ public class H2Configuration {
     private List<JoinSubject> getJoinSubjectList(List<User> userList, List<Subject> subjectList) {
         List<JoinSubject> joinSubjectList = Lists.newArrayList();
 
-        joinSubjectList.add(JoinSubject.builder()
-                .subject(subjectList.get(0))
-                .user(userList.get(0))
-                .build());
+//        joinSubjectList.add(JoinSubject.builder()
+//                .subject(subjectList.get(0))
+//                .user(userList.get(0))
+//                .build());
 
         joinSubjectList.add(JoinSubject.builder()
                 .subject(subjectList.get(0))
@@ -171,8 +171,8 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(0))
                 .status(NoticeStatus.PROGRESS)
-                .title("수학 1번 숙제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .title("독후감 1번 어린왕자 숙제")
+                .content("어리왕자를 읽고 독후감을 제출해주세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
                 .build());
 
@@ -181,8 +181,8 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(1))
                 .status(NoticeStatus.PENDING)
-                .title("국어 1번 숙제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .title("그림일기 첫번째 주 숙제")
+                .content("작성한 그림일기를 올려주세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(5))
                 .build());
 
@@ -191,8 +191,8 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(1))
                 .status(NoticeStatus.PENDING)
-                .title("국어 2번 숙제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .title("그림일기 두번째 주 숙제")
+                .content("작성한 그림일기를 올려주세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(15))
                 .build());
 
@@ -201,8 +201,8 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(2))
                 .status(NoticeStatus.COMPLETED)
-                .title("코딩자바 1번 숙제")
-                .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
+                .title("미술 1번 숙제")
+                .content("화목한 집을 그려주세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).minusDays(10))
                 .build());
 
@@ -216,25 +216,7 @@ public class H2Configuration {
                 .user(userList.get(1))
                 .subject(noticeList.get(0).getSubject())
                 .notice(noticeList.get(0))
-                .feedback("답안을 더 자세하게 써주세요. ")
-                .score(75)
-                .isOpen(true)
-                .build());
-
-        assignmentList.add(Assignment.builder()
-                .user(userList.get(2))
-                .subject(noticeList.get(1).getSubject())
-                .notice(noticeList.get(1))
-                .feedback("망했어요. ")
-                .score(25)
-                .isOpen(true)
-                .build());
-
-        assignmentList.add(Assignment.builder()
-                .user(userList.get(1))
-                .subject(noticeList.get(1).getSubject())
-                .notice(noticeList.get(1))
-                .feedback("잘했어요. ")
+                .feedback("자신의 느낌을 더 적어주세요.")
                 .score(80)
                 .isOpen(true)
                 .build());
@@ -243,8 +225,17 @@ public class H2Configuration {
                 .user(userList.get(2))
                 .subject(noticeList.get(1).getSubject())
                 .notice(noticeList.get(1))
-                .feedback("다시해와요. ")
-                .score(10)
+                .feedback("띄어쓰기에 신경써주세요.")
+                .score(90)
+                .isOpen(true)
+                .build());
+
+        assignmentList.add(Assignment.builder()
+                .user(userList.get(1))
+                .subject(noticeList.get(1).getSubject())
+                .notice(noticeList.get(1))
+                .feedback("참 잘 썼어요. ")
+                .score(100)
                 .isOpen(true)
                 .build());
 
@@ -252,8 +243,8 @@ public class H2Configuration {
                 .user(userList.get(3))
                 .subject(noticeList.get(1).getSubject())
                 .notice(noticeList.get(1))
-                .feedback("좀 더 생각해보세요. ")
-                .score(60)
+                .feedback("엄마 아빠가 좋아 하시겠어요. ")
+                .score(95)
                 .isOpen(true)
                 .build());
 
@@ -261,7 +252,7 @@ public class H2Configuration {
                 .user(userList.get(1))
                 .subject(noticeList.get(2).getSubject())
                 .notice(noticeList.get(2))
-                .feedback("잘 했지만 조금 아쉬워요. ")
+                .feedback("좀 더 세밀함이 필요해요. ")
                 .score(70)
                 .isOpen(true)
                 .build());
@@ -270,8 +261,8 @@ public class H2Configuration {
                 .user(userList.get(2))
                 .subject(noticeList.get(2).getSubject())
                 .notice(noticeList.get(2))
-                .feedback("이것도 다시 해오세요. ")
-                .score(20)
+                .feedback("미래의 미술가가 되겠어요.! ")
+                .score(100)
                 .isOpen(true)
                 .build());
 
@@ -279,8 +270,8 @@ public class H2Configuration {
                 .user(userList.get(3))
                 .subject(noticeList.get(2).getSubject())
                 .notice(noticeList.get(2))
-                .feedback("박수 짝짝짝. ")
-                .score(100)
+                .feedback("색칠을 좀 더 잘 해주세요. ")
+                .score(80)
                 .isOpen(true)
                 .build());
 
