@@ -74,10 +74,10 @@
                                         <td>
                                           <base-button
                                               v-if="row.status == true"
-                                              type="primary" @click="down(row.id)"><i class="ni ni-like-2"></i> {{row.id + 11}}</base-button>
+                                              type="primary" @click="down(row.id)"><i class="ni ni-like-2"></i> {{1}}</base-button>
                                           <base-button
                                               v-else
-                                              type="secondary" @click="up(row.id)"><i class="ni ni-like-2"></i> {{row.id + 10}}</base-button>
+                                              type="secondary" @click="up(row.id)"><i class="ni ni-like-2"></i> {{0}}</base-button>
                                         </td>
                                     </template>
 
@@ -187,11 +187,11 @@
                 responseMsg: false,
                 tableData: [
                     {
-                        assignmentId: 'img/theme/bootstrap.jpg',
-                        assignmentFileId: '2차 함수 응용',
-                        subjectName: '50점',
-                        noticeTile: '평가진행중',
-                        feedback: 'warning',
+                        assignmentId: '',
+                        assignmentFileId: '',
+                        subjectName: '',
+                        noticeTile: '',
+                        feedback: '',
                         score: 60
                     }
                 ]
