@@ -7,6 +7,7 @@ import com.manager.homework.vo.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,7 @@ import static com.manager.homework.domain.QNotice.notice;
 import static com.manager.homework.domain.QSubject.subject;
 import static com.manager.homework.domain.QUser.user;
 
+@Slf4j
 @Repository
 public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
     private final JPAQueryFactory queryFactory;
@@ -137,7 +139,7 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
     }
 
     public List<StatisticsCategoryAvgDto> findByCategoryAvg(Long userId) {
-        System.out.println("cdy userId = " + userId);
+        log.info("cdy userId = {}", userId);
 
         List<StatisticsDto> resultList = queryFactory
                 .select(Projections.fields(StatisticsDto.class,
@@ -182,19 +184,19 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
     }
 
     public StatisticsSubjectRangeAvgDto findByRangeAvg(Long subjectId, Long userId) {
-        System.out.println("size = " + findByTotalAvg(subjectId).size());
-        System.out.println("list = " + findByTotalAvg(subjectId));
+        List<StatisticsSubjectTotalAvgDto> list = findByTotalAvg(subjectId);
+        log.info("size = " + list.size());
 
-        StatisticsSubjectTotalAvgDto dto = findByTotalAvg(subjectId).get(0);
+        StatisticsSubjectTotalAvgDto dto = list.get(0);
 
-        System.out.println("StatisticsSubjectTotalAvgDto = " + dto);
+        log.info("StatisticsSubjectTotalAvgDto = " + dto);
         StatisticsDto statisticsDto =
                 dto.getStatisticsDtoList().stream()
                         .filter(it -> it.getUserId().equals(userId))
                         .findFirst()
                         .orElse(new StatisticsDto());
 
-        System.out.println("statisticsDto = " + statisticsDto);
+        log.info("statisticsDto = " + statisticsDto);
 
         return StatisticsSubjectRangeAvgDto.builder()
                 .subjectId(statisticsDto.getSubjectId())
@@ -220,7 +222,6 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
     private List<Integer> getCountList(List<StatisticsDto> statisticsDtoList, Map<String, Integer> map) {
         statisticsDtoList.forEach(it -> {
                     String range = getRange(it.getAverageScore());
-                    System.out.println("range = " + range);
                     map.put(range, map.get(range) + 1);
                 }
         );
@@ -232,7 +233,6 @@ public class StatisticsRepositorySupport extends QuerydslRepositorySupport {
     }
 
     private String getRange(Double avg) {
-        System.out.println("avg = " + avg);
         for (int i = 0; i < 10; i++) {
             if (i * 10 <= avg && avg < i * 10 + 10) {
                 return (i * 10) + "-" + (i * 10 + 10);
