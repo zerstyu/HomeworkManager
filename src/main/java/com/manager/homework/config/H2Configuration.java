@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
-//@Profile("local")
+@Profile("local")
 @RequiredArgsConstructor
 public class H2Configuration {
     private final UserRepository userRepository;
