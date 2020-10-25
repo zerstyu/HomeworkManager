@@ -3,6 +3,7 @@ package com.manager.homework.service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.manager.homework.domain.Product;
+import com.manager.homework.repository.ProductRepository;
 import com.manager.homework.repository.ProductRepositorySupport;
 import com.manager.homework.repository.SubjectRepository;
 import com.manager.homework.vo.RecommendResponse;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class RecommendService {
     private final SubjectRepository subjectRepository;
     private final ProductRepositorySupport productRepositorySupport;
+    private final ProductRepository productRepository;
 
     public List<RecommendResponse> getRecommendList(Long userId) {
         List<SubjectResponse> subjectResponseList = getSubjectList(userId);
@@ -73,7 +75,8 @@ public class RecommendService {
             Map.Entry<String, Integer> entry = sortedMap.entrySet().iterator().next();
             String firstKey = entry.getKey();
 
-            List<Product> productList = productRepositorySupport.findByCondition(firstKey);
+//            List<Product> productList = productRepositorySupport.findByCondition(firstKey);
+            List<Product> productList = productRepository.findAll();
 
             for (Product product : productList) {
                 RecommendResponse recommendResponse = new RecommendResponse();

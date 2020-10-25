@@ -172,7 +172,7 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(0))
                 .status(NoticeStatus.PROGRESS)
-                .title("수학 1번 과제")
+                .title("수학 1번 숙제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(10))
                 .build());
@@ -182,7 +182,7 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(1))
                 .status(NoticeStatus.PENDING)
-                .title("국어 1번 과제")
+                .title("국어 1번 숙제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(5))
                 .build());
@@ -192,7 +192,7 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(1))
                 .status(NoticeStatus.PENDING)
-                .title("국어 2번 과제")
+                .title("국어 2번 숙제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).plusDays(15))
                 .build());
@@ -202,7 +202,7 @@ public class H2Configuration {
                 .user(subjectList.get(0).getUser())
                 .subject(subjectList.get(2))
                 .status(NoticeStatus.COMPLETED)
-                .title("코딩자바 1번 과제")
+                .title("코딩자바 1번 숙제")
                 .content("첨부된 이미지를 다운받아서 문제를 풀고 제출하세요.")
                 .expiredAt(LocalDate.from(LocalDate.now()).minusDays(10))
                 .build());
@@ -342,69 +342,69 @@ public class H2Configuration {
         List<Product> productList = Lists.newArrayList();
 
         productList.add(Product.builder()
-                .name("EBS 고교 50일 수학 (상)")
+                .name("응가 할 시간이야, 크롱!")
                 .price(7000)
-                .imageUrl("http://image.yes24.com/goods/34421049/800x0")
+                .imageUrl("http://image.yes24.com/Goods/4410502/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 수학영역 수학 나형 (2020년)")
+                .name("읽어주는 동화책 003. 방귀 로켓")
                 .price(7650)
-                .imageUrl("http://image.yes24.com/goods/90443884/800x0")
+                .imageUrl("http://image.yes24.com/Goods/33127064/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 수학영역 수학 가형 (2020년)")
+                .name("읽어주는 동화책 001. 나뭇잎 아이")
                 .price(8190)
-                .imageUrl("http://image.yes24.com/goods/90443874/800x0")
+                .imageUrl("http://image.yes24.com/Goods/32734400/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능특강 수학영역 수학 1 (2020년)")
+                .name("아이랑 이야기하며 함께 보는 동화책 1")
                 .price(4770)
-                .imageUrl("http://image.yes24.com/goods/85927922/800x0")
+                .imageUrl("http://image.yes24.com/Goods/93216384/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능특강 국어영역 문학")
+                .name("동화책을 먹은 바둑이")
                 .price(8200)
-                .imageUrl("http://image.yes24.com/goods/85927903/800x0")
+                .imageUrl("http://image.yes24.com/Goods/175991/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 영어영역 영어")
+                .name("갈매기에게 나는 법을 가르쳐준 고양이")
                 .price(9800)
-                .imageUrl("http://image.yes24.com/goods/90443862/800x0")
+                .imageUrl("http://image.yes24.com/Goods/17739882/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 과학탐구영역 지구과학1")
+                .name("악몽을 먹고 자란 소년")
                 .price(5900)
-                .imageUrl("http://image.yes24.com/goods/90444326/800x0")
+                .imageUrl("http://image.yes24.com/Goods/90964086/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 사회탐구영역 사회·문화")
+                .name("좀비 아이")
                 .price(6400)
-                .imageUrl("http://image.yes24.com/goods/90444094/800x0")
+                .imageUrl("http://image.yes24.com/Goods/90964097/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 사회탐구영역 경제")
+                .name("수상한 화장실")
                 .price(5700)
-                .imageUrl("http://image.yes24.com/goods/74211634/800x0")
+                .imageUrl("http://image.yes24.com/Goods/89496128/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 국영수 자연계(이과) 세트")
+                .name("마법의 설탕 두 조각")
                 .price(28700)
-                .imageUrl("http://image.yes24.com/goods/90445030/800x0")
+                .imageUrl("http://image.yes24.com/Goods/201210/L")
                 .build());
 
         productList.add(Product.builder()
-                .name("EBS 수능완성 국영수 인문계(문과) 세트")
+                .name("너의 운명은")
                 .price(28100)
-                .imageUrl("http://image.yes24.com/goods/90445049/800x0")
+                .imageUrl("http://image.yes24.com/Goods/91879000/L")
                 .build());
 
         return productList;

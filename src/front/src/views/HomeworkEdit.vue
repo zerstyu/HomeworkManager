@@ -303,15 +303,17 @@
                 }
             },
 
-
-
-
-
-
-
             homeworkSubmit(){
                 let vm = this;
                 const axiosConfig = { headers:{ "Content-Type": "application/json"} };
+
+              //피드백 체크
+              if(this.feedback.length < 2){
+                this.responseMsg = "피드백을 입력해주세요 !";
+                this.modals = true;
+                return;
+              }
+
 
                 axios.put('/api/assignments/' + this.$route.params.assignId,
                     '{' +
