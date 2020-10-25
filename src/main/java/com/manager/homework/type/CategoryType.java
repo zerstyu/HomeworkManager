@@ -12,6 +12,7 @@ public enum CategoryType {
     ENGLISH("영어"),
     SCIENCE("과학"),
     SOCIAL("사회"),
+    SOCIAL2("사회"),
 
     ECONOMY("경제"),
 

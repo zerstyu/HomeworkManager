@@ -13,7 +13,7 @@ import java.util.List;
 public enum CategoryGroupType {
     STUDY("학문", Arrays.asList(CategoryType.MATH, CategoryType.KOREAN, CategoryType.ENGLISH,
             CategoryType.SCIENCE, CategoryType.SOCIAL)),
-    PASSING_EVENTS("시사", Arrays.asList(CategoryType.ECONOMY, CategoryType.SOCIAL)),
+    PASSING_EVENTS("시사", Arrays.asList(CategoryType.ECONOMY, CategoryType.SOCIAL2)),
     COMPUTER("컴퓨터", Arrays.asList(CategoryType.WORD, CategoryType.EXCEL, CategoryType.POWERPOINT)),
     PROGRAMMING("프로그래밍", Arrays.asList(CategoryType.JAVA, CategoryType.C, CategoryType.HTML)),
     GAME("게임", Arrays.asList(CategoryType.STRATEGY, CategoryType.PUZZLE, CategoryType.QUIZ)),
